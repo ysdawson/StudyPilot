@@ -1,0 +1,72 @@
+[
+  {
+    "course": "Cybersecurity (243-5E6)",
+    "title": "Homework 3: Web recon",
+    "date": "2026-11-19",
+    "weight": "part of Homework & Quizzes 15%",
+    "source": "Outline schedule week 14 (Nov 16-20); due day estimated"
+  },
+  {
+    "course": "Project Planning (243-5E9)",
+    "title": "Final Contract Presentation",
+    "date": "2026-11-25",
+    "weight": "10%",
+    "source": "Outline schedule week 15; day estimated (Wednesday class)"
+  },
+  {
+    "course": "Cybersecurity (243-5E6)",
+    "title": "Homework 4: Web tracking",
+    "date": "2026-11-26",
+    "weight": "part of Homework & Quizzes 15%",
+    "source": "Outline schedule week 15 (Nov 23-27); due day estimated"
+  },
+  {
+    "course": "Cybersecurity (243-5E6)",
+    "title": "Risk Assessment Report",
+    "date": "2026-11-26",
+    "weight": "3%",
+    "source": "Outline schedule week 15 (Nov 23-27); due day estimated"
+  },
+  {
+    "course": "Network Applications I (243-5E3)",
+    "title": "Class Test 4",
+    "date": "2026-11-26",
+    "weight": "see outline",
+    "source": "Outline schedule week 15 (Nov 23-27); day estimated (Thursday lecture)"
+  },
+  {
+    "course": "Electronic Techniques (243-5E4)",
+    "title": "Final Lab Exam",
+    "date": "2026-11-27",
+    "weight": "50%",
+    "source": "Outline schedule week 15; day estimated (Friday lab)"
+  },
+  {
+    "course": "Humanities (345-FXH)",
+    "title": "Essai final",
+    "date": "2026-11-27",
+    "weight": "20%",
+    "source": "Outline semaine 15; class day unknown"
+  },
+  {
+    "course": "Telecom Techniques II (243-5E8)",
+    "title": "Lab Exam",
+    "date": "2026-11-30",
+    "weight": "20%",
+    "source": "Outline: week of Nov 30; day estimated (Monday lab)"
+  },
+  {
+    "course": "Network Applications I (243-5E3)",
+    "title": "Major Assessment #4: VoIP Maintenance & Troubleshooting",
+    "date": "2026-12-01",
+    "weight": "see outline",
+    "source": "Outline schedule week 16 (Nov 30-Dec 4); day estimated (Tuesday lab)"
+  },
+  {
+    "course": "Cybersecurity (243-5E6)",
+    "title": "Practical Lab Exam (Lab test)",
+    "date": "2026-12-03",
+    "weight": "12%",
+    "source": "Outline schedule week 16 (Nov 30-Dec 4) - grading table says week 15; day estimated (Thursday lab)"
+  }
+]

@@ -83,3 +83,17 @@ def week_progress(events: list[dict], monday: date, done: set[str]) -> tuple[int
     planned = sum(minutes(e) for e in week)
     finished = sum(minutes(e) for e in week if e.get("session_id") in done)
     return finished, planned
+
+
+def deadline_sources(course_deadlines: list[dict]) -> dict[str, str]:
+    """Calendar deadline title ("<Course>: <Title>") -> Source text (e.g. "... day estimated")."""
+    out = {}
+    for d in course_deadlines:
+        title = f"{d['course']}: {d['title']}" if d.get("course") else d["title"]
+        out[title] = d.get("source", "")
+    return out
+
+
+def next_deadlines(events: list[dict], today: date, n: int = 3, skip_title: str = "") -> list[tuple[str, int]]:
+    """The next n deadline markers (title, days left), skipping the goal's own marker."""
+    return [(t, left) for t, left in countdowns(events, today) if t != skip_title][:n]

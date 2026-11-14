@@ -3,9 +3,9 @@ from datetime import date, timedelta
 import streamlit as st
 from core.contracts import *
 from core.ai_engine import extract_text, extract_topics, make_plan
-from core.scheduler import schedule_sessions, build_calendar, with_goal_deadline
-from core.schedule_input import schedule_input_ui
-from core.demo import load_demo_data
+from core.scheduler import schedule_sessions, build_calendar, all_deadlines, calendar_end
+from core.schedule_input import schedule_input_ui, deadlines_input_ui
+from core.demo import load_demo_data, demo_picker
 
 st.set_page_config(page_title="StudyPilot", layout="wide")
 st.title("StudyPilot")
@@ -13,8 +13,9 @@ st.write("Upload your course material and schedule. Get a tailored study plan wi
 st.caption("Mock AI ON: AI steps return sample results, no API spend" if mock_mode(st)
            else "Live mode: real Claude API")
 
+demo_choice = demo_picker(st, st.sidebar, key="demo_pick_home")
 if st.sidebar.button("Load demo data"):
-    load_demo_data(st)
+    load_demo_data(st, demo_choice)
     st.switch_page("pages/1_Plan.py")
 
 today = date.today()
@@ -51,6 +52,7 @@ st.caption("Classes and commitments repeat every week. Study sessions will be pl
 # Only saved to K_SCHEDULE when a plan is generated: the editor's example rows
 # must not become the student's timetable (or a calendar) on their own.
 schedule = schedule_input_ui(next_monday.isoformat())
+course_deadlines = deadlines_input_ui()
 
 # Step 3: goal + generate
 st.header("3. Your goal")
@@ -81,8 +83,9 @@ if go:
         st.session_state[K_SCHEDULE] = schedule
         st.session_state[K_GOAL] = goal
         st.session_state[K_PLAN] = plan
-        st.session_state[K_CALENDAR] = build_calendar(schedule, study, with_goal_deadline(deadlines, goal),
-                                                      goal["start_date"], goal["deadline"])
+        marks = all_deadlines(deadlines, course_deadlines, goal)
+        st.session_state[K_CALENDAR] = build_calendar(schedule, study, marks, goal["start_date"],
+                                                      calendar_end(goal, marks))
         # New plan: session ids restart at s1, so drop guides/results of any old plan.
         st.session_state[K_CONTENT] = {}
         st.session_state[K_RESULTS] = {}

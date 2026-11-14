@@ -1,0 +1,66 @@
+{
+  "course": "Network Applications I",
+  "topics": [
+    {
+      "id": "t1",
+      "name": "Extended ACLs",
+      "weight": 0.08,
+      "summary": "Outline week 7: Writing and applying extended ACLs, including protocol matching and port filtering."
+    },
+    {
+      "id": "t2",
+      "name": "Network management protocols (CDP, LLDP, NTP, SNMP, Syslog)",
+      "weight": 0.08,
+      "summary": "Outline week 7: Using CDP and LLDP for discovery, NTP for time sync, and SNMP and Syslog for monitoring and logging."
+    },
+    {
+      "id": "t3",
+      "name": "ACL incident response",
+      "weight": 0.1,
+      "summary": "Outline week 8: Diagnosing and restoring service when users cannot reach resources and administrators cannot manage devices remotely."
+    },
+    {
+      "id": "t4",
+      "name": "Enterprise troubleshooting and documentation",
+      "weight": 0.1,
+      "summary": "Outline week 9: Applying troubleshooting workflows, tools and the layered model, and documenting the results."
+    },
+    {
+      "id": "t5",
+      "name": "Network automation fundamentals",
+      "weight": 0.08,
+      "summary": "Outline week 10: Automation concepts and data formats (YAML, JSON, XML) with REST and DNA Center."
+    },
+    {
+      "id": "t6",
+      "name": "REST APIs and Postman",
+      "weight": 0.1,
+      "summary": "Outline week 11: REST methods, authentication, CRUD operations, and Postman collections for gathering device information."
+    },
+    {
+      "id": "t7",
+      "name": "Automation for operations and support",
+      "weight": 0.1,
+      "summary": "Outline week 12: Using APIs to gather diagnostics and verify configurations when supporting troubleshooting."
+    },
+    {
+      "id": "t8",
+      "name": "VoIP fundamentals",
+      "weight": 0.08,
+      "summary": "Outline week 13: PSTN versus VoIP, codecs, RTP, SIP, call flows, and QoS for voice."
+    },
+    {
+      "id": "t9",
+      "name": "CUCM architecture, dial plans and calling search spaces",
+      "weight": 0.14,
+      "summary": "Outline week 14: Cisco Unified Communications Manager architecture, endpoints, dial plans, partitions, and calling search spaces."
+    },
+    {
+      "id": "t10",
+      "name": "VoIP maintenance and troubleshooting",
+      "weight": 0.14,
+      "summary": "Outline week 15: Diagnosing and restoring VoIP service for incorrect dial plans, unregistered phones, DHCP option issues, NTP issues, and codec mismatches."
+    }
+  ],
+  "deadlines": []
+}

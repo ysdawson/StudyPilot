@@ -119,3 +119,44 @@ def schedule_input_ui(week_start: str) -> list[Event]:
                        "start": f"{d.isoformat()}T{str(r['start']).strip()}",
                        "end": f"{d.isoformat()}T{str(r['end']).strip()}", "kind": kind})
     return events
+
+
+def parse_deadlines_csv(text: str) -> list[dict]:
+    """Rows of Course,Title,Date,Weight,Source -> [{course, title, date, weight, source}].
+    Rows without a title or a valid YYYY-MM-DD date are skipped."""
+    import csv, io
+    out = []
+    for r in csv.DictReader(io.StringIO(text.lstrip("\ufeff"))):
+        r = {str(k).strip().lower(): (v or "").strip() for k, v in r.items() if k}
+        try:
+            day = date.fromisoformat(r.get("date", ""))
+        except ValueError:
+            continue
+        if r.get("title"):
+            out.append({"course": r.get("course", ""), "title": r["title"], "date": day.isoformat(),
+                        "weight": r.get("weight", ""), "source": r.get("source", "")})
+    return sorted(out, key=lambda d: d["date"])
+
+
+def deadlines_input_ui() -> list[dict]:
+    """Optional upload of all courses' deadlines (Home, under the timetable).
+    Stored in st.session_state[DEADLINES_KEY]; shown on the calendar as markers only."""
+    from core.demo import DEADLINES_KEY
+    st.subheader("Upcoming deadlines (optional)")
+    up = st.file_uploader("Upcoming deadlines (CSV): Course,Title,Date,Weight,Source", type=["csv"],
+                          key="deadlines_csv")
+    if up is not None and st.button("Load deadlines from CSV"):
+        try:
+            rows = parse_deadlines_csv(up.getvalue().decode("utf-8-sig"))
+            st.session_state[DEADLINES_KEY] = rows
+            if not rows:
+                st.warning("No rows with a title and a YYYY-MM-DD date found in that CSV.")
+        except Exception as ex:
+            st.error(f"Couldn't read the deadlines CSV: {ex}")
+    rows = st.session_state.get(DEADLINES_KEY, [])
+    if rows:
+        st.dataframe(pd.DataFrame(rows)[["date", "course", "title", "weight", "source"]],
+                     width="stretch", hide_index=True)
+        st.caption("Dates marked as estimated in Source are not official. Deadlines are markers: "
+                   "they never block study time.")
+    return rows

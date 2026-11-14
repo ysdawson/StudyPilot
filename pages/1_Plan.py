@@ -1,17 +1,18 @@
 """OWNER: Member 2. Plan page."""
 import streamlit as st
 from core.contracts import *
-from core.demo import load_demo_data
+from core.demo import load_demo_data, demo_picker, DEADLINES_KEY
 from core.ai_engine import replan
-from core.scheduler import schedule_sessions, build_calendar, with_goal_deadline
+from core.scheduler import schedule_sessions, build_calendar, all_deadlines, calendar_end
 
 if K_PLAN not in st.session_state:
     st.info("No study plan yet. Generate one on the Home page, or load the demo.")
     c1, c2 = st.columns(2)
     if c1.button("Go to Home"):
         st.switch_page("app.py")
+    choice = demo_picker(st, c2, key="demo_pick_plan")
     if c2.button("Load demo data"):
-        load_demo_data(st)
+        load_demo_data(st, choice)
         st.rerun()
     st.stop()
 
@@ -35,8 +36,9 @@ if st.button("Update plan from my quiz results", disabled=not results):
         ss[K_PLAN] = new
         todo = {**new, "sessions": [s for s in new["sessions"] if s["id"] not in results]}
         study = schedule_sessions(todo, ss.get(K_SCHEDULE, []))
-        ss[K_CALENDAR] = build_calendar(ss.get(K_SCHEDULE, []), study, with_goal_deadline(topics["deadlines"], goal),
-                                        goal["start_date"], goal["deadline"])
+        marks = all_deadlines(topics["deadlines"], ss.get(DEADLINES_KEY, []), goal)
+        ss[K_CALENDAR] = build_calendar(ss.get(K_SCHEDULE, []), study, marks, goal["start_date"],
+                                        calendar_end(goal, marks))
         st.rerun()
     except Exception as ex:
         st.error(f"Couldn't update the plan: {ex}")

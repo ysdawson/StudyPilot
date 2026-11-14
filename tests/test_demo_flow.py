@@ -9,7 +9,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def _mock(name):
-    with open(os.path.join(ROOT, "mock_data", name), encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "mock_data", "calculus", name), encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -31,6 +31,7 @@ def test_demo_flow_chain_rule_mistake_gets_a_chain_rule_review():
     at = AppTest.from_file(os.path.join(ROOT, "app.py"), default_timeout=30)
     at.secrets["MOCK_AI"] = "1"
     _run(at)
+    at.selectbox(key="demo_pick_home").set_value("calculus")
     _btn(at, "Load demo data").click(); _run(at)
     assert at.title[0].value == "Your study plan"
     assert at.session_state["schedule"] == _mock("schedule.json")

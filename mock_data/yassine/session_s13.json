@@ -1,0 +1,107 @@
+{
+  "session_id": "s13",
+  "guide": {
+    "key_points": [
+      "CUCM is the call-control server that registers IP phones, routes calls, and provides phone configuration (Outline week 14: CUCM architecture, endpoints).",
+      "A phone downloads its configuration from the TFTP service and then registers with a CUCM node before it can place or receive calls (Outline week 14: Endpoints).",
+      "Dial plans are built from directory numbers, route patterns, and route lists that determine how dialed digits are matched and routed (Outline week 14: Dial plans).",
+      "Partitions group directory numbers and route patterns, and a calling search space (CSS) is the ordered list of partitions a device may search (Outline week 14: Partitions, calling search spaces).",
+      "If a dialed number is not in any partition in the caller's CSS, the call fails, so CSS design determines which destinations a phone can reach (Outline week 14: Calling search spaces)."
+    ],
+    "explanation": "CUCM is the call-control platform that handles registration, call setup, and routing for IP phones. Endpoints depend on it for configuration and registration, so their network and TFTP settings must be correct. Dial plans use partitions and calling search spaces to decide which numbers each device can reach. Source: Outline week 14: CUCM architecture, endpoints, dial plans, partitions, calling search spaces.",
+    "example": "Phone A has CSS = [Office_PT, PSTN_PT]. Office_PT contains DN 5001-5099, and PSTN_PT contains route pattern 9.@ pointing to a gateway. Dialing 5042 matches Office_PT, so the call goes to phone 5042. Dialing 9 followed by a 10-digit number does not match Office_PT, but it matches 9.@ in PSTN_PT, so the call goes out the gateway. If PSTN_PT were removed from Phone A's CSS, the 9-prefixed call would fail (Outline week 14: Dial plans).",
+    "source_hint": "Outline week 14: Cisco Unified Communications Manager (CUCM), CUCM architecture, Endpoints, Dial plans, Partitions, Calling search spaces"
+  },
+  "questions": [
+    {
+      "id": "s13-q1",
+      "type": "mcq",
+      "question": "Which CUCM service does an IP phone typically use to download its configuration file during startup?",
+      "options": [
+        "TFTP service",
+        "RTP service",
+        "DNS server",
+        "SNMP agent"
+      ],
+      "answer": "TFTP service",
+      "explanation": "Phones obtain configuration files from the TFTP service on CUCM before registering (Outline week 14: Endpoints).",
+      "topic_id": "t9",
+      "session_id": "s13"
+    },
+    {
+      "id": "s13-q2",
+      "type": "mcq",
+      "question": "What is a calling search space in CUCM?",
+      "options": [
+        "An ordered list of partitions that a device searches when it places a call",
+        "A list of IP phones registered to one CUCM node",
+        "A group of IP addresses used for SIP trunks",
+        "A set of codecs negotiated for a call"
+      ],
+      "answer": "An ordered list of partitions that a device searches when it places a call",
+      "explanation": "A calling search space is the ordered set of partitions a device can search for a dialed number (Outline week 14: Calling search spaces).",
+      "topic_id": "t9",
+      "session_id": "s13"
+    },
+    {
+      "id": "s13-q3",
+      "type": "short",
+      "question": "Explain the relationship between a partition and a calling search space. Why would two phones in the same building have different CSS settings?",
+      "options": [],
+      "answer": "A partition is a container of directory numbers and route patterns. A CSS lists the partitions a phone may search, so two phones with different CSS lists can reach different destinations even in the same building.",
+      "explanation": "Partitions group numbers and route patterns, and CSS controls which groups are visible to each device (Outline week 14: Partitions, calling search spaces).",
+      "topic_id": "t9",
+      "session_id": "s13"
+    },
+    {
+      "id": "s13-q4",
+      "type": "mcq",
+      "question": "Phone A has CSS = [Office_PT, PSTN_PT]. The directory number 6200 exists only in partition Lab_PT, which is not in the CSS. What happens when Phone A dials 6200?",
+      "options": [
+        "The call fails because 6200 is not reachable from Phone A's CSS",
+        "The call reaches 6200 because all partitions are searched",
+        "The call is sent to the PSTN gateway",
+        "The call rings 6200 after a registration retry"
+      ],
+      "answer": "The call fails because 6200 is not reachable from Phone A's CSS",
+      "explanation": "Digit analysis only searches partitions in the caller's CSS, so a number in an unlisted partition is not matched (Outline week 14: Calling search spaces).",
+      "topic_id": "t9",
+      "session_id": "s13"
+    },
+    {
+      "id": "s13-q5",
+      "type": "short",
+      "question": "Describe the startup sequence an IP phone follows before it can make calls on a CUCM system. Include the role of DHCP and TFTP.",
+      "options": [],
+      "answer": "The phone obtains an IP address and TFTP server information from DHCP (for example, option 150), downloads its configuration file from the TFTP service, and then registers with a CUCM node.",
+      "explanation": "The phone must get network settings, then its configuration, then register with CUCM before calls are possible (Outline week 14: Endpoints, CUCM architecture).",
+      "topic_id": "t9",
+      "session_id": "s13"
+    },
+    {
+      "id": "s13-q6",
+      "type": "mcq",
+      "question": "A calling device has route patterns 9.@ and 9.1514XXXXXXX in partitions it can search. Dialing 91514 followed by seven digits matches both. Which pattern does CUCM select?",
+      "options": [
+        "9.1514XXXXXXX",
+        "9.@",
+        "Both are used in parallel",
+        "Neither, because the call is blocked"
+      ],
+      "answer": "9.1514XXXXXXX",
+      "explanation": "CUCM selects the most specific (longest) match, so the more specific pattern 9.1514XXXXXXX wins over the wildcard 9.@ (Outline week 14: Dial plans).",
+      "topic_id": "t9",
+      "session_id": "s13"
+    },
+    {
+      "id": "s13-q7",
+      "type": "short",
+      "question": "Name the difference between the CUCM Publisher and Subscriber roles, and state which one holds the read-write copy of the database.",
+      "options": [],
+      "answer": "The Publisher holds the read-write master copy of the database and replicates it to Subscribers. Subscribers hold read-only copies and typically handle call processing and device registration.",
+      "explanation": "The Publisher is the database master, and Subscribers receive replicated data (Outline week 14: CUCM architecture).",
+      "topic_id": "t9",
+      "session_id": "s13"
+    }
+  ]
+}

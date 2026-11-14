@@ -100,7 +100,27 @@ def build_calendar(busy: list[Event], study: list[Event], deadlines: list[Deadli
 def with_goal_deadline(deadlines: list[Deadline], goal: dict) -> list[Deadline]:
     """Course deadlines plus the student's own goal deadline (when the material
     gives no date, e.g. "Other" + a date typed on the Home page)."""
-    if not goal.get("deadline") or any(d.get("date") == goal["deadline"] for d in deadlines):
+    target = str(goal.get("target") or "").lower()
+    if not goal.get("deadline") or any(
+            d.get("date") == goal["deadline"] and (not target or target in d.get("title", "").lower())
+            for d in deadlines):
         return list(deadlines)
     title = f"{goal.get('target') or 'Deadline'} (your target date)"  # not from the material
     return list(deadlines) + [{"title": title, "date": goal["deadline"]}]
+
+
+def course_deadline_title(d: dict) -> str:
+    return f"{d['course']}: {d['title']}" if d.get("course") else d["title"]
+
+
+def all_deadlines(topic_deadlines: list[Deadline], course_deadlines: list[dict], goal: dict) -> list[Deadline]:
+    """Deadlines for build_calendar: from the material, from the deadlines CSV
+    ("<Course>: <Title>"), plus the student's goal unless one of them already is it."""
+    merged = list(topic_deadlines) + [{"title": course_deadline_title(d), "date": d["date"]}
+                                      for d in course_deadlines]
+    return with_goal_deadline(merged, goal)
+
+
+def calendar_end(goal: dict, deadlines: list[Deadline]) -> str:
+    """Show the calendar up to the goal or the last deadline, whichever is later."""
+    return max([goal["deadline"]] + [d["date"] for d in deadlines])

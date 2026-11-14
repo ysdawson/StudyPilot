@@ -28,6 +28,13 @@ Hard rules:
   "date": "YYYY-MM-DD"}. If no such date is written in the text, return
   "deadlines": []. Never invent, guess or estimate a date, and never infer one
   from lecture numbers, weeks or the current date.
+- Topics are subject matter only. Ignore course administration: grading,
+  penalties, attendance, policies, contact details, office hours, textbooks.
+- If the text is a course outline (a week-by-week schedule rather than lecture
+  notes), take the topics from the scheduled weeks and name the week(s) in each
+  summary, e.g. "Outline weeks 13-14: ...".
+- If the text starts with a "Focus:" note from the student, only return topics
+  from the weeks or subjects it names.
 - Never invent facts that the provided text does not support.
 
 Return only the JSON. No prose. No markdown fences.
@@ -119,6 +126,11 @@ Hard rules:
 - Every question.topic_id must exist in the provided topics list.
 - Ground every part of the response in the provided document text and do not
   contradict it.
+- If the text is only a course outline (a week-by-week schedule, no lecture
+  notes), you may explain the session's topic from standard, well-established
+  knowledge of the subject, but source_hint and the explanations must cite the
+  outline week instead of pages, e.g. "Outline week 13: VoIP Fundamentals".
+  Never cite slides or pages that are not in the text.
 - The document text was extracted from slides, so exponents and brackets may
   be flattened (e.g. "x2 + 1" means x^2 + 1). Interpret them mathematically.
 - Work out every answer step by step before writing it, and make sure the

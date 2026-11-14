@@ -1,7 +1,11 @@
 """grade() and the Session page, driven by whatever is in mock_data/ (no hard-coded answers)."""
 import os
-from core.contracts import load_mock
+from core.demo import read_file
 from core.quiz_logic import grade
+
+
+def load_mock(name):
+    return read_file("calculus", name)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -68,13 +72,14 @@ def test_session_page_full_flow():
     at.secrets["MOCK_AI"] = "1"
     at.run()
     assert not at.exception
+    at.selectbox(key="demo_pick_session").set_value("calculus")
     next(b for b in at.button if b.label == "Load demo data").click()  # no auto-load any more
     at.run()
     assert not at.exception
     at.radio(key=f"ans_{m1['id']}").set_value(m1["answer"])
     at.radio(key=f"ans_{m2['id']}").set_value(m2["answer"])
     at.text_area(key=f"ans_{s1['id']}").input(s1["answer"])
-    at.button[0].click()  # form submit: "Check my answers"
+    next(b for b in at.button if b.label == "Check my answers").click()
     at.run()
     assert not at.exception
     at.checkbox(key=f"self_{s1['id']}").check()

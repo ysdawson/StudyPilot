@@ -1,0 +1,165 @@
+{
+  "goal": {
+    "course": "Network Applications I (243-5E3)",
+    "target": "Class Test 4",
+    "deadline": "2026-11-26",
+    "start_date": "2026-11-16",
+    "hours_per_week": 6.0,
+    "target_grade": "A"
+  },
+  "sessions": [
+    {
+      "id": "s1",
+      "order": 1,
+      "topic_id": "t1",
+      "title": "Learn extended ACL syntax",
+      "minutes": 30,
+      "objective": "Write extended ACL entries that match protocol, source, destination, and port.",
+      "kind": "learn"
+    },
+    {
+      "id": "s2",
+      "order": 2,
+      "topic_id": "t2",
+      "title": "Learn CDP, LLDP, NTP, SNMP, and Syslog",
+      "minutes": 30,
+      "objective": "Explain the purpose of each management protocol and when to use it.",
+      "kind": "learn"
+    },
+    {
+      "id": "s3",
+      "order": 3,
+      "topic_id": "t3",
+      "title": "Learn ACL incident response workflow",
+      "minutes": 30,
+      "objective": "Identify the steps to diagnose blocked user access and blocked remote management.",
+      "kind": "learn"
+    },
+    {
+      "id": "s4",
+      "order": 4,
+      "topic_id": "t3",
+      "title": "Practice diagnosing ACL-caused outages",
+      "minutes": 30,
+      "objective": "Locate the ACL entry causing a reachability or management failure and correct it.",
+      "kind": "practice"
+    },
+    {
+      "id": "s5",
+      "order": 5,
+      "topic_id": "t4",
+      "title": "Learn troubleshooting workflows and layered model",
+      "minutes": 30,
+      "objective": "Apply a structured troubleshooting workflow across the OSI layers.",
+      "kind": "learn"
+    },
+    {
+      "id": "s6",
+      "order": 6,
+      "topic_id": "t4",
+      "title": "Practice documenting a troubleshooting result",
+      "minutes": 30,
+      "objective": "Write a concise incident record covering symptom, cause, fix, and verification.",
+      "kind": "practice"
+    },
+    {
+      "id": "s7",
+      "order": 7,
+      "topic_id": "t5",
+      "title": "Learn automation concepts and data formats",
+      "minutes": 30,
+      "objective": "Read and compare YAML, JSON, and XML structures and explain REST and DNA Center roles.",
+      "kind": "learn"
+    },
+    {
+      "id": "s8",
+      "order": 8,
+      "topic_id": "t6",
+      "title": "Learn REST methods and authentication",
+      "minutes": 30,
+      "objective": "Map CRUD operations to HTTP methods and describe common API authentication.",
+      "kind": "learn"
+    },
+    {
+      "id": "s9",
+      "order": 9,
+      "topic_id": "t6",
+      "title": "Practice Postman requests and collections",
+      "minutes": 30,
+      "objective": "Build a Postman collection that retrieves device information with authentication.",
+      "kind": "practice"
+    },
+    {
+      "id": "s10",
+      "order": 10,
+      "topic_id": "t7",
+      "title": "Learn API-based diagnostics for support",
+      "minutes": 30,
+      "objective": "Select the API calls needed to gather diagnostics and verify configuration.",
+      "kind": "learn"
+    },
+    {
+      "id": "s11",
+      "order": 11,
+      "topic_id": "t7",
+      "title": "Practice verifying configurations with APIs",
+      "minutes": 30,
+      "objective": "Run API queries to confirm a device configuration matches the expected state.",
+      "kind": "practice"
+    },
+    {
+      "id": "s12",
+      "order": 12,
+      "topic_id": "t8",
+      "title": "Learn VoIP fundamentals and call flows",
+      "minutes": 30,
+      "objective": "Compare PSTN and VoIP, and trace a SIP call flow with RTP media and QoS needs.",
+      "kind": "learn"
+    },
+    {
+      "id": "s13",
+      "order": 13,
+      "topic_id": "t9",
+      "title": "Learn CUCM architecture and endpoints",
+      "minutes": 30,
+      "objective": "Describe CUCM components, endpoint registration, and how dial plans are structured.",
+      "kind": "learn"
+    },
+    {
+      "id": "s14",
+      "order": 14,
+      "topic_id": "t9",
+      "title": "Practice partitions and calling search spaces",
+      "minutes": 30,
+      "objective": "Determine whether a call succeeds given partitions and calling search space assignments.",
+      "kind": "practice"
+    },
+    {
+      "id": "s15",
+      "order": 15,
+      "topic_id": "t10",
+      "title": "Learn VoIP maintenance and troubleshooting",
+      "minutes": 30,
+      "objective": "Identify causes of dial plan errors, unregistered phones, DHCP option issues, NTP issues, and codec mismatches.",
+      "kind": "learn"
+    },
+    {
+      "id": "s16",
+      "order": 16,
+      "topic_id": "t10",
+      "title": "Practice diagnosing VoIP service faults",
+      "minutes": 30,
+      "objective": "Trace a VoIP fault to its root cause and state the fix that restores service.",
+      "kind": "practice"
+    },
+    {
+      "id": "s17",
+      "order": 17,
+      "topic_id": "t10",
+      "title": "Review VoIP and CUCM across all topics",
+      "minutes": 30,
+      "objective": "Recall key CUCM, dial plan, and VoIP troubleshooting points and fix weak areas.",
+      "kind": "review"
+    }
+  ]
+}

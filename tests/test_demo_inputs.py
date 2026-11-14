@@ -40,7 +40,8 @@ def test_parse_full_timetable_work_rows_become_busy():
 
 def test_mock_schedule_keeps_busy_events_and_study_avoids_them():
     from datetime import datetime
-    from core.contracts import load_mock
+    from core.demo import read_file
+    load_mock = lambda n: read_file("calculus", n)
     from core.scheduler import BUFFER, FMT
     os.chdir(ROOT)
     schedule, cal = load_mock("schedule.json"), load_mock("calendar.json")
@@ -62,7 +63,7 @@ def _app():
 
 def test_home_generate_with_no_deadlines_uses_other_and_manual_date():
     at = _app()
-    topics = json.load(open(os.path.join(ROOT, "mock_data", "topics.json"), encoding="utf-8"))
+    topics = json.load(open(os.path.join(ROOT, "mock_data", "calculus", "topics.json"), encoding="utf-8"))
     topics["deadlines"] = []
     at.session_state["topics"] = topics
     at.session_state["schedule_rows"] = pd.DataFrame(parse_timetable_csv(
@@ -88,7 +89,8 @@ def test_home_generate_with_no_deadlines_uses_other_and_manual_date():
 def test_mock_replan_reviews_the_weakest_topic():
     at = AppTest.from_string(
         "import streamlit as st\n"
-        "from core.contracts import load_mock\n"
+        "from core.demo import read_file\n"
+        "load_mock = lambda n: read_file('calculus', n)\n"
         "from core.ai_engine import replan\n"
         "plan, topics = load_mock('plan.json'), load_mock('topics.json')\n"
         "ids = [t['id'] for t in topics['topics']]\n"

@@ -3,7 +3,7 @@ import html
 from datetime import date, timedelta
 import streamlit as st
 from core.contracts import *
-from core.demo import load_demo_data
+from core.demo import load_demo_data, demo_picker, DEADLINES_KEY
 from core import board
 
 st.set_page_config(page_title="StudyPilot | Calendar", layout="wide")
@@ -13,8 +13,9 @@ if K_PLAN not in st.session_state:
     c1, c2 = st.columns(2)
     if c1.button("Go to Home"):
         st.switch_page("app.py")
+    choice = demo_picker(st, c2, key="demo_pick_calendar")
     if c2.button("Load demo data"):
-        load_demo_data(st)
+        load_demo_data(st, choice)
         st.rerun()
     st.stop()
 
@@ -25,6 +26,10 @@ done = set(ss.get(K_RESULTS, {}))
 sessions = {s["id"]: s for s in plan["sessions"]}
 topic_name = {t["id"]: t["name"] for t in ss.get(K_TOPICS, {}).get("topics", [])}
 courses = board.course_colors(events)
+sources = board.deadline_sources(ss.get(DEADLINES_KEY, []))  # title -> "day estimated" etc.
+goal = plan["goal"]
+goal_marker = next((t for t, _ in board.countdowns(events, date.min)
+                    if goal.get("target") and goal["target"].lower() in t.lower()), "")
 today = date.today()
 plan_week = board.monday_of(date.fromisoformat(plan["goal"]["start_date"]))
 WEEK_KEY = "board_week"
@@ -56,6 +61,7 @@ st.markdown("""
 .sp-study {color:#fff; box-shadow:0 2px 6px rgba(79,70,229,.35);}
 .sp-study .sp-time {color:#E0E7FF;}
 .sp-study .sp-tag {background:rgba(255,255,255,.25); color:#fff;}
+.sp-src {font-size:0.72rem; font-style:italic; color:#7F1D1D;}
 .sp-empty {color:#9CA3AF; font-size:0.78rem; text-align:center; padding:8px 0;}
 .sp-next {border-radius:10px; padding:6px 10px; background:#EEF2FF; margin-bottom:4px;
           font-size:0.82rem; color:#1F2937;}
@@ -78,6 +84,8 @@ def card_html(e: dict) -> str:
         extra = f"<div>{html.escape(topic)} · {board.minutes(e)} min</div>"
         if e.get("session_id") in done:
             title = "✅ " + title
+    elif kind == "deadline" and sources.get(e["title"]):
+        extra = f'<div class="sp-src">{html.escape(sources[e["title"]])}</div>'
     time = "All day" if kind == "deadline" else board.time_range(e)
     cls = "sp-card sp-study" if kind == "study" else "sp-card"
     return (f'<div class="{cls}" style="background:{bg};border-left-color:{accent}">'
@@ -127,19 +135,34 @@ with tab_board:
             if s and st.button("Open", key=f"next-open-{e['id']}", width="stretch"):
                 _open(s["id"])
         st.markdown("#### Countdown")
-        counts = board.countdowns(events, today)
-        if not counts:
+
+        def _when(left: int) -> str:
+            return "today" if left == 0 else "tomorrow" if left == 1 else f"in {left} days"
+
+        goal_left = (date.fromisoformat(goal["deadline"]) - today).days
+        if goal_left >= 0:
+            src = sources.get(goal_marker, "your target date")
+            st.markdown(f'<div class="sp-count">🎯 {html.escape(goal["target"])} {_when(goal_left)}'
+                        f'<div class="sp-src">{html.escape(src)}</div></div>', unsafe_allow_html=True)
+        others = board.next_deadlines(events, today, 3, skip_title=goal_marker)
+        if others:
+            st.markdown("#### Next deadlines")
+        elif goal_left < 0:
             st.caption("No upcoming deadlines.")
-        for title, left in counts:
-            when = "today" if left == 0 else "tomorrow" if left == 1 else f"in {left} days"
-            st.markdown(f'<div class="sp-count">{html.escape(title)} {when}</div>', unsafe_allow_html=True)
+        for title, left in others:
+            src = sources.get(title, "")
+            st.markdown(f'<div class="sp-next"><b>{html.escape(title)}</b><br>{_when(left)}'
+                        + (f'<div class="sp-src">{html.escape(src)}</div>' if src else "") + '</div>',
+                        unsafe_allow_html=True)
         st.markdown("#### This week")
         finished, planned = board.week_progress(events, week, done)
         st.progress(finished / planned if planned else 0.0,
                     text=f"{finished} of {planned} study minutes done")
 
 with tab_grid:
-    grid = [{"title": e["title"], "start": e["start"], "end": e["end"], "id": e["id"],
+    grid = [{"title": e["title"] + (f" ({sources[e['title']]})" if e.get("kind") == "deadline"
+                                    and sources.get(e["title"]) else ""),
+             "start": e["start"], "end": e["end"], "id": e["id"],
              "backgroundColor": board.event_colors(e, courses)[0],
              "borderColor": board.event_colors(e, courses)[1],
              "textColor": "#FFFFFF" if e.get("kind") == "study" else "#1F2937"} for e in events]

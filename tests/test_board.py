@@ -4,7 +4,11 @@ from datetime import date
 from streamlit.testing.v1 import AppTest
 
 from core import board
-from core.contracts import load_mock
+from core.demo import read_file
+
+
+def load_mock(name):
+    return read_file("calculus", name)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,6 +53,7 @@ def _calendar_with_demo():
     at.switch_page("pages/2_Calendar.py")
     at.run()
     at._page_hash = ""  # AppTest otherwise keeps forcing the page chosen by switch_page()
+    at.selectbox(key="demo_pick_calendar").set_value("calculus")
     next(b for b in at.button if b.label == "Load demo data").click()
     at.run()
     assert not at.exception, [e.value for e in at.exception]
@@ -67,7 +72,8 @@ def test_board_renders_cards_for_the_demo_week():
     assert sum('>Work<' in c for c in cards) == sum(e["kind"] == "busy" for e in week) == 2
     assert any("Part-time job" in c for c in cards)
     side = " ".join(m.value for m in at.markdown)
-    assert "Test 1 (your target date)" in side and "days" in side
+    assert "Test 1 in 19 days" in side or ("Test 1 in" in side and "days" in side)
+    assert "your target date" in side  # the goal is labelled as the student's own date
     # week navigation
     next(b for b in at.button if b.key == "week-next").click()
     at.run()

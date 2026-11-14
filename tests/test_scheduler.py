@@ -2,8 +2,8 @@ import json
 from datetime import datetime
 from core.scheduler import schedule_sessions, build_calendar, FMT
 
-plan = json.load(open("mock_data/plan.json"))
-busy = json.load(open("mock_data/schedule.json"))
+plan = json.load(open("mock_data/calculus/plan.json"))
+busy = json.load(open("mock_data/calculus/schedule.json"))
 
 
 def overlaps(a, b):

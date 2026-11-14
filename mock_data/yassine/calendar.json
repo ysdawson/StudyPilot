@@ -1,0 +1,411 @@
+[
+  {
+    "id": "class-1-2026-11-16",
+    "title": "Telecom Techniques II - Lab (243-5E8) 2H.7",
+    "start": "2026-11-16T08:30",
+    "end": "2026-11-16T11:30",
+    "kind": "class"
+  },
+  {
+    "id": "class-2-2026-11-16",
+    "title": "Telecom Techniques II - Lecture (243-5E8) 2P.57",
+    "start": "2026-11-16T11:30",
+    "end": "2026-11-16T13:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-3-2026-11-17",
+    "title": "Network Applications I - Lab (243-5E3) 2H.5",
+    "start": "2026-11-17T10:00",
+    "end": "2026-11-17T13:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-4-2026-11-17",
+    "title": "Cybersecurity - Theory (243-5E6) 2P.04",
+    "start": "2026-11-17T14:00",
+    "end": "2026-11-17T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-5-2026-11-18",
+    "title": "Project Planning (243-5E9) 2P.04",
+    "start": "2026-11-18T08:00",
+    "end": "2026-11-18T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-6-2026-11-18",
+    "title": "Project Planning - Lab (243-5E9) 2H.11",
+    "start": "2026-11-18T12:00",
+    "end": "2026-11-18T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-7-2026-11-19",
+    "title": "Telecom Techniques II - Lecture (243-5E8) 2P.57",
+    "start": "2026-11-19T08:30",
+    "end": "2026-11-19T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-8-2026-11-19",
+    "title": "Cybersecurity - Lab (243-5E6)",
+    "start": "2026-11-19T12:00",
+    "end": "2026-11-19T14:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-9-2026-11-19",
+    "title": "Network Applications I - Lecture (243-5E3) 2P.04",
+    "start": "2026-11-19T14:00",
+    "end": "2026-11-19T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-10-2026-11-20",
+    "title": "Electronic Techniques - Lab (243-5E4) -2H.12",
+    "start": "2026-11-20T11:30",
+    "end": "2026-11-20T15:30",
+    "kind": "class"
+  },
+  {
+    "id": "class-1-2026-11-23",
+    "title": "Telecom Techniques II - Lab (243-5E8) 2H.7",
+    "start": "2026-11-23T08:30",
+    "end": "2026-11-23T11:30",
+    "kind": "class"
+  },
+  {
+    "id": "class-2-2026-11-23",
+    "title": "Telecom Techniques II - Lecture (243-5E8) 2P.57",
+    "start": "2026-11-23T11:30",
+    "end": "2026-11-23T13:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-3-2026-11-24",
+    "title": "Network Applications I - Lab (243-5E3) 2H.5",
+    "start": "2026-11-24T10:00",
+    "end": "2026-11-24T13:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-4-2026-11-24",
+    "title": "Cybersecurity - Theory (243-5E6) 2P.04",
+    "start": "2026-11-24T14:00",
+    "end": "2026-11-24T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-5-2026-11-25",
+    "title": "Project Planning (243-5E9) 2P.04",
+    "start": "2026-11-25T08:00",
+    "end": "2026-11-25T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-6-2026-11-25",
+    "title": "Project Planning - Lab (243-5E9) 2H.11",
+    "start": "2026-11-25T12:00",
+    "end": "2026-11-25T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-7-2026-11-26",
+    "title": "Telecom Techniques II - Lecture (243-5E8) 2P.57",
+    "start": "2026-11-26T08:30",
+    "end": "2026-11-26T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-8-2026-11-26",
+    "title": "Cybersecurity - Lab (243-5E6)",
+    "start": "2026-11-26T12:00",
+    "end": "2026-11-26T14:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-9-2026-11-26",
+    "title": "Network Applications I - Lecture (243-5E3) 2P.04",
+    "start": "2026-11-26T14:00",
+    "end": "2026-11-26T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-10-2026-11-27",
+    "title": "Electronic Techniques - Lab (243-5E4) -2H.12",
+    "start": "2026-11-27T11:30",
+    "end": "2026-11-27T15:30",
+    "kind": "class"
+  },
+  {
+    "id": "class-1-2026-11-30",
+    "title": "Telecom Techniques II - Lab (243-5E8) 2H.7",
+    "start": "2026-11-30T08:30",
+    "end": "2026-11-30T11:30",
+    "kind": "class"
+  },
+  {
+    "id": "class-2-2026-11-30",
+    "title": "Telecom Techniques II - Lecture (243-5E8) 2P.57",
+    "start": "2026-11-30T11:30",
+    "end": "2026-11-30T13:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-3-2026-12-01",
+    "title": "Network Applications I - Lab (243-5E3) 2H.5",
+    "start": "2026-12-01T10:00",
+    "end": "2026-12-01T13:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-4-2026-12-01",
+    "title": "Cybersecurity - Theory (243-5E6) 2P.04",
+    "start": "2026-12-01T14:00",
+    "end": "2026-12-01T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-5-2026-12-02",
+    "title": "Project Planning (243-5E9) 2P.04",
+    "start": "2026-12-02T08:00",
+    "end": "2026-12-02T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-6-2026-12-02",
+    "title": "Project Planning - Lab (243-5E9) 2H.11",
+    "start": "2026-12-02T12:00",
+    "end": "2026-12-02T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-7-2026-12-03",
+    "title": "Telecom Techniques II - Lecture (243-5E8) 2P.57",
+    "start": "2026-12-03T08:30",
+    "end": "2026-12-03T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-8-2026-12-03",
+    "title": "Cybersecurity - Lab (243-5E6)",
+    "start": "2026-12-03T12:00",
+    "end": "2026-12-03T14:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-9-2026-12-03",
+    "title": "Network Applications I - Lecture (243-5E3) 2P.04",
+    "start": "2026-12-03T14:00",
+    "end": "2026-12-03T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "study-s1",
+    "title": "Study: Learn extended ACL syntax",
+    "start": "2026-11-16T13:15",
+    "end": "2026-11-16T13:45",
+    "kind": "study",
+    "session_id": "s1"
+  },
+  {
+    "id": "study-s2",
+    "title": "Study: Learn CDP, LLDP, NTP, SNMP, and Syslog",
+    "start": "2026-11-17T08:00",
+    "end": "2026-11-17T08:30",
+    "kind": "study",
+    "session_id": "s2"
+  },
+  {
+    "id": "study-s3",
+    "title": "Study: Learn ACL incident response workflow",
+    "start": "2026-11-18T10:15",
+    "end": "2026-11-18T10:45",
+    "kind": "study",
+    "session_id": "s3"
+  },
+  {
+    "id": "study-s4",
+    "title": "Study: Practice diagnosing ACL-caused outages",
+    "start": "2026-11-19T10:15",
+    "end": "2026-11-19T10:45",
+    "kind": "study",
+    "session_id": "s4"
+  },
+  {
+    "id": "study-s5",
+    "title": "Study: Learn troubleshooting workflows and layered model",
+    "start": "2026-11-19T11:00",
+    "end": "2026-11-19T11:30",
+    "kind": "study",
+    "session_id": "s5"
+  },
+  {
+    "id": "study-s6",
+    "title": "Study: Practice documenting a troubleshooting result",
+    "start": "2026-11-20T08:00",
+    "end": "2026-11-20T08:30",
+    "kind": "study",
+    "session_id": "s6"
+  },
+  {
+    "id": "study-s7",
+    "title": "Study: Learn automation concepts and data formats",
+    "start": "2026-11-20T08:45",
+    "end": "2026-11-20T09:15",
+    "kind": "study",
+    "session_id": "s7"
+  },
+  {
+    "id": "study-s8",
+    "title": "Study: Learn REST methods and authentication",
+    "start": "2026-11-21T08:00",
+    "end": "2026-11-21T08:30",
+    "kind": "study",
+    "session_id": "s8"
+  },
+  {
+    "id": "study-s9",
+    "title": "Study: Practice Postman requests and collections",
+    "start": "2026-11-21T08:45",
+    "end": "2026-11-21T09:15",
+    "kind": "study",
+    "session_id": "s9"
+  },
+  {
+    "id": "study-s10",
+    "title": "Study: Learn API-based diagnostics for support",
+    "start": "2026-11-22T08:00",
+    "end": "2026-11-22T08:30",
+    "kind": "study",
+    "session_id": "s10"
+  },
+  {
+    "id": "study-s11",
+    "title": "Study: Practice verifying configurations with APIs",
+    "start": "2026-11-22T08:45",
+    "end": "2026-11-22T09:15",
+    "kind": "study",
+    "session_id": "s11"
+  },
+  {
+    "id": "study-s12",
+    "title": "Study: Learn VoIP fundamentals and call flows",
+    "start": "2026-11-23T13:15",
+    "end": "2026-11-23T13:45",
+    "kind": "study",
+    "session_id": "s12"
+  },
+  {
+    "id": "study-s13",
+    "title": "Study: Learn CUCM architecture and endpoints",
+    "start": "2026-11-23T14:00",
+    "end": "2026-11-23T14:30",
+    "kind": "study",
+    "session_id": "s13"
+  },
+  {
+    "id": "study-s14",
+    "title": "Study: Practice partitions and calling search spaces",
+    "start": "2026-11-24T08:00",
+    "end": "2026-11-24T08:30",
+    "kind": "study",
+    "session_id": "s14"
+  },
+  {
+    "id": "study-s15",
+    "title": "Study: Learn VoIP maintenance and troubleshooting",
+    "start": "2026-11-24T08:45",
+    "end": "2026-11-24T09:15",
+    "kind": "study",
+    "session_id": "s15"
+  },
+  {
+    "id": "study-s16",
+    "title": "Study: Practice diagnosing VoIP service faults",
+    "start": "2026-11-25T10:15",
+    "end": "2026-11-25T10:45",
+    "kind": "study",
+    "session_id": "s16"
+  },
+  {
+    "id": "study-s17",
+    "title": "Study: Review VoIP and CUCM across all topics",
+    "start": "2026-11-25T11:00",
+    "end": "2026-11-25T11:30",
+    "kind": "study",
+    "session_id": "s17"
+  },
+  {
+    "id": "deadline-1",
+    "title": "Cybersecurity (243-5E6): Homework 3: Web recon",
+    "start": "2026-11-19T08:00",
+    "end": "2026-11-19T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-2",
+    "title": "Project Planning (243-5E9): Final Contract Presentation",
+    "start": "2026-11-25T08:00",
+    "end": "2026-11-25T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-3",
+    "title": "Cybersecurity (243-5E6): Homework 4: Web tracking",
+    "start": "2026-11-26T08:00",
+    "end": "2026-11-26T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-4",
+    "title": "Cybersecurity (243-5E6): Risk Assessment Report",
+    "start": "2026-11-26T08:00",
+    "end": "2026-11-26T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-5",
+    "title": "Network Applications I (243-5E3): Class Test 4",
+    "start": "2026-11-26T08:00",
+    "end": "2026-11-26T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-6",
+    "title": "Electronic Techniques (243-5E4): Final Lab Exam",
+    "start": "2026-11-27T08:00",
+    "end": "2026-11-27T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-7",
+    "title": "Humanities (345-FXH): Essai final",
+    "start": "2026-11-27T08:00",
+    "end": "2026-11-27T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-8",
+    "title": "Telecom Techniques II (243-5E8): Lab Exam",
+    "start": "2026-11-30T08:00",
+    "end": "2026-11-30T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-9",
+    "title": "Network Applications I (243-5E3): Major Assessment #4: VoIP Maintenance & Troubleshooting",
+    "start": "2026-12-01T08:00",
+    "end": "2026-12-01T09:00",
+    "kind": "deadline"
+  },
+  {
+    "id": "deadline-10",
+    "title": "Cybersecurity (243-5E6): Practical Lab Exam (Lab test)",
+    "start": "2026-12-03T08:00",
+    "end": "2026-12-03T09:00",
+    "kind": "deadline"
+  }
+]

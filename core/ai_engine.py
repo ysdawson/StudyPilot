@@ -6,7 +6,7 @@ import json
 import fitz  # pymupdf
 import streamlit as st
 
-from core import contracts
+from core import contracts, demo
 from core.llm import call_claude_json
 from core.prompts import PLAN, REPLAN, SESSION, TIMETABLE, TOPICS
 
@@ -148,7 +148,7 @@ def extract_text(pdf_bytes: bytes) -> str:
 def extract_topics(doc_text: str) -> dict:
     """Extract and defensively normalize course topics and deadlines."""
     if contracts.mock_mode(st):
-        return contracts.load_mock("topics.json")
+        return demo.load_mock(st, "topics.json")
 
     result = _as_dict(call_claude_json(TOPICS, doc_text[:MAX_DOC_CHARS]))
     topics = _valid_topics(result.get("topics"))
@@ -170,7 +170,7 @@ def make_plan(topics: dict, goal: dict) -> dict:
     topics = _as_dict(topics)
     goal = _as_dict(goal)
     if contracts.mock_mode(st):
-        plan = _as_dict(contracts.load_mock("plan.json"))
+        plan = _as_dict(demo.load_mock(st, "plan.json"))
         plan["goal"] = goal
         return plan
 
@@ -192,14 +192,12 @@ def make_plan(topics: dict, goal: dict) -> dict:
 def _mock_session_file(session: dict) -> str:
     """Mock content for this session: session_<id>.json if saved, else a saved
     session on the same topic (e.g. a chain-rule review), else session_s1.json."""
-    import os
-    files = sorted(f for f in os.listdir(contracts.MOCK_DIR)
-                   if f.startswith("session_") and f.endswith(".json"))
+    files = demo.session_files(st)
     own = f"session_{session.get('id')}.json"
     if own in files:
         return own
     for name in files:
-        questions = _as_dict(contracts.load_mock(name)).get("questions") or []
+        questions = _as_dict(demo.load_mock(st, name)).get("questions") or []
         topic_ids = [q.get("topic_id") for q in questions if isinstance(q, dict)]
         if topic_ids and max(set(topic_ids), key=topic_ids.count) == session.get("topic_id"):
             return name
@@ -212,7 +210,7 @@ def make_session(session: dict, topics: dict, doc_text: str) -> dict:
     topics = _as_dict(topics)
     session_id = str(session.get("id", "s1"))
     if contracts.mock_mode(st):
-        content = _as_dict(contracts.load_mock(_mock_session_file(session)))
+        content = _as_dict(demo.load_mock(st, _mock_session_file(session)))
         content["session_id"] = session_id
         content["questions"] = _valid_questions(content.get("questions"), session_id)
         return content
@@ -306,7 +304,7 @@ def parse_timetable_image(
 ) -> list:
     """Extract and normalize class events from a timetable image."""
     if contracts.mock_mode(st):
-        return contracts.load_mock("schedule.json")
+        return demo.load_mock(st, "schedule.json")
 
     content = [
         {
