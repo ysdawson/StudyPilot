@@ -19,7 +19,7 @@ DATA_SOURCE_KEY = "data_source"     # "demo" (Load demo data) | "user" (Analyze 
 
 _APP_KEYS = (K_DOC_TEXT, K_TOPICS, K_GOAL, K_PLAN, K_CONTENT, K_SCHEDULE,
              K_CALENDAR, K_RESULTS, K_CURRENT, DEADLINES_KEY, DATA_SOURCE_KEY)
-_WIDGET_KEYS = ("schedule_rows", "schedule_editor", "board_week")
+_WIDGET_KEYS = ("schedule_rows", "schedule_editor", "board_week", "study_prefs")
 
 
 def selected_dataset(st) -> str:

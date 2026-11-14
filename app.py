@@ -4,7 +4,8 @@ import streamlit as st
 from core.contracts import *
 from core.ai_engine import extract_text, extract_topics, make_plan
 from core.scheduler import schedule_sessions, build_calendar, all_deadlines, calendar_end
-from core.schedule_input import schedule_input_ui, deadlines_input_ui, goal_options
+from core.schedule_input import (schedule_input_ui, deadlines_input_ui, goal_options, study_prefs_ui,
+                                 schedule_kwargs, STUDY_PREFS_KEY)
 from core.demo import load_demo_data, demo_picker, DATA_SOURCE_KEY, DEADLINES_KEY
 from core.ai_engine import AIConfigError
 from core.llm import api_key_configured
@@ -59,6 +60,7 @@ st.caption("Classes and commitments repeat every week. Study sessions will be pl
 # must not become the student's timetable (or a calendar) on their own.
 schedule = schedule_input_ui(next_monday.isoformat())
 course_deadlines = deadlines_input_ui()
+study_prefs = study_prefs_ui()
 
 # Step 3: goal + generate
 st.header("3. Your goal")
@@ -92,7 +94,8 @@ if go:
     try:
         with st.spinner("Building your study plan..."):
             plan = make_plan(topics, goal)
-        study = schedule_sessions(plan, schedule)
+        st.session_state[STUDY_PREFS_KEY] = study_prefs
+        study = schedule_sessions(plan, schedule, **schedule_kwargs(study_prefs))
         st.session_state[K_SCHEDULE] = schedule
         st.session_state[K_GOAL] = goal
         st.session_state[K_PLAN] = plan

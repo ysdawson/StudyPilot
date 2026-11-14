@@ -58,3 +58,13 @@ Demo data is loaded ONLY by a "Load demo data" button (Home sidebar + the pages 
 ## Timeline
 0:20-2:30 build on mocks | 2:30 checkpoint + integrate | 3:30 FEATURE FREEZE | 3:30-4:15 test/fix | 4:15 record backup demo video | 4:30-5:00 rehearse.
 Run the full demo once with the demo model before presenting so every AI result is cached (instant, free live demo). Don't delete cache/.
+
+## Other session_state keys (not in contracts.py)
+- "data_source": "demo" | "user" (see Hard rules). "course_deadlines": Home deadlines CSV. "study_prefs": Home "Days I can study" + study window {"days": [0..6], "start", "end"}, passed to schedule_sessions(study_days=, day_start=, day_end=) by Generate and Update plan. "demo_dataset": selected demo.
+- extract_topics may return an extra optional "assessments" list (titles only, no dates) used for Home's "What are you studying for?". Deadline dates are only prefilled from the documents/CSV, never invented.
+
+## Roadmap (NOT NOW)
+- Multiple courses/projects, each with its own documents, plan, calendar and quizzes.
+- Hours per week scaling the plan in demo mode (take/extend sessions from the dataset plan); verify real make_plan scales with hours_per_week x weeks left.
+- Sidebar label "app" -> "Home": st.navigation needs pages/ renamed (Streamlit 1.67 keeps MPA v1 while pages/ exists); CSS relabel was unreliable.
+- Calendar: tests/deadlines replacing the class card on days that course meets.

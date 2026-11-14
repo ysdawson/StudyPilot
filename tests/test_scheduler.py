@@ -45,3 +45,17 @@ def test_sessions_spread_until_deadline_not_crammed():
     span = (datetime.fromisoformat(plan["goal"]["deadline"]) - datetime.fromisoformat(plan["goal"]["start_date"])).days
     # uses most of the available days instead of filling the first ones to the daily cap
     assert len(days) >= min(len(ev), span) * 0.8
+
+
+def test_study_days_and_window_are_respected():
+    days = {0, 2, 4}  # Mon, Wed, Fri
+    ev = schedule_sessions(plan, busy, study_days=days, day_start="17:00", day_end="22:00")
+    assert ev
+    for e in ev:
+        start, end = datetime.strptime(e["start"], FMT), datetime.strptime(e["end"], FMT)
+        assert start.weekday() in days
+        assert start.strftime("%H:%M") >= "17:00" and end.strftime("%H:%M") <= "22:00"
+
+
+def test_default_study_days_unchanged():
+    assert schedule_sessions(plan, busy) == schedule_sessions(plan, busy, study_days=None)

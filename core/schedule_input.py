@@ -187,3 +187,27 @@ def goal_options(topics: dict, course_deadlines: list[dict]) -> list[tuple[str, 
         add(f"Topic: {t['name']}", t["name"], None)
     opts.append(("Other (type it)", "", None))
     return opts
+
+
+STUDY_PREFS_KEY = "study_prefs"  # owned by Home: {"days": [0..6], "start": "HH:MM", "end": "HH:MM"}
+
+
+def study_prefs_ui() -> dict:
+    """Days I can study + study window. Stored for Generate and 'Update plan'."""
+    from datetime import time as dtime
+    st.subheader("When can you study?")
+    prev = st.session_state.get(STUDY_PREFS_KEY, {"days": [0, 1, 2, 3, 4], "start": "17:00", "end": "22:00"})
+    days = st.multiselect("Days I can study", DAYS, default=[DAYS[i] for i in prev["days"]], key="study_days")
+    c1, c2 = st.columns(2)
+    start = c1.time_input("Study window from", dtime.fromisoformat(prev["start"]), key="study_start", step=900)
+    end = c2.time_input("to", dtime.fromisoformat(prev["end"]), key="study_end", step=900)
+    if end <= start:
+        st.warning("The study window must end after it starts.")
+    return {"days": [DAYS.index(d) for d in days], "start": start.strftime("%H:%M"), "end": end.strftime("%H:%M")}
+
+
+def schedule_kwargs(prefs: dict | None) -> dict:
+    """Extra schedule_sessions arguments for the saved study preferences (none = defaults)."""
+    if not prefs:
+        return {}
+    return {"study_days": set(prefs["days"]), "day_start": prefs["start"], "day_end": prefs["end"]}
