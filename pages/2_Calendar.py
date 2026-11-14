@@ -94,9 +94,12 @@ def card_html(e: dict) -> str:
 
 
 st.title("Your week")
-tab_board, tab_grid = st.tabs(["🗂️ Week board", "🕒 Time grid"])
+# A view switch instead of st.tabs: the time grid (FullCalendar) drawn inside a hidden
+# tab gets zero width and stays blank, so only the chosen view is drawn.
+VIEWS = ["🗂️ Week board", "🕒 Time grid"]
+view = st.radio("View", VIEWS, horizontal=True, key="cal_view", label_visibility="collapsed")
 
-with tab_board:
+if view == VIEWS[0]:
     week = ss[WEEK_KEY]
     nav = st.columns([1, 1, 1.4, 5])
     nav[0].button("←", key="week-prev", on_click=_shift_week, args=(-7,), help="Previous week")
@@ -159,20 +162,27 @@ with tab_board:
         st.progress(finished / planned if planned else 0.0,
                     text=f"{finished} of {planned} study minutes done")
 
-with tab_grid:
+else:
     grid = [{"title": e["title"] + (f" ({sources[e['title']]})" if e.get("kind") == "deadline"
                                     and sources.get(e["title"]) else ""),
              "start": e["start"], "end": e["end"], "id": e["id"],
              "backgroundColor": board.event_colors(e, courses)[0],
              "borderColor": board.event_colors(e, courses)[1],
-             "textColor": "#FFFFFF" if e.get("kind") == "study" else "#1F2937"} for e in events]
+             "textColor": "#FFFFFF" if e.get("kind") == "study" else "#1F2937",
+             "extendedProps": {"session_id": e.get("session_id", "")}} for e in events]
     try:
         from streamlit_calendar import calendar
-        calendar(events=grid, options={
+        state = calendar(events=grid, options={
             "initialView": "timeGridWeek", "initialDate": plan["goal"]["start_date"],
             "slotMinTime": "08:00:00", "slotMaxTime": "22:00:00", "allDaySlot": False, "height": 700,
             "headerToolbar": {"left": "prev,next today", "center": "title", "right": "timeGridWeek,dayGridMonth"},
-        }, key="cal")
+        }, callbacks=["eventClick"], key="cal")
+        clicked = (state or {}).get("eventClick", {}).get("event", {})
+        sid = (clicked.get("extendedProps") or {}).get("session_id") or ""
+        if sid in sessions and ss.get("grid_click_handled") != clicked.get("id"):
+            ss["grid_click_handled"] = clicked.get("id")  # the component keeps its last click
+            _open(sid)
+        st.caption("Click a study session (indigo) to open it.")
     except ImportError:
         st.warning("Install streamlit-calendar for the time grid. Showing a list instead.")
         st.dataframe(grid, width="stretch")

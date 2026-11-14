@@ -90,3 +90,13 @@ def test_study_card_open_goes_to_session():
     assert at.session_state["current_session_id"] == sid
     plan_titles = {s["id"]: s["title"] for s in at.session_state["plan"]["sessions"]}
     assert [t.value for t in at.title] == [plan_titles[sid]]  # Session page title
+
+
+def test_time_grid_view_renders_the_calendar_component():
+    at = _calendar_with_demo()
+    at.radio(key="cal_view").set_value("🕒 Time grid")
+    at.run()
+    assert not at.exception
+    assert not [m for m in at.markdown if 'class="sp-card' in m.value]  # board not drawn
+    assert any(getattr(c, "type", "") == "component_instance" or "component" in type(c).__name__.lower()
+               for c in at.main)
