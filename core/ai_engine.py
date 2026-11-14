@@ -179,6 +179,8 @@ def extract_topics(doc_text: str) -> dict:
         "course": str(result.get("course", "") or "My course"),
         "topics": topics,
         "deadlines": _valid_deadlines(result.get("deadlines")),
+        # extra optional key (titles only, no dates) for Home's "What are you studying for?"
+        "assessments": [str(a) for a in (result.get("assessments") or []) if str(a).strip()][:20],
     }
 
 

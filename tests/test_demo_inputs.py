@@ -69,10 +69,21 @@ def test_home_generate_with_no_deadlines_uses_other_and_manual_date():
     at.session_state["data_source"] = "demo"  # mock plan; a user's own topics would use the real AI
     at.session_state["schedule_rows"] = pd.DataFrame(parse_timetable_csv(
         open(os.path.join(ROOT, "sample_data", "calculus", "Weekly_Timetable.csv"), encoding="utf-8").read()))
+    topics["assessments"] = ["Test 1"]
     at.run()
     assert not at.exception
-    assert at.selectbox[0].options == ["Other"]
-    next(t for t in at.text_input if t.label.startswith("If other")).input("Test 1")
+    goal_box = at.selectbox(key="goal_choice")
+    assert goal_box.options[0] == "Test 1 (no date in the documents)"      # assessment, no date
+    assert "Topic: Chain rule" in goal_box.options                          # main topics
+    assert goal_box.options[-1] == "Other (type it)"
+    assert at.date_input[0].value is None                                   # never an invented date
+    next(b for b in at.button if "Generate" in b.label).click()
+    at.run()
+    assert [e.value for e in at.error] == ["Pick your deadline date first: it wasn't found in the documents."]
+    assert "plan" not in at.session_state
+    at.selectbox(key="goal_choice").set_value("Other (type it)")
+    at.run()
+    at.text_input(key="goal_other").input("Test 1")
     day = datetime.date.today() + datetime.timedelta(days=17)
     at.date_input[0].set_value(day)
     next(b for b in at.button if "Generate" in b.label).click()
@@ -106,3 +117,16 @@ def test_mock_replan_reviews_the_weakest_topic():
     assert not at.exception
     new, weakest = at.session_state["out"]
     assert new["kind"] == "review" and new["topic_id"] == weakest
+
+
+def test_goal_options_keep_known_dates_and_never_invent_one():
+    from core.schedule_input import goal_options
+    topics = {"deadlines": [{"title": "Midterm", "date": "2026-12-01"}], "assessments": ["Midterm", "Quiz 2"],
+              "topics": [{"id": "t1", "name": "Limits"}]}
+    course = [{"course": "Net I", "title": "Class Test 4", "date": "2026-11-26", "source": "day estimated"}]
+    opts = goal_options(topics, course)
+    assert opts == [("Midterm — 2026-12-01", "Midterm", "2026-12-01"),
+                    ("Net I: Class Test 4 — 2026-11-26 (estimated)", "Class Test 4", "2026-11-26"),
+                    ("Quiz 2 (no date in the documents)", "Quiz 2", None),
+                    ("Topic: Limits", "Limits", None),
+                    ("Other (type it)", "", None)]

@@ -161,3 +161,29 @@ def deadlines_input_ui() -> list[dict]:
         st.caption("Dates marked as estimated in Source are not official. Deadlines are markers: "
                    "they never block study time.")
     return rows
+
+
+def goal_options(topics: dict, course_deadlines: list[dict]) -> list[tuple[str, str, str | None]]:
+    """Choices for "What are you studying for?": (label, target title, date or None).
+    Dated items keep the date from the documents / deadlines CSV; assessments and
+    topics found without a date have None (the student picks the date). Never invents one."""
+    opts: list[tuple[str, str, str | None]] = []
+    seen: set[str] = set()
+
+    def add(label: str, title: str, day: str | None) -> None:
+        if title and title.lower() not in seen:
+            seen.add(title.lower())
+            opts.append((label, title, day))
+
+    for d in topics.get("deadlines", []):
+        add(f"{d['title']} — {d['date']}", d["title"], d["date"])
+    for d in course_deadlines:
+        est = " (estimated)" if "estimat" in d.get("source", "").lower() else ""
+        add(f"{d['course']}: {d['title']} — {d['date']}{est}" if d.get("course") else d["title"],
+            d["title"], d["date"])
+    for a in topics.get("assessments", []):
+        add(f"{a} (no date in the documents)", str(a), None)
+    for t in topics.get("topics", []):
+        add(f"Topic: {t['name']}", t["name"], None)
+    opts.append(("Other (type it)", "", None))
+    return opts

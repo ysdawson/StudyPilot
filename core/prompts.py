@@ -12,7 +12,8 @@ Return exactly this JSON shape:
     {"id": "t2", "name": "Kirchhoff's laws", "weight": 0.6,
      "summary": "Current and voltage laws for analysing whole circuits."}
   ],
-  "deadlines": []
+  "deadlines": [],
+  "assessments": ["Midterm", "Lab report 3"]
 }
 
 Hard rules:
@@ -28,6 +29,9 @@ Hard rules:
   "date": "YYYY-MM-DD"}. If no such date is written in the text, return
   "deadlines": []. Never invent, guess or estimate a date, and never infer one
   from lecture numbers, weeks or the current date.
+- assessments: the names of tests, exams, quizzes, projects and reports the text
+  mentions (e.g. "Class Test 4", "Final exam"), with or without a date. Names
+  only, never a date. Empty list if none.
 - Topics are subject matter only. Ignore course administration: grading,
   penalties, attendance, policies, contact details, office hours, textbooks.
 - If the text is a course outline (a week-by-week schedule rather than lecture

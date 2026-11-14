@@ -4,8 +4,8 @@ import streamlit as st
 from core.contracts import *
 from core.ai_engine import extract_text, extract_topics, make_plan
 from core.scheduler import schedule_sessions, build_calendar, all_deadlines, calendar_end
-from core.schedule_input import schedule_input_ui, deadlines_input_ui
-from core.demo import load_demo_data, demo_picker, DATA_SOURCE_KEY
+from core.schedule_input import schedule_input_ui, deadlines_input_ui, goal_options
+from core.demo import load_demo_data, demo_picker, DATA_SOURCE_KEY, DEADLINES_KEY
 from core.ai_engine import AIConfigError
 from core.llm import api_key_configured
 
@@ -67,20 +67,27 @@ if not topics:
     st.stop()
 
 deadlines = topics["deadlines"]
-with st.form("goal_form"):  # not "goal": that is K_GOAL
-    course = st.text_input("Course", topics["course"])
-    options = [f"{d['title']} ({d['date']})" for d in deadlines] + ["Other"]
-    choice = st.selectbox("What are you studying for?", options)
-    other = st.text_input("If other, what?", "")
-    default_deadline = date.fromisoformat(deadlines[options.index(choice)]["date"]) if choice != "Other" else today + timedelta(days=14)
-    deadline = st.date_input("Deadline", default_deadline, min_value=today + timedelta(days=1))
-    hours = st.slider("Hours per week you can study", 2, 20, 6)
-    grade = st.radio("Target", ["Pass", "B", "A"], index=2, horizontal=True)
-    go = st.form_submit_button("Generate my plan", type="primary")
+course = st.text_input("Course", topics["course"], key="goal_course")
+goal_opts = goal_options(topics, st.session_state.get(DEADLINES_KEY, []))
+labels = [o[0] for o in goal_opts]
+choice = st.selectbox("What are you studying for?", labels, key="goal_choice")
+_, chosen_title, chosen_day = goal_opts[labels.index(choice)]
+other = st.text_input("Type what you are studying for", key="goal_other") if not chosen_title else ""
+known = date.fromisoformat(chosen_day) if chosen_day else None
+deadline = st.date_input(
+    "Deadline" + ("" if known and known > today else " — pick the date yourself (not found in the documents)"),
+    value=known if known and known > today else None, min_value=today + timedelta(days=1),
+    key=f"goal_date_{labels.index(choice)}")  # new key per choice: shows that choice's date
+hours = st.slider("Hours per week you can study", 2, 20, 6)
+grade = st.radio("Target", ["Pass", "B", "A"], index=2, horizontal=True)
+go = st.button("Generate my plan", type="primary")
 
+if go and deadline is None:
+    st.error("Pick your deadline date first: it wasn't found in the documents.")
+    go = False
 if go:
-    target = other.strip() if choice == "Other" else deadlines[options.index(choice)]["title"]
-    goal: Goal = {"course": course, "target": target or "Exam", "deadline": deadline.isoformat(),
+    target = (other.strip() or "Exam") if not chosen_title else chosen_title
+    goal: Goal = {"course": course, "target": target, "deadline": deadline.isoformat(),
                   "start_date": today.isoformat(), "hours_per_week": float(hours), "target_grade": grade}
     try:
         with st.spinner("Building your study plan..."):
