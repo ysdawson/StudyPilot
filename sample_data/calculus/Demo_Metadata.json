@@ -1,0 +1,18 @@
+{
+  "course": "Calculus I",
+  "course_code": "201-NYA-05",
+  "semester": "Fall 2026 (fictional demo schedule)",
+  "assessment": "Test 1",
+  "assessment_date": null,
+  "lecture_files": [
+    "Lecture1.pdf",
+    "Lecture2.pdf",
+    "Lecture3-4.pdf",
+    "Lecture5.pdf",
+    "Lecture6.pdf",
+    "Lecture7.pdf",
+    "Lecture8.pdf",
+    "Lecture9.pdf"
+  ],
+  "notes": "Course schedule and study times supplied or agreed in chat; test date unspecified. No app-specific data contract assumed."
+}
