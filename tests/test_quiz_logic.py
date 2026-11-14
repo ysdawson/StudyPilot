@@ -68,6 +68,9 @@ def test_session_page_full_flow():
     at.secrets["MOCK_AI"] = "1"
     at.run()
     assert not at.exception
+    next(b for b in at.button if b.label == "Load demo data").click()  # no auto-load any more
+    at.run()
+    assert not at.exception
     at.radio(key=f"ans_{m1['id']}").set_value(m1["answer"])
     at.radio(key=f"ans_{m2['id']}").set_value(m2["answer"])
     at.text_area(key=f"ans_{s1['id']}").input(s1["answer"])

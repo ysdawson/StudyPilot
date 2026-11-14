@@ -5,19 +5,16 @@ from core.contracts import *
 from core.ai_engine import extract_text, extract_topics, make_plan
 from core.scheduler import schedule_sessions, build_calendar, with_goal_deadline
 from core.schedule_input import schedule_input_ui
+from core.demo import load_demo_data
 
 st.set_page_config(page_title="StudyPilot", layout="wide")
 st.title("StudyPilot")
 st.write("Upload your course material and schedule. Get a tailored study plan with guides and practice questions, placed in your week.")
-st.caption("Mock mode ON: demo data, no API spend" if mock_mode(st) else "Live mode: real Claude API")
+st.caption("Mock AI ON: AI steps return sample results, no API spend" if mock_mode(st)
+           else "Live mode: real Claude API")
 
 if st.sidebar.button("Load demo data"):
-    # The schedule editor below already wrote its example rows to K_SCHEDULE, and
-    # load_mock_state only fills missing keys, so force the demo timetable.
-    st.session_state[K_SCHEDULE] = load_mock("schedule.json")
-    for k in ("schedule_rows", "schedule_editor"):  # editor rebuilds from K_SCHEDULE
-        st.session_state.pop(k, None)
-    load_mock_state(st)
+    load_demo_data(st)
     st.switch_page("pages/1_Plan.py")
 
 today = date.today()
@@ -51,7 +48,9 @@ if topics:
 # Step 2: schedule
 st.header("2. Your weekly schedule")
 st.caption("Classes and commitments repeat every week. Study sessions will be placed around them.")
-st.session_state[K_SCHEDULE] = schedule_input_ui(next_monday.isoformat())
+# Only saved to K_SCHEDULE when a plan is generated: the editor's example rows
+# must not become the student's timetable (or a calendar) on their own.
+schedule = schedule_input_ui(next_monday.isoformat())
 
 # Step 3: goal + generate
 st.header("3. Your goal")
@@ -78,13 +77,15 @@ if go:
     try:
         with st.spinner("Building your study plan..."):
             plan = make_plan(topics, goal)
-        study = schedule_sessions(plan, st.session_state[K_SCHEDULE])
+        study = schedule_sessions(plan, schedule)
+        st.session_state[K_SCHEDULE] = schedule
         st.session_state[K_GOAL] = goal
         st.session_state[K_PLAN] = plan
-        st.session_state[K_CALENDAR] = build_calendar(st.session_state[K_SCHEDULE], study, with_goal_deadline(deadlines, goal),
+        st.session_state[K_CALENDAR] = build_calendar(schedule, study, with_goal_deadline(deadlines, goal),
                                                       goal["start_date"], goal["deadline"])
-        st.session_state.setdefault(K_CONTENT, {})
-        st.session_state.setdefault(K_RESULTS, {})
+        # New plan: session ids restart at s1, so drop guides/results of any old plan.
+        st.session_state[K_CONTENT] = {}
+        st.session_state[K_RESULTS] = {}
         st.session_state[K_CURRENT] = plan["sessions"][0]["id"]
         if len(study) < len(plan["sessions"]):
             st.warning(f"Only {len(study)} of {len(plan['sessions'])} sessions fit before the deadline.")

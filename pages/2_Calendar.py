@@ -1,12 +1,17 @@
 """OWNER: Member 2. Calendar page."""
 import streamlit as st
 from core.contracts import *
+from core.demo import load_demo_data
 
 if K_PLAN not in st.session_state:
-    if mock_mode(st):
-        load_mock_state(st)
-    else:
-        st.info("Start on the Home page"); st.stop()
+    st.info("No study plan yet. Generate one on the Home page, or load the demo.")
+    c1, c2 = st.columns(2)
+    if c1.button("Go to Home"):
+        st.switch_page("app.py")
+    if c2.button("Load demo data"):
+        load_demo_data(st)
+        st.rerun()
+    st.stop()
 
 COLORS = {"class": "#9aa0a6", "busy": "#9aa0a6", "study": "#1a73e8", "deadline": "#d93025"}
 events = [{"title": e["title"], "start": e["start"], "end": e["end"],

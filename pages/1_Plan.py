@@ -1,14 +1,19 @@
 """OWNER: Member 2. Plan page."""
 import streamlit as st
 from core.contracts import *
+from core.demo import load_demo_data
 from core.ai_engine import replan
 from core.scheduler import schedule_sessions, build_calendar, with_goal_deadline
 
 if K_PLAN not in st.session_state:
-    if mock_mode(st):
-        load_mock_state(st)
-    else:
-        st.info("Start on the Home page"); st.stop()
+    st.info("No study plan yet. Generate one on the Home page, or load the demo.")
+    c1, c2 = st.columns(2)
+    if c1.button("Go to Home"):
+        st.switch_page("app.py")
+    if c2.button("Load demo data"):
+        load_demo_data(st)
+        st.rerun()
+    st.stop()
 
 ss = st.session_state
 plan, topics = ss[K_PLAN], ss[K_TOPICS]
