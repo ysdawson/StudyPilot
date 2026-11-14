@@ -81,7 +81,7 @@ deadline = st.date_input(
     value=known if known and known > today else None, min_value=today + timedelta(days=1),
     key=f"goal_date_{labels.index(choice)}")  # new key per choice: shows that choice's date
 hours = st.slider("Hours per week you can study", 2, 20, 6)
-grade = st.radio("Target", ["Pass", "B", "A"], index=2, horizontal=True)
+grade = "A"  # target grade is no longer asked; Goal.target_grade keeps a fixed default
 go = st.button("Generate my plan", type="primary")
 
 if go and deadline is None:

@@ -25,7 +25,7 @@ when = {e.get("session_id"): e for e in ss.get(K_CALENDAR, []) if e["kind"] == "
 
 st.title("Your study plan")
 st.write(f"**{goal['course']}**: {goal['target']} on **{goal['deadline']}** · "
-         f"{goal['hours_per_week']:g} h/week · target {goal['target_grade']}")
+         f"{goal['hours_per_week']:g} h/week")
 done = sum(1 for s in plan["sessions"] if s["id"] in results)
 st.progress(done / max(len(plan["sessions"]), 1), text=f"{done} of {len(plan['sessions'])} sessions done")
 
