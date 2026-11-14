@@ -89,7 +89,7 @@
         "Neither, because the call is blocked"
       ],
       "answer": "9.1514XXXXXXX",
-      "explanation": "CUCM selects the most specific (longest) match, so the more specific pattern 9.1514XXXXXXX wins over the wildcard 9.@ (Outline week 14: Dial plans).",
+      "explanation": "CUCM uses closest-match routing: it picks the pattern that matches the fewest possible digit strings. 9.1514XXXXXXX matches far fewer numbers than 9.@, so it wins (Outline week 14: Dial plans).",
       "topic_id": "t9",
       "session_id": "s13"
     },
