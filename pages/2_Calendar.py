@@ -21,7 +21,8 @@ if K_PLAN not in st.session_state:
 
 ss = st.session_state
 plan = ss[K_PLAN]
-events = ss.get(K_CALENDAR, [])
+tasks = ss.setdefault(board.TASKS_KEY, [])
+events = ss.get(K_CALENDAR, []) + board.task_events(tasks)  # own tasks drawn on top
 done = set(ss.get(K_RESULTS, {}))
 sessions = {s["id"]: s for s in plan["sessions"]}
 topic_name = {t["id"]: t["name"] for t in ss.get(K_TOPICS, {}).get("topics", [])}
@@ -90,10 +91,32 @@ def card_html(e: dict) -> str:
     cls = "sp-card sp-study" if kind == "study" else "sp-card"
     return (f'<div class="{cls}" style="background:{bg};border-left-color:{accent}">'
             f'<span class="sp-time">{time}</span><b>{html.escape(title)}</b>{extra}'
-            f'<span class="sp-tag">{board.TAGS.get(kind, kind.title())}</span></div>')
+            f'<span class="sp-tag">{board.tag(e)}</span></div>')
 
 
 st.title("Your week")
+with st.expander("➕ Add my own task"):
+    with st.form("add_task", clear_on_submit=True):
+        t_title = st.text_input("Title")
+        c1, c2, c3 = st.columns(3)
+        t_date = c1.date_input("Date", value=date.fromisoformat(plan["goal"]["start_date"]))
+        t_from = c2.text_input("From (HH:MM)", "18:00")
+        t_to = c3.text_input("To (HH:MM)", "19:00")
+        t_blocks = st.checkbox("Blocks study time?", value=True)
+        if st.form_submit_button("Add task"):
+            from core.schedule_input import _valid_hm
+            f, t = t_from.strip().zfill(5), t_to.strip().zfill(5)
+            if not t_title.strip():
+                st.warning("Give the task a title.")
+            elif not (_valid_hm(f) and _valid_hm(t)) or f >= t:
+                st.warning("'From' must be before 'To' (HH:MM).")
+            else:
+                n = max([int(x["id"][5:]) for x in tasks] + [0]) + 1
+                tasks.append({"id": f"task-{n}", "title": t_title.strip(), "date": t_date.isoformat(),
+                              "start": f, "end": t, "blocks": t_blocks})
+                st.rerun()
+    if tasks:
+        st.caption("Blocking tasks are avoided by Generate and 'Update plan from my quiz results'.")
 # A view switch instead of st.tabs: the time grid (FullCalendar) drawn inside a hidden
 # tab gets zero width and stays blank, so only the chosen view is drawn.
 VIEWS = ["🗂️ Week board", "🕒 Time grid"]
@@ -119,6 +142,9 @@ if view == VIEWS[0]:
                     st.markdown('<div class="sp-empty">Free</div>', unsafe_allow_html=True)
                 for e in day_events:
                     st.markdown(card_html(e), unsafe_allow_html=True)
+                    if board.is_task(e) and st.button("Remove", key=f"rm-{e['id']}", width="stretch"):
+                        ss[board.TASKS_KEY] = [x for x in tasks if x["id"] != e["id"]]
+                        st.rerun()
                     sid = e.get("session_id")
                     if e.get("kind") == "study" and sid in sessions:
                         if st.button("Open", key=f"board-open-{e['id']}", width="stretch",

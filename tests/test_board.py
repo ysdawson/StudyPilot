@@ -100,3 +100,59 @@ def test_time_grid_view_renders_the_calendar_component():
     assert not [m for m in at.markdown if 'class="sp-card' in m.value]  # board not drawn
     assert any(getattr(c, "type", "") == "component_instance" or "component" in type(c).__name__.lower()
                for c in at.main)
+
+
+def _add_task(at, title, day, start, end, blocks=True):
+    form_inputs = [t for t in at.text_input]
+    next(t for t in form_inputs if t.label == "Title").input(title)
+    next(t for t in form_inputs if t.label == "From (HH:MM)").input(start)
+    next(t for t in form_inputs if t.label == "To (HH:MM)").input(end)
+    next(d for d in at.date_input if d.label == "Date").set_value(day)
+    cb = next(c for c in at.checkbox if c.label == "Blocks study time?")
+    cb.check() if blocks else cb.uncheck()
+    next(b for b in at.button if b.label == "Add task").click()
+    at.run()
+    assert not at.exception, [e.value for e in at.exception]
+
+
+def test_own_task_shows_on_board_and_can_be_removed():
+    at = _calendar_with_demo()
+    _add_task(at, "Dentist", date(2026, 11, 18), "15:00", "16:00", blocks=False)
+    tasks = at.session_state["custom_tasks"]
+    assert tasks == [{"id": "task-1", "title": "Dentist", "date": "2026-11-18", "start": "15:00",
+                      "end": "16:00", "blocks": False}]
+    cards = [m.value for m in at.markdown if 'class="sp-card' in m.value and "Dentist" in m.value]
+    assert len(cards) == 1 and ">Task<" in cards[0]
+    next(b for b in at.button if b.key == "rm-task-1").click()
+    at.run()
+    assert at.session_state["custom_tasks"] == []
+    assert not [m for m in at.markdown if "Dentist" in m.value]
+
+
+def test_invalid_task_times_are_rejected():
+    at = _calendar_with_demo()
+    _add_task(at, "Bad", date(2026, 11, 18), "16:00", "15:00")
+    assert at.session_state["custom_tasks"] == []
+    assert any("before" in w.value for w in at.warning)
+
+
+def test_blocking_task_is_avoided_by_replanning():
+    from datetime import datetime, timedelta
+    from core.scheduler import BUFFER, FMT
+    at = _calendar_with_demo()
+    ss = at.session_state
+    target = next(e for e in ss["calendar"] if e.get("session_id") == "s3")  # a session not done yet
+    s = datetime.strptime(target["start"], FMT)
+    _add_task(at, "Shift swap", s.date(), (s - timedelta(minutes=30)).strftime("%H:%M"),
+              (s + timedelta(hours=3)).strftime("%H:%M"), blocks=True)
+    task = ss["custom_tasks"][0]
+    ts, te = datetime.strptime(f"{task['date']}T{task['start']}", FMT), datetime.strptime(f"{task['date']}T{task['end']}", FMT)
+    ss["quiz_results"] = {"s1": {"session_id": "s1", "results": [], "score": 0.2, "topic_scores": {"t1": 0.2}}}
+    at.switch_page("pages/1_Plan.py"); at.run(); at._page_hash = ""
+    next(b for b in at.button if b.label == "Update plan from my quiz results").click()
+    at.run()
+    assert not at.exception
+    study = [e for e in at.session_state["calendar"] if e["kind"] == "study"]
+    assert study and not [e for e in study if datetime.strptime(e["start"], FMT) < te + BUFFER
+                          and ts - BUFFER < datetime.strptime(e["end"], FMT)]
+    assert not [e for e in at.session_state["calendar"] if e["id"].startswith("task-")]  # drawn, not stored

@@ -95,7 +95,9 @@ if go:
         with st.spinner("Building your study plan..."):
             plan = make_plan(topics, goal)
         st.session_state[STUDY_PREFS_KEY] = study_prefs
-        study = schedule_sessions(plan, schedule, **schedule_kwargs(study_prefs))
+        from core.board import task_events, TASKS_KEY  # the student's own blocking tasks
+        busy = schedule + task_events(st.session_state.get(TASKS_KEY, []), blocking_only=True)
+        study = schedule_sessions(plan, busy, **schedule_kwargs(study_prefs))
         st.session_state[K_SCHEDULE] = schedule
         st.session_state[K_GOAL] = goal
         st.session_state[K_PLAN] = plan

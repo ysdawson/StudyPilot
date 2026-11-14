@@ -16,11 +16,15 @@ def _hm(day: date, hhmm: str) -> datetime:
 
 
 def _busy_on(day: date, busy: list[Event]) -> list[tuple[datetime, datetime]]:
-    """Weekly schedule: an event repeats on the same weekday every week."""
+    """Weekly schedule: an event repeats on the same weekday every week.
+    Exception: the student's own tasks (id "task-...") block only their own date."""
     out = []
     for e in busy:
         s, en = _dt(e["start"]), _dt(e["end"])
-        if s.weekday() == day.weekday():
+        if str(e.get("id", "")).startswith("task-"):
+            if s.date() == day:
+                out.append((s, en))
+        elif s.weekday() == day.weekday():
             out.append((_hm(day, s.strftime("%H:%M")), _hm(day, en.strftime("%H:%M"))))
     return sorted(out)
 

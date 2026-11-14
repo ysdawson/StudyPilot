@@ -5,6 +5,23 @@ from datetime import date, datetime, timedelta
 FMT = "%Y-%m-%dT%H:%M"
 DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 TAGS = {"class": "Class", "busy": "Work", "study": "Study", "deadline": "Deadline"}
+TASKS_KEY = "custom_tasks"  # owned by the Calendar page: [{id, title, date, start, end, blocks}]
+TASK_COLORS = ("#E0F2FE", "#0284C7")
+
+
+def is_task(event: dict) -> bool:
+    return str(event.get("id", "")).startswith("task-")
+
+
+def task_events(tasks: list[dict], blocking_only: bool = False) -> list[dict]:
+    """The student's own tasks as contract Events (kind "busy", id "task-<n>")."""
+    return [{"id": t["id"], "title": t["title"], "start": f"{t['date']}T{t['start']}",
+             "end": f"{t['date']}T{t['end']}", "kind": "busy"}
+            for t in tasks if t.get("blocks") or not blocking_only]
+
+
+def tag(event: dict) -> str:
+    return "Task" if is_task(event) else TAGS.get(event.get("kind"), str(event.get("kind", "")).title())
 
 # Soft pastels: (background, border/accent). Classes get one per course.
 COURSE_PALETTE = [("#DBEAFE", "#3B82F6"), ("#EDE9FE", "#8B5CF6"), ("#D1FAE5", "#10B981"),
@@ -34,6 +51,8 @@ def course_colors(events: list[dict]) -> dict[str, tuple[str, str]]:
 
 
 def event_colors(event: dict, courses: dict[str, tuple[str, str]]) -> tuple[str, str]:
+    if is_task(event):
+        return TASK_COLORS
     if event.get("kind") == "class":
         return courses.get(course_key(event["title"]), COURSE_PALETTE[0])
     return KIND_COLORS.get(event.get("kind"), COURSE_PALETTE[0])

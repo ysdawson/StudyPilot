@@ -61,6 +61,7 @@ Run the full demo once with the demo model before presenting so every AI result 
 
 ## Other session_state keys (not in contracts.py)
 - "data_source": "demo" | "user" (see Hard rules). "course_deadlines": Home deadlines CSV. "study_prefs": Home per-day availability table, {"availability": {weekday: ["HH:MM", "HH:MM"]}}, passed to schedule_sessions(availability=) by Generate and Update plan (days not listed get no sessions). "demo_dataset": selected demo.
+- "custom_tasks": Calendar page "Add my own task" list [{id: "task-<n>", title, date, start, end, blocks}], drawn as kind "busy" events on the board and time grid (not stored in K_CALENDAR); blocking ones are passed as busy time to schedule_sessions by Generate and Update plan (a task-* event blocks only its own date). Cleared by Load demo data, kept by Generate.
 - extract_topics may return an extra optional "assessments" list (titles only, no dates) used for Home's "What are you studying for?". Deadline dates are only prefilled from the documents/CSV, never invented.
 
 ## Roadmap (NOT NOW)

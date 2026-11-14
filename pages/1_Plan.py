@@ -36,7 +36,9 @@ if st.button("Update plan from my quiz results", disabled=not results):
         ss[K_PLAN] = new
         todo = {**new, "sessions": [s for s in new["sessions"] if s["id"] not in results]}
         from core.schedule_input import schedule_kwargs, STUDY_PREFS_KEY
-        study = schedule_sessions(todo, ss.get(K_SCHEDULE, []), **schedule_kwargs(ss.get(STUDY_PREFS_KEY)))
+        from core.board import task_events, TASKS_KEY  # the student's own blocking tasks
+        busy = ss.get(K_SCHEDULE, []) + task_events(ss.get(TASKS_KEY, []), blocking_only=True)
+        study = schedule_sessions(todo, busy, **schedule_kwargs(ss.get(STUDY_PREFS_KEY)))
         marks = all_deadlines(topics["deadlines"], ss.get(DEADLINES_KEY, []), goal)
         ss[K_CALENDAR] = build_calendar(ss.get(K_SCHEDULE, []), study, marks, goal["start_date"],
                                         calendar_end(goal, marks))
