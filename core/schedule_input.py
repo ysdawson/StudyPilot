@@ -69,10 +69,8 @@ def schedule_input_ui(week_start: str) -> list[Event]:
         if st.session_state.get(K_SCHEDULE):
             st.session_state[ROWS_KEY] = _events_to_rows(st.session_state[K_SCHEDULE])
         else:
-            st.session_state[ROWS_KEY] = pd.DataFrame([
-                {"day": "Mon", "start": "09:00", "end": "11:00", "title": "Example class", "type": "class"},
-                {"day": "Wed", "start": "13:00", "end": "15:00", "title": "Example lab", "type": "class"},
-            ], columns=COLUMNS)
+            # Start empty (headers only); rows come from the student, a CSV or an image.
+            st.session_state[ROWS_KEY] = pd.DataFrame({c: pd.Series(dtype="object") for c in COLUMNS})
 
     csv_file = st.file_uploader("Optional: upload your timetable as CSV (Day,Date,Start,End,Activity,Type)",
                                 type=["csv"])

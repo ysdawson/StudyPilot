@@ -35,8 +35,9 @@ def test_home_startup_creates_no_schedule_plan_or_calendar():
     at = _app("app.py")
     at.run()
     assert not at.exception
-    assert len(at.session_state["schedule_rows"]) == 2  # editor shows its example rows...
-    assert _data_keys(at) == []                         # ...but they are not saved as data
+    rows = at.session_state["schedule_rows"]
+    assert len(rows) == 0 and list(rows.columns) == ["day", "start", "end", "title", "type"]  # empty editor
+    assert _data_keys(at) == []
 
 
 @pytest.mark.parametrize("page", PAGES)
@@ -72,3 +73,23 @@ def test_go_to_home_button():
     at.run()
     assert not at.exception
     assert [t.value for t in at.title] == ["StudyPilot"]
+
+
+def test_generate_with_an_empty_timetable():
+    import datetime, json
+    at = _app("app.py")
+    with open(os.path.join(ROOT, "mock_data", "calculus", "topics.json"), encoding="utf-8") as f:
+        at.session_state["topics"] = json.load(f)
+    at.session_state["data_source"] = "demo"
+    at.run()
+    assert len(at.session_state["schedule_rows"]) == 0
+    at.selectbox(key="goal_choice").set_value("Other (type it)")
+    at.run()
+    at.text_input(key="goal_other").input("Test 1")
+    at.date_input[0].set_value(datetime.date.today() + datetime.timedelta(days=14))
+    next(b for b in at.button if "Generate" in b.label).click()
+    at.run()
+    assert not at.exception and not at.error
+    ss = at.session_state
+    assert ss["schedule"] == [] and not [e for e in ss["calendar"] if e["kind"] in ("class", "busy")]
+    assert len([e for e in ss["calendar"] if e["kind"] == "study"]) == len(ss["plan"]["sessions"])
