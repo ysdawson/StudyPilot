@@ -10,6 +10,9 @@ from core import contracts
 from core.llm import call_claude_json
 from core.prompts import PLAN, REPLAN, SESSION, TIMETABLE, TOPICS
 
+# The 8 Calculus lectures are ~69k chars and the chain rule (Lecture 9) is at the end.
+MAX_DOC_CHARS = 150_000
+
 
 def _as_dict(value: object) -> dict:
     return value if isinstance(value, dict) else {}
@@ -49,7 +52,7 @@ def _valid_sessions(value: object, topic_ids: set[str]) -> list[dict]:
     return valid
 
 
-def _valid_questions(value: object, session_id: str) -> list[dict]:
+def _valid_questions(value: object, session_id: str, topic_id: str = "") -> list[dict]:
     questions = value if isinstance(value, list) else []
     valid = []
     for question in questions:
@@ -63,9 +66,51 @@ def _valid_questions(value: object, session_id: str) -> list[dict]:
                 continue
         if not str(question.get("explanation", "")).strip():
             question["explanation"] = "See the study guide."
+        if question.get("type") not in {"mcq", "short"}:
+            question["type"] = "short"
+        if question["type"] == "short":
+            question["options"] = []
+        if not question.get("question") or not str(question.get("answer", "")).strip():
+            continue
         question["id"] = f"{session_id}-q{len(valid) + 1}"
+        question["session_id"] = session_id  # contract field, grade() relies on it
+        if not question.get("topic_id") and topic_id:
+            question["topic_id"] = topic_id
         valid.append(question)
     return valid
+
+
+def _dumps(value: object) -> str:
+    # ensure_ascii=False: math symbols in the PDFs (e.g. 𝑓, 𝑥) stay readable
+    # instead of becoming 𝑓 escapes (+48% characters).
+    return json.dumps(value, ensure_ascii=False)
+
+
+def _valid_deadlines(value: object) -> list[dict]:
+    """Keep only deadlines with a title and a real YYYY-MM-DD date."""
+    from datetime import date
+    valid = []
+    for item in value if isinstance(value, list) else []:
+        item = _as_dict(item)
+        try:
+            day = date.fromisoformat(str(item.get("date", "")))
+        except ValueError:
+            continue
+        if item.get("title"):
+            valid.append({"title": str(item["title"]), "date": day.isoformat()})
+    return valid
+
+
+def _guide(result: dict) -> dict:
+    """Map the prompt's flat guide fields to the contract's nested Guide."""
+    guide = _as_dict(result.get("guide")) or result
+    points = guide.get("key_points")
+    return {
+        "key_points": [str(p) for p in points] if isinstance(points, list) else [],
+        "explanation": str(guide.get("explanation", "")),
+        "example": str(guide.get("example") or guide.get("worked_example") or ""),
+        "source_hint": str(guide.get("source_hint", "")),
+    }
 
 
 def _valid_events(value: object) -> list[dict]:
@@ -105,13 +150,18 @@ def extract_topics(doc_text: str) -> dict:
     if contracts.mock_mode(st):
         return contracts.load_mock("topics.json")
 
-    result = _as_dict(call_claude_json(TOPICS, doc_text[:60000]))
+    result = _as_dict(call_claude_json(TOPICS, doc_text[:MAX_DOC_CHARS]))
     topics = _valid_topics(result.get("topics"))
-    deadlines = result.get("deadlines")
+    for topic in topics:  # contract: Topic has id, name, weight, summary
+        try:
+            topic["weight"] = float(topic.get("weight", 0))
+        except (TypeError, ValueError):
+            topic["weight"] = 0.0
+        topic["summary"] = str(topic.get("summary", ""))
     return {
-        "course": result.get("course", ""),
+        "course": str(result.get("course", "") or "My course"),
         "topics": topics,
-        "deadlines": deadlines if isinstance(deadlines, list) else [],
+        "deadlines": _valid_deadlines(result.get("deadlines")),
     }
 
 
@@ -124,17 +174,19 @@ def make_plan(topics: dict, goal: dict) -> dict:
         plan["goal"] = goal
         return plan
 
-    content = json.dumps({"topics": topics, "goal": goal})
+    content = _dumps({"topics": topics, "goal": goal})
     result = _as_dict(call_claude_json(PLAN, content))
     topic_ids = {
         topic.get("id")
         for topic in _valid_topics(topics.get("topics"))
         if topic.get("id")
     }
-    return {
-        "goal": result.get("goal", goal),
-        "sessions": _valid_sessions(result.get("sessions"), topic_ids),
-    }
+    sessions = _valid_sessions(result.get("sessions"), topic_ids)
+    sessions.sort(key=lambda s: s.get("order", 0))
+    for index, item in enumerate(sessions, 1):  # unique ids/orders, as the contract says
+        item["id"], item["order"] = f"s{index}", index
+    # Keep the student's goal: the prompt's goal shape has no "course".
+    return {"goal": goal, "sessions": sessions}
 
 
 def make_session(session: dict, topics: dict, doc_text: str) -> dict:
@@ -148,13 +200,17 @@ def make_session(session: dict, topics: dict, doc_text: str) -> dict:
         content["questions"] = _valid_questions(content.get("questions"), session_id)
         return content
 
-    prompt_content = json.dumps(
-        {"session": session, "topics": topics, "doc_text": doc_text[:60000]}
+    prompt_content = _dumps(
+        {"session": session, "topics": topics, "doc_text": doc_text[:MAX_DOC_CHARS]}
     )
     result = _as_dict(call_claude_json(SESSION, prompt_content))
-    result["session_id"] = session_id
-    result["questions"] = _valid_questions(result.get("questions"), session_id)
-    return result
+    return {
+        "session_id": session_id,
+        "guide": _guide(result),
+        "questions": _valid_questions(
+            result.get("questions"), session_id, str(session.get("topic_id", ""))
+        ),
+    }
 
 
 def replan(plan: dict, topics: dict, results: dict) -> dict:
@@ -167,13 +223,10 @@ def replan(plan: dict, topics: dict, results: dict) -> dict:
         if not isinstance(sessions, list):
             sessions = []
             updated["sessions"] = sessions
+        # QuizResult has topic_scores {topic_id: 0..1}, not a top-level topic_id.
         topic_scores: dict[str, list[float]] = {}
         for result in results.values() if isinstance(results, dict) else []:
-            if not isinstance(result, dict):
-                continue
-            topic_id = result.get("topic_id")
-            score = result.get("score")
-            if topic_id is not None:
+            for topic_id, score in _as_dict(_as_dict(result).get("topic_scores")).items():
                 try:
                     topic_scores.setdefault(topic_id, []).append(float(score))
                 except (TypeError, ValueError):
@@ -187,18 +240,19 @@ def replan(plan: dict, topics: dict, results: dict) -> dict:
             available = _valid_topics(topics.get("topics"))
             topic_id = available[0].get("id") if available else "t1"
         new_id = _next_session_id(sessions)
+        names = {t.get("id"): t.get("name") for t in _valid_topics(topics.get("topics"))}
         sessions.append({
             "id": new_id,
             "order": len(sessions) + 1,
             "topic_id": topic_id,
-            "title": "Review: weak topic",
+            "title": f"Review: {names.get(topic_id) or 'weak topic'}",
             "minutes": 30,
             "objective": "Fix mistakes from the latest quiz.",
             "kind": "review",
         })
         return updated
 
-    content = json.dumps({"plan": plan, "topics": topics, "results": results})
+    content = _dumps({"plan": plan, "topics": topics, "results": results})
     result = _as_dict(call_claude_json(REPLAN, content))
     existing = plan.get("sessions") if isinstance(plan.get("sessions"), list) else []
     existing_ids = {item.get("id") for item in existing if isinstance(item, dict)}
@@ -227,7 +281,7 @@ def replan(plan: dict, topics: dict, results: dict) -> dict:
         except (TypeError, ValueError):
             item["minutes"] = 30
         normalized.append(item)
-    return {"goal": result.get("goal", plan.get("goal", {})), "sessions": normalized}
+    return {"goal": plan.get("goal", {}), "sessions": normalized}
 
 
 def parse_timetable_image(

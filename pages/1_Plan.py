@@ -2,7 +2,7 @@
 import streamlit as st
 from core.contracts import *
 from core.ai_engine import replan
-from core.scheduler import schedule_sessions, build_calendar
+from core.scheduler import schedule_sessions, build_calendar, with_goal_deadline
 
 if K_PLAN not in st.session_state:
     if mock_mode(st):
@@ -30,7 +30,7 @@ if st.button("Update plan from my quiz results", disabled=not results):
         ss[K_PLAN] = new
         todo = {**new, "sessions": [s for s in new["sessions"] if s["id"] not in results]}
         study = schedule_sessions(todo, ss.get(K_SCHEDULE, []))
-        ss[K_CALENDAR] = build_calendar(ss.get(K_SCHEDULE, []), study, topics["deadlines"],
+        ss[K_CALENDAR] = build_calendar(ss.get(K_SCHEDULE, []), study, with_goal_deadline(topics["deadlines"], goal),
                                         goal["start_date"], goal["deadline"])
         st.rerun()
     except Exception as ex:

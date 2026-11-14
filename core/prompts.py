@@ -7,19 +7,24 @@ Return exactly this JSON shape:
 {
   "course": "Circuit Analysis",
   "topics": [
-    {"id": "t1", "name": "Ohm's law", "weight": 0.4},
-    {"id": "t2", "name": "Kirchhoff's laws", "weight": 0.6}
+    {"id": "t1", "name": "Ohm's law", "weight": 0.4,
+     "summary": "Relating voltage, current and resistance in a resistor."},
+    {"id": "t2", "name": "Kirchhoff's laws", "weight": 0.6,
+     "summary": "Current and voltage laws for analysing whole circuits."}
   ],
-  "deadlines": [
-    {"title": "Midterm", "date": "2026-03-20"}
-  ]
+  "deadlines": []
 }
 
 Hard rules:
-- Use topic ids t1, t2, ... tn.
+- Use topic ids t1, t2, ... tn, in the order the material teaches them.
 - Each weight must be a float between 0 and 1, with weights roughly summing to
   1.0.
-- The deadlines array may be empty when no deadlines are mentioned.
+- Each summary is one sentence.
+- Deadlines: only include a deadline when the text states its full calendar
+  date explicitly (day, month and year). Write it as {"title": "...",
+  "date": "YYYY-MM-DD"}. If no such date is written in the text, return
+  "deadlines": []. Never invent, guess or estimate a date, and never infer one
+  from lecture numbers, weeks or the current date.
 - Never invent facts that the provided text does not support.
 
 Return only the JSON. No prose. No markdown fences.
@@ -60,7 +65,9 @@ Hard rules:
 - Total study minutes should be approximately
   goal.hours_per_week * the number of weeks between goal.start_date and
   goal.deadline.
-- Session order should progress from learn to practice to review.
+- Follow the topic order t1, t2, ... (prerequisites first, as the course
+  teaches them). Within a topic, learn comes before practice. Put any review
+  sessions at the end.
 - Higher-weight topics should receive more sessions.
 - A target_grade of "A" means include more practice sessions.
 - Every session.kind must be exactly "learn", "practice", or "review".
@@ -106,6 +113,12 @@ Hard rules:
 - Every question.topic_id must exist in the provided topics list.
 - Ground every part of the response in the provided document text and do not
   contradict it.
+- The document text was extracted from slides, so exponents and brackets may
+  be flattened (e.g. "x2 + 1" means x^2 + 1). Interpret them mathematically.
+- Work out every answer step by step before writing it, and make sure the
+  answer and explanation are mathematically correct and agree with each other.
+- Write math in plain text that reads well in Markdown, e.g. x^2, sqrt(x),
+  (x^2 + 1)^3, sin(x)/x, lim_(x->0). Do not use LaTeX.
 
 Return only the JSON. No prose. No markdown fences.
 """

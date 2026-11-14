@@ -24,6 +24,38 @@ def _valid_hm(x) -> bool:
         return False
 
 
+def _to_hm(value: str) -> str | None:
+    """'6:00 PM' / '18:00' -> '18:00'; None if empty or unreadable."""
+    value = str(value or "").strip().upper()
+    for fmt in ("%I:%M %p", "%I:%M%p", "%I %p", "%H:%M"):
+        try:
+            return datetime.strptime(value, fmt).strftime("%H:%M")
+        except ValueError:
+            continue
+    return None
+
+
+def parse_timetable_csv(text: str) -> list[dict]:
+    """Rows for the editor from a CSV with header Day,Date,Start,End,Activity,Type.
+    Only rows whose Type is "Class" are kept (study suggestions / free time are not busy)."""
+    import csv, io
+    rows = []
+    for r in csv.DictReader(io.StringIO(text.lstrip("﻿"))):
+        r = {str(k).strip().lower(): (v or "").strip() for k, v in r.items() if k}
+        if r.get("type", "").lower() != "class":
+            continue
+        start, end = _to_hm(r.get("start")), _to_hm(r.get("end"))
+        day = r.get("day", "")[:3].title()
+        if day not in DAYS and r.get("date"):
+            try:
+                day = DAYS[date.fromisoformat(r["date"]).weekday()]
+            except ValueError:
+                pass
+        if day in DAYS and start and end:
+            rows.append({"day": day, "start": start, "end": end, "title": r.get("activity") or "Class"})
+    return rows
+
+
 def schedule_input_ui(week_start: str) -> list[Event]:
     monday = date.fromisoformat(week_start)
     if ROWS_KEY not in st.session_state:
@@ -34,6 +66,19 @@ def schedule_input_ui(week_start: str) -> list[Event]:
                 {"day": "Mon", "start": "09:00", "end": "11:00", "title": "Example class"},
                 {"day": "Wed", "start": "13:00", "end": "15:00", "title": "Example lab"},
             ])
+
+    csv_file = st.file_uploader("Optional: upload your timetable as CSV (Day,Date,Start,End,Activity,Type)",
+                                type=["csv"])
+    if csv_file is not None and st.button("Load classes from CSV"):
+        try:
+            rows = parse_timetable_csv(csv_file.getvalue().decode("utf-8-sig"))
+            if rows:
+                st.session_state[ROWS_KEY] = pd.DataFrame(rows, columns=["day", "start", "end", "title"])
+                st.session_state.pop("schedule_editor", None)  # show the new rows, not old edits
+                st.rerun()
+            st.warning("No rows with Type = Class found in that CSV.")
+        except Exception as ex:
+            st.error(f"Couldn't read the CSV: {ex}")
 
     img = st.file_uploader("Optional: upload a screenshot of your timetable", type=["png", "jpg", "jpeg"])
     if img is not None and st.button("Read my timetable with AI"):

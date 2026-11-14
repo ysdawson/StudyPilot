@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import streamlit as st
 from core.contracts import *
 from core.ai_engine import extract_text, extract_topics, make_plan
-from core.scheduler import schedule_sessions, build_calendar
+from core.scheduler import schedule_sessions, build_calendar, with_goal_deadline
 from core.schedule_input import schedule_input_ui
 
 st.set_page_config(page_title="StudyPilot", layout="wide")
@@ -60,7 +60,7 @@ if not topics:
     st.stop()
 
 deadlines = topics["deadlines"]
-with st.form("goal"):
+with st.form("goal_form"):  # not "goal": that is K_GOAL
     course = st.text_input("Course", topics["course"])
     options = [f"{d['title']} ({d['date']})" for d in deadlines] + ["Other"]
     choice = st.selectbox("What are you studying for?", options)
@@ -81,7 +81,7 @@ if go:
         study = schedule_sessions(plan, st.session_state[K_SCHEDULE])
         st.session_state[K_GOAL] = goal
         st.session_state[K_PLAN] = plan
-        st.session_state[K_CALENDAR] = build_calendar(st.session_state[K_SCHEDULE], study, deadlines,
+        st.session_state[K_CALENDAR] = build_calendar(st.session_state[K_SCHEDULE], study, with_goal_deadline(deadlines, goal),
                                                       goal["start_date"], goal["deadline"])
         st.session_state.setdefault(K_CONTENT, {})
         st.session_state.setdefault(K_RESULTS, {})

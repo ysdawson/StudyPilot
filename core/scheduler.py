@@ -89,3 +89,11 @@ def build_calendar(busy: list[Event], study: list[Event], deadlines: list[Deadli
             cal.append({"id": f"deadline-{i}", "title": d["title"], "start": f"{d['date']}T08:00",
                         "end": f"{d['date']}T09:00", "kind": "deadline"})
     return cal
+
+
+def with_goal_deadline(deadlines: list[Deadline], goal: dict) -> list[Deadline]:
+    """Course deadlines plus the student's own goal deadline (when the material
+    gives no date, e.g. "Other" + a date typed on the Home page)."""
+    if not goal.get("deadline") or any(d.get("date") == goal["deadline"] for d in deadlines):
+        return list(deadlines)
+    return list(deadlines) + [{"title": goal.get("target") or "Deadline", "date": goal["deadline"]}]
