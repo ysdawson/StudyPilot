@@ -89,6 +89,12 @@ def _print_usage(response: Any) -> None:
 _MIN_REQUEST_TOKENS = 16000
 
 
+def api_key_configured() -> bool:
+    """True when a real-looking Anthropic key is set (the example placeholder is not)."""
+    key = _read_setting("ANTHROPIC_API_KEY", _FILE_SECRETS) or ""
+    return key.startswith("sk-ant-") and len(key) > 40 and "..." not in key
+
+
 def _response_text(response: Any) -> str:
     """Join the text blocks; content[0] may be a thinking block."""
     return "".join(block.text for block in response.content if block.type == "text")

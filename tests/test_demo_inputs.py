@@ -66,6 +66,7 @@ def test_home_generate_with_no_deadlines_uses_other_and_manual_date():
     topics = json.load(open(os.path.join(ROOT, "mock_data", "calculus", "topics.json"), encoding="utf-8"))
     topics["deadlines"] = []
     at.session_state["topics"] = topics
+    at.session_state["data_source"] = "demo"  # mock plan; a user's own topics would use the real AI
     at.session_state["schedule_rows"] = pd.DataFrame(parse_timetable_csv(
         open(os.path.join(ROOT, "sample_data", "calculus", "Weekly_Timetable.csv"), encoding="utf-8").read()))
     at.run()
@@ -89,6 +90,7 @@ def test_home_generate_with_no_deadlines_uses_other_and_manual_date():
 def test_mock_replan_reviews_the_weakest_topic():
     at = AppTest.from_string(
         "import streamlit as st\n"
+        "st.session_state['data_source'] = 'demo'\n"
         "from core.demo import read_file\n"
         "load_mock = lambda n: read_file('calculus', n)\n"
         "from core.ai_engine import replan\n"

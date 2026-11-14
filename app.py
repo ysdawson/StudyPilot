@@ -5,13 +5,15 @@ from core.contracts import *
 from core.ai_engine import extract_text, extract_topics, make_plan
 from core.scheduler import schedule_sessions, build_calendar, all_deadlines, calendar_end
 from core.schedule_input import schedule_input_ui, deadlines_input_ui
-from core.demo import load_demo_data, demo_picker
+from core.demo import load_demo_data, demo_picker, DATA_SOURCE_KEY
+from core.ai_engine import AIConfigError
+from core.llm import api_key_configured
 
 st.set_page_config(page_title="StudyPilot", layout="wide")
 st.title("StudyPilot")
 st.write("Upload your course material and schedule. Get a tailored study plan with guides and practice questions, placed in your week.")
-st.caption("Mock AI ON: AI steps return sample results, no API spend" if mock_mode(st)
-           else "Live mode: real Claude API")
+st.caption("Demo data loads instantly (no API spend). Your own uploads are analyzed by Claude"
+           + ("." if api_key_configured() else " — but AI is not configured on this server."))
 
 demo_choice = demo_picker(st, st.sidebar, key="demo_pick_home")
 if st.sidebar.button("Load demo data"):
@@ -25,11 +27,15 @@ next_monday = today + timedelta(days=(7 - today.weekday()) % 7)
 st.header("1. Your course material")
 files = st.file_uploader("Course outline, slides, notes (PDF)", type=["pdf"], accept_multiple_files=True)
 if files and st.button("Analyze my documents", type="primary"):
+    st.session_state[DATA_SOURCE_KEY] = "user"  # the user's own material: always the real AI
     try:
         with st.spinner("Reading your documents..."):
             text = "\n\n".join(f"=== {f.name} ===\n" + extract_text(f.getvalue()) for f in files)
-            st.session_state[K_DOC_TEXT] = text
-            st.session_state[K_TOPICS] = extract_topics(text)
+            topics_result = extract_topics(text)
+        st.session_state[K_DOC_TEXT] = text
+        st.session_state[K_TOPICS] = topics_result
+    except AIConfigError as ex:
+        st.error(str(ex))
     except Exception as ex:
         st.error(f"Couldn't analyze the documents: {ex}")
 
@@ -93,5 +99,7 @@ if go:
         if len(study) < len(plan["sessions"]):
             st.warning(f"Only {len(study)} of {len(plan['sessions'])} sessions fit before the deadline.")
         st.switch_page("pages/1_Plan.py")
+    except AIConfigError as ex:
+        st.error(str(ex))
     except Exception as ex:
         st.error(f"Couldn't build the plan: {ex}")

@@ -15,9 +15,10 @@ DATASETS = {"yassine": "1 — My real term (Network Applications I)",
             "calculus": "2 — Calculus I Test 1"}
 DEFAULT_DATASET = "yassine"
 DEADLINES_KEY = "course_deadlines"  # owned by Home / core/schedule_input.py
+DATA_SOURCE_KEY = "data_source"     # "demo" (Load demo data) | "user" (Analyze my documents)
 
 _APP_KEYS = (K_DOC_TEXT, K_TOPICS, K_GOAL, K_PLAN, K_CONTENT, K_SCHEDULE,
-             K_CALENDAR, K_RESULTS, K_CURRENT, DEADLINES_KEY)
+             K_CALENDAR, K_RESULTS, K_CURRENT, DEADLINES_KEY, DATA_SOURCE_KEY)
 _WIDGET_KEYS = ("schedule_rows", "schedule_editor", "board_week")
 
 
@@ -52,6 +53,7 @@ def load_demo_data(st, dataset: str | None = None) -> None:
     for key in _APP_KEYS + _WIDGET_KEYS:
         st.session_state.pop(key, None)
     st.session_state[DATASET_KEY] = dataset
+    st.session_state[DATA_SOURCE_KEY] = "demo"  # AI functions answer from this dataset, instantly
     ss = st.session_state
     plan = read_file(dataset, "plan.json")
     ss[K_DOC_TEXT] = "Mock course text."

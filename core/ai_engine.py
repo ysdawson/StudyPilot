@@ -14,6 +14,23 @@ from core.prompts import PLAN, REPLAN, SESSION, TIMETABLE, TOPICS
 MAX_DOC_CHARS = 150_000
 
 
+class AIConfigError(RuntimeError):
+    """The user's own files need the real AI, but no API key is configured."""
+
+
+def _use_mock() -> bool:
+    """Demo data (loaded with 'Load demo data') answers from mock_data instantly.
+    Anything else is the user's own material and always goes to Claude; without a
+    key that is an error, never silently demo data. MOCK_AI no longer decides this."""
+    if st.session_state.get(demo.DATA_SOURCE_KEY) == "demo":
+        return True
+    from core.llm import api_key_configured
+    if not api_key_configured():
+        raise AIConfigError("AI is not configured: set ANTHROPIC_API_KEY in .streamlit/secrets.toml "
+                            "(or the app's Secrets on Streamlit Cloud) to analyze your own files.")
+    return False
+
+
 def _as_dict(value: object) -> dict:
     return value if isinstance(value, dict) else {}
 
@@ -147,7 +164,7 @@ def extract_text(pdf_bytes: bytes) -> str:
 
 def extract_topics(doc_text: str) -> dict:
     """Extract and defensively normalize course topics and deadlines."""
-    if contracts.mock_mode(st):
+    if _use_mock():
         return demo.load_mock(st, "topics.json")
 
     result = _as_dict(call_claude_json(TOPICS, doc_text[:MAX_DOC_CHARS]))
@@ -169,7 +186,7 @@ def make_plan(topics: dict, goal: dict) -> dict:
     """Create and normalize an ordered study plan."""
     topics = _as_dict(topics)
     goal = _as_dict(goal)
-    if contracts.mock_mode(st):
+    if _use_mock():
         plan = _as_dict(demo.load_mock(st, "plan.json"))
         plan["goal"] = goal
         return plan
@@ -209,7 +226,7 @@ def make_session(session: dict, topics: dict, doc_text: str) -> dict:
     session = _as_dict(session)
     topics = _as_dict(topics)
     session_id = str(session.get("id", "s1"))
-    if contracts.mock_mode(st):
+    if _use_mock():
         content = _as_dict(demo.load_mock(st, _mock_session_file(session)))
         content["session_id"] = session_id
         content["questions"] = _valid_questions(content.get("questions"), session_id)
@@ -232,7 +249,7 @@ def replan(plan: dict, topics: dict, results: dict) -> dict:
     """Append targeted review sessions based on quiz performance."""
     plan = _as_dict(plan)
     topics = _as_dict(topics)
-    if contracts.mock_mode(st):
+    if _use_mock():
         updated = copy.deepcopy(plan)
         sessions = updated.get("sessions")
         if not isinstance(sessions, list):
@@ -303,7 +320,7 @@ def parse_timetable_image(
     image_bytes: bytes, media_type: str, week_start: str
 ) -> list:
     """Extract and normalize class events from a timetable image."""
-    if contracts.mock_mode(st):
+    if _use_mock():
         return demo.load_mock(st, "schedule.json")
 
     content = [

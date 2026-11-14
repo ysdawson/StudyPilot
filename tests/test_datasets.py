@@ -98,6 +98,7 @@ def test_mock_ai_functions_follow_the_selected_dataset(dataset):
         "import streamlit as st\n"
         "from core import ai_engine as ae\n"
         f"st.session_state['demo_dataset'] = '{dataset}'\n"
+        "st.session_state['data_source'] = 'demo'\n"
         "t = ae.extract_topics('x')\n"
         "p = ae.make_plan(t, {'course': 'c', 'target': 'x', 'deadline': '2026-12-01', 'start_date': '2026-11-16',"
         " 'hours_per_week': 4.0, 'target_grade': 'A'})\n"
@@ -114,3 +115,46 @@ def test_mock_ai_functions_follow_the_selected_dataset(dataset):
     assert n_sessions == len(read_file(dataset, "plan.json")["sessions"])
     assert qsid == read_file(dataset, "plan.json")["sessions"][0]["id"]
     assert n_events == len(read_file(dataset, "schedule.json"))
+
+
+def _engine_script(source, key_ok):
+    return AppTest.from_string(
+        "import streamlit as st\n"
+        "import core.llm, core.ai_engine as ae\n"
+        f"core.llm.api_key_configured = lambda: {key_ok}\n"
+        "calls = []\n"
+        "ae.call_claude_json = lambda system, content, max_tokens=4000: calls.append(1) or "
+        "{'course': 'Biology 101', 'topics': [{'id': 't1', 'name': 'Cells', 'weight': 1.0, 'summary': 's'}], 'deadlines': []}\n"
+        + (f"st.session_state['data_source'] = '{source}'\n" if source else "")
+        + "try:\n"
+        "    t = ae.extract_topics('my own notes')\n"
+        "    st.session_state['out'] = (t['course'], len(calls))\n"
+        "except ae.AIConfigError as e:\n"
+        "    st.session_state['out'] = ('error', str(e))\n",
+        default_timeout=30)
+
+
+@pytest.mark.parametrize("source", ["user", None])
+def test_user_material_uses_the_real_ai_even_with_mock_ai_on(source):
+    at = _engine_script(source, True)
+    os.chdir(ROOT)
+    at.secrets["MOCK_AI"] = "1"
+    at.run()
+    assert not at.exception
+    assert at.session_state["out"] == ("Biology 101", 1)  # went to Claude, not mock_data
+
+
+def test_user_material_without_key_is_a_clear_error_not_demo_data():
+    at = _engine_script("user", False)
+    os.chdir(ROOT)
+    at.secrets["MOCK_AI"] = "1"
+    at.run()
+    kind, msg = at.session_state["out"]
+    assert kind == "error" and msg.startswith("AI is not configured")
+
+
+def test_demo_source_never_calls_the_api():
+    at = _engine_script("demo", False)
+    os.chdir(ROOT)
+    at.run()
+    assert at.session_state["out"][1] == 0

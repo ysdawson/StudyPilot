@@ -90,6 +90,7 @@ def schedule_input_ui(week_start: str) -> list[Event]:
     img = st.file_uploader("Optional: upload a screenshot of your timetable", type=["png", "jpg", "jpeg"])
     if img is not None and st.button("Read my timetable with AI"):
         from core.ai_engine import parse_timetable_image
+        st.session_state["data_source"] = "user"  # the user's own image: always the real AI
         try:
             with st.spinner("Reading your timetable..."):
                 events = parse_timetable_image(img.getvalue(), img.type, week_start)

@@ -10,7 +10,7 @@ Repo: https://github.com/ysdawson/StudyPilot
 - Only edit the files owned by the member you're helping (table below). Never rewrite another member's file.
 - Dates are strings in session_state: "YYYY-MM-DD" and "YYYY-MM-DDTHH:MM". Ids: t1, s1, s1-q1, class-1, study-s1, deadline-1.
 - Never hard-code the API key; read st.secrets["ANTHROPIC_API_KEY"]. `.streamlit/secrets.toml` is gitignored; never commit it.
-- `MOCK_AI = "1"` in secrets -> ai_engine functions return the SELECTED demo dataset in mock_data/<dataset>/ (no API spend). It does NOT pre-fill session_state. Only member 1 uses "0" while building. Budget: $50 shared key.
+- AI mode is decided by st.session_state["data_source"] (demo.DATA_SOURCE_KEY), NOT by MOCK_AI: "demo" (set by Load demo data) -> ai_engine answers from mock_data/<dataset>/ instantly; anything else (the user's own uploads, set to "user" by Analyze my documents) -> real Claude API, or a clear "AI is not configured" error (AIConfigError) when no key. Never return demo data for user uploads. MOCK_AI is no longer read by the engine. Tests block real API calls (tests/conftest.py). Budget: $50 shared key.
 - PRIVACY: private_data/ is gitignored and must never be committed (course outlines with teacher contact details, real names). Mock data and citations must not contain teacher names or contact details.
 - Wrap every AI call in st.spinner + try/except with st.error so the demo never crashes.
 - Prefer simple, working code. Feature freeze at 3:30 into the hackathon.
