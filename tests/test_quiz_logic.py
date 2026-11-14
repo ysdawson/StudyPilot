@@ -88,3 +88,54 @@ def test_session_page_full_flow():
     assert not at.exception
     res = at.session_state["quiz_results"]["s1"]
     assert res["score"] == 3 / len(qs)
+
+
+def _session_app(dataset, fake_ai=None, key_ok=False):
+    from streamlit.testing.v1 import AppTest
+    import core.llm
+    core.llm.api_key_configured = lambda: key_ok
+    if fake_ai:
+        import core.ai_engine
+        core.ai_engine.call_claude_json = fake_ai
+    at = AppTest.from_file(os.path.join(ROOT, "pages", "3_Session.py"), default_timeout=30)
+    at.secrets["MOCK_AI"] = "1"
+    at.run()
+    at.selectbox(key="demo_pick_session").set_value(dataset)
+    next(b for b in at.button if b.label == "Load demo data").click()
+    at.run()
+    assert not at.exception
+    return at
+
+
+def test_switching_session_in_the_dropdown_switches_the_content(monkeypatch):
+    import core.llm
+    monkeypatch.setattr(core.llm, "api_key_configured", core.llm.api_key_configured)
+    at = _session_app("yassine")
+    first_q = at.session_state["session_content"]["s1"]["questions"][0]["question"]
+    at.sidebar.selectbox[0].set_value("s13")
+    at.run()
+    assert not at.exception
+    content = at.session_state["session_content"]["s13"]
+    assert content["questions"][0]["question"] != first_q
+    assert all(q["id"].startswith("s13-") for q in content["questions"])
+    shown = " ".join(m.value for m in at.markdown)
+    assert content["questions"][0]["question"] in shown and first_q not in shown
+
+
+def test_demo_session_without_saved_content_is_generated_when_key(monkeypatch):
+    import core.llm, core.ai_engine
+    monkeypatch.setattr(core.llm, "api_key_configured", core.llm.api_key_configured)
+    calls = []
+
+    def fake(system, content, max_tokens=4000):
+        calls.append(content)
+        return {"key_points": ["a", "b", "c"], "explanation": "Own guide", "worked_example": "w",
+                "source_hint": "Outline week 9", "questions": [
+                    {"type": "mcq", "question": "Own question?", "options": ["1", "2", "3", "4"],
+                     "answer": "2", "explanation": "e"}]}
+    monkeypatch.setattr(core.ai_engine, "call_claude_json", fake)
+    at = _session_app("yassine", key_ok=True)
+    at.sidebar.selectbox[0].set_value("s5")  # topic t4: no saved session on that topic
+    at.run()
+    assert not at.exception and len(calls) == 1
+    assert at.session_state["session_content"]["s5"]["guide"]["explanation"] == "Own guide"

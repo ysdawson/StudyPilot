@@ -206,9 +206,9 @@ def make_plan(topics: dict, goal: dict) -> dict:
     return {"goal": goal, "sessions": sessions}
 
 
-def _mock_session_file(session: dict) -> str:
-    """Mock content for this session: session_<id>.json if saved, else a saved
-    session on the same topic (e.g. a chain-rule review), else session_s1.json."""
+def _mock_session_file(session: dict) -> str | None:
+    """Demo content for this session: session_<id>.json if saved, else a saved
+    session on the same topic (e.g. a chain-rule review), else None."""
     files = demo.session_files(st)
     own = f"session_{session.get('id')}.json"
     if own in files:
@@ -218,7 +218,7 @@ def _mock_session_file(session: dict) -> str:
         topic_ids = [q.get("topic_id") for q in questions if isinstance(q, dict)]
         if topic_ids and max(set(topic_ids), key=topic_ids.count) == session.get("topic_id"):
             return name
-    return "session_s1.json"
+    return None
 
 
 def make_session(session: dict, topics: dict, doc_text: str) -> dict:
@@ -227,10 +227,18 @@ def make_session(session: dict, topics: dict, doc_text: str) -> dict:
     topics = _as_dict(topics)
     session_id = str(session.get("id", "s1"))
     if _use_mock():
-        content = _as_dict(demo.load_mock(st, _mock_session_file(session)))
-        content["session_id"] = session_id
-        content["questions"] = _valid_questions(content.get("questions"), session_id)
-        return content
+        name = _mock_session_file(session)
+        from core.llm import api_key_configured
+        if name or not api_key_configured():
+            content = _as_dict(demo.load_mock(st, name or "session_s1.json"))
+            content["session_id"] = session_id
+            content["questions"] = _valid_questions(content.get("questions"), session_id)
+            return content
+        # Demo session with no saved content on its topic: generate it for real, so each
+        # session shows its own guide and quiz (demo data has no documents: use the topics).
+        topic = next((t for t in topics.get("topics", []) if t.get("id") == session.get("topic_id")), {})
+        doc_text = (f"(Demo data: no course documents loaded. Explain from standard knowledge of the "
+                    f"course topic '{topic.get('name', session.get('title', ''))}': {topic.get('summary', '')})")
 
     prompt_content = _dumps(
         {"session": session, "topics": topics, "doc_text": doc_text[:MAX_DOC_CHARS]}
