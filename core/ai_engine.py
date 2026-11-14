@@ -121,8 +121,8 @@ def _valid_events(value: object) -> list[dict]:
         if not all(event.get(key) for key in ("title", "start", "end")):
             continue
         event = copy.deepcopy(event)
-        event["kind"] = "class"
-        event["id"] = f"class-{len(valid) + 1}"
+        event["kind"] = event.get("kind") if event.get("kind") in {"class", "busy"} else "class"
+        event["id"] = f"{event['kind']}-{len(valid) + 1}"
         valid.append(event)
     return valid
 

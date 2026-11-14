@@ -14,8 +14,8 @@ def test_parse_calculus_timetable_csv_keeps_only_classes():
     with open(os.path.join(ROOT, "sample_data", "calculus", "Weekly_Timetable.csv"), encoding="utf-8") as f:
         rows = parse_timetable_csv(f.read())  # file starts with a BOM; also handles it
     assert rows == [
-        {"day": "Tue", "start": "18:00", "end": "21:00", "title": "Calculus I class"},
-        {"day": "Thu", "start": "18:00", "end": "21:00", "title": "Calculus I class"},
+        {"day": "Tue", "start": "18:00", "end": "21:00", "title": "Calculus I class", "type": "class"},
+        {"day": "Thu", "start": "18:00", "end": "21:00", "title": "Calculus I class", "type": "class"},
     ]
 
 
@@ -24,7 +24,33 @@ def test_parse_csv_bom_12h_times_and_bad_rows():
             ",2026-11-16,12:30 PM,1:15 PM,Lab,class\n"      # day from date, lower-case type
             "Friday,,9:00 AM,,Broken,Class\n"               # no end time: skipped
             "Saturday,,10:00 AM,11:00 AM,Gym,Busy\n")       # not a class
-    assert parse_timetable_csv(text) == [{"day": "Mon", "start": "12:30", "end": "13:15", "title": "Lab"}]
+    assert parse_timetable_csv(text) == [{"day": "Mon", "start": "12:30", "end": "13:15", "title": "Lab", "type": "class"}]
+
+
+def test_parse_full_timetable_work_rows_become_busy():
+    with open(os.path.join(ROOT, "sample_data", "calculus", "Weekly_Timetable_Full.csv"), encoding="utf-8") as f:
+        rows = parse_timetable_csv(f.read())
+    assert sum(r["type"] == "class" for r in rows) == 13
+    assert [r for r in rows if r["type"] == "busy"] == [
+        {"day": "Wed", "start": "16:00", "end": "20:00", "title": "Part-time job", "type": "busy"},
+        {"day": "Sat", "start": "10:00", "end": "16:00", "title": "Part-time job", "type": "busy"},
+    ]
+    assert not any(r["day"] == "Sun" for r in rows)  # the Free row (no times) is skipped
+
+
+def test_mock_schedule_keeps_busy_events_and_study_avoids_them():
+    from datetime import datetime
+    from core.contracts import load_mock
+    from core.scheduler import BUFFER, FMT
+    os.chdir(ROOT)
+    schedule, cal = load_mock("schedule.json"), load_mock("calendar.json")
+    assert {e["kind"] for e in schedule} == {"class", "busy"}
+    dt = lambda s: datetime.strptime(s, FMT)
+    blocked = [e for e in cal if e["kind"] in ("class", "busy")]
+    study = [e for e in cal if e["kind"] == "study"]
+    assert len(study) == len(load_mock("plan.json")["sessions"])
+    assert not [(s["id"], b["id"]) for s in study for b in blocked
+                if dt(s["start"]) < dt(b["end"]) + BUFFER and dt(b["start"]) - BUFFER < dt(s["end"])]
 
 
 def _app():

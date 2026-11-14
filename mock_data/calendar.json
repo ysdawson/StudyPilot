@@ -1,42 +1,294 @@
 [
   {
-    "id": "class-1-2026-11-17",
-    "title": "Calculus I class",
+    "id": "class-1-2026-11-16",
+    "title": "English 603 - Literary Genres",
+    "start": "2026-11-16T08:30",
+    "end": "2026-11-16T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-2-2026-11-16",
+    "title": "Mechanics (Physics NYA)",
+    "start": "2026-11-16T10:30",
+    "end": "2026-11-16T12:30",
+    "kind": "class"
+  },
+  {
+    "id": "class-3-2026-11-16",
+    "title": "Mechanics Lab",
+    "start": "2026-11-16T14:00",
+    "end": "2026-11-16T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-4-2026-11-17",
+    "title": "Humanities 345 - Knowledge",
+    "start": "2026-11-17T10:00",
+    "end": "2026-11-17T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-5-2026-11-17",
+    "title": "General Chemistry",
+    "start": "2026-11-17T13:00",
+    "end": "2026-11-17T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-6-2026-11-17",
+    "title": "Calculus I (201-NYA-05)",
     "start": "2026-11-17T18:00",
     "end": "2026-11-17T21:00",
     "kind": "class"
   },
   {
-    "id": "class-2-2026-11-19",
-    "title": "Calculus I class",
+    "id": "class-7-2026-11-18",
+    "title": "English 603 - Literary Genres",
+    "start": "2026-11-18T08:30",
+    "end": "2026-11-18T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-8-2026-11-18",
+    "title": "Mechanics (Physics NYA)",
+    "start": "2026-11-18T10:30",
+    "end": "2026-11-18T12:30",
+    "kind": "class"
+  },
+  {
+    "id": "busy-9-2026-11-18",
+    "title": "Part-time job",
+    "start": "2026-11-18T16:00",
+    "end": "2026-11-18T20:00",
+    "kind": "busy"
+  },
+  {
+    "id": "class-10-2026-11-19",
+    "title": "Humanities 345 - Knowledge",
+    "start": "2026-11-19T10:00",
+    "end": "2026-11-19T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-11-2026-11-19",
+    "title": "Chemistry Lab",
+    "start": "2026-11-19T13:00",
+    "end": "2026-11-19T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-12-2026-11-19",
+    "title": "Calculus I (201-NYA-05)",
     "start": "2026-11-19T18:00",
     "end": "2026-11-19T21:00",
     "kind": "class"
   },
   {
-    "id": "class-1-2026-11-24",
-    "title": "Calculus I class",
+    "id": "class-13-2026-11-20",
+    "title": "Physical Education",
+    "start": "2026-11-20T09:00",
+    "end": "2026-11-20T11:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-14-2026-11-20",
+    "title": "General Chemistry",
+    "start": "2026-11-20T13:00",
+    "end": "2026-11-20T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "busy-15-2026-11-21",
+    "title": "Part-time job",
+    "start": "2026-11-21T10:00",
+    "end": "2026-11-21T16:00",
+    "kind": "busy"
+  },
+  {
+    "id": "class-1-2026-11-23",
+    "title": "English 603 - Literary Genres",
+    "start": "2026-11-23T08:30",
+    "end": "2026-11-23T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-2-2026-11-23",
+    "title": "Mechanics (Physics NYA)",
+    "start": "2026-11-23T10:30",
+    "end": "2026-11-23T12:30",
+    "kind": "class"
+  },
+  {
+    "id": "class-3-2026-11-23",
+    "title": "Mechanics Lab",
+    "start": "2026-11-23T14:00",
+    "end": "2026-11-23T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-4-2026-11-24",
+    "title": "Humanities 345 - Knowledge",
+    "start": "2026-11-24T10:00",
+    "end": "2026-11-24T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-5-2026-11-24",
+    "title": "General Chemistry",
+    "start": "2026-11-24T13:00",
+    "end": "2026-11-24T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-6-2026-11-24",
+    "title": "Calculus I (201-NYA-05)",
     "start": "2026-11-24T18:00",
     "end": "2026-11-24T21:00",
     "kind": "class"
   },
   {
-    "id": "class-2-2026-11-26",
-    "title": "Calculus I class",
+    "id": "class-7-2026-11-25",
+    "title": "English 603 - Literary Genres",
+    "start": "2026-11-25T08:30",
+    "end": "2026-11-25T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-8-2026-11-25",
+    "title": "Mechanics (Physics NYA)",
+    "start": "2026-11-25T10:30",
+    "end": "2026-11-25T12:30",
+    "kind": "class"
+  },
+  {
+    "id": "busy-9-2026-11-25",
+    "title": "Part-time job",
+    "start": "2026-11-25T16:00",
+    "end": "2026-11-25T20:00",
+    "kind": "busy"
+  },
+  {
+    "id": "class-10-2026-11-26",
+    "title": "Humanities 345 - Knowledge",
+    "start": "2026-11-26T10:00",
+    "end": "2026-11-26T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-11-2026-11-26",
+    "title": "Chemistry Lab",
+    "start": "2026-11-26T13:00",
+    "end": "2026-11-26T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-12-2026-11-26",
+    "title": "Calculus I (201-NYA-05)",
     "start": "2026-11-26T18:00",
     "end": "2026-11-26T21:00",
     "kind": "class"
   },
   {
-    "id": "class-1-2026-12-01",
-    "title": "Calculus I class",
+    "id": "class-13-2026-11-27",
+    "title": "Physical Education",
+    "start": "2026-11-27T09:00",
+    "end": "2026-11-27T11:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-14-2026-11-27",
+    "title": "General Chemistry",
+    "start": "2026-11-27T13:00",
+    "end": "2026-11-27T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "busy-15-2026-11-28",
+    "title": "Part-time job",
+    "start": "2026-11-28T10:00",
+    "end": "2026-11-28T16:00",
+    "kind": "busy"
+  },
+  {
+    "id": "class-1-2026-11-30",
+    "title": "English 603 - Literary Genres",
+    "start": "2026-11-30T08:30",
+    "end": "2026-11-30T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-2-2026-11-30",
+    "title": "Mechanics (Physics NYA)",
+    "start": "2026-11-30T10:30",
+    "end": "2026-11-30T12:30",
+    "kind": "class"
+  },
+  {
+    "id": "class-3-2026-11-30",
+    "title": "Mechanics Lab",
+    "start": "2026-11-30T14:00",
+    "end": "2026-11-30T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-4-2026-12-01",
+    "title": "Humanities 345 - Knowledge",
+    "start": "2026-12-01T10:00",
+    "end": "2026-12-01T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-5-2026-12-01",
+    "title": "General Chemistry",
+    "start": "2026-12-01T13:00",
+    "end": "2026-12-01T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-6-2026-12-01",
+    "title": "Calculus I (201-NYA-05)",
     "start": "2026-12-01T18:00",
     "end": "2026-12-01T21:00",
     "kind": "class"
   },
   {
-    "id": "class-2-2026-12-03",
-    "title": "Calculus I class",
+    "id": "class-7-2026-12-02",
+    "title": "English 603 - Literary Genres",
+    "start": "2026-12-02T08:30",
+    "end": "2026-12-02T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-8-2026-12-02",
+    "title": "Mechanics (Physics NYA)",
+    "start": "2026-12-02T10:30",
+    "end": "2026-12-02T12:30",
+    "kind": "class"
+  },
+  {
+    "id": "busy-9-2026-12-02",
+    "title": "Part-time job",
+    "start": "2026-12-02T16:00",
+    "end": "2026-12-02T20:00",
+    "kind": "busy"
+  },
+  {
+    "id": "class-10-2026-12-03",
+    "title": "Humanities 345 - Knowledge",
+    "start": "2026-12-03T10:00",
+    "end": "2026-12-03T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-11-2026-12-03",
+    "title": "Chemistry Lab",
+    "start": "2026-12-03T13:00",
+    "end": "2026-12-03T16:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-12-2026-12-03",
+    "title": "Calculus I (201-NYA-05)",
     "start": "2026-12-03T18:00",
     "end": "2026-12-03T21:00",
     "kind": "class"
@@ -44,8 +296,8 @@
   {
     "id": "study-s1",
     "title": "Study: Learn functions and their properties",
-    "start": "2026-11-16T08:00",
-    "end": "2026-11-16T08:30",
+    "start": "2026-11-16T12:45",
+    "end": "2026-11-16T13:15",
     "kind": "study",
     "session_id": "s1"
   },
@@ -60,8 +312,8 @@
   {
     "id": "study-s3",
     "title": "Study: Learn limits and one-sided limits",
-    "start": "2026-11-18T08:00",
-    "end": "2026-11-18T08:30",
+    "start": "2026-11-18T12:45",
+    "end": "2026-11-18T13:15",
     "kind": "study",
     "session_id": "s3"
   },
@@ -100,8 +352,8 @@
   {
     "id": "study-s8",
     "title": "Study: Learn trigonometric limits and the squeeze theorem",
-    "start": "2026-11-23T08:00",
-    "end": "2026-11-23T08:30",
+    "start": "2026-11-23T12:45",
+    "end": "2026-11-23T13:15",
     "kind": "study",
     "session_id": "s8"
   },
@@ -116,8 +368,8 @@
   {
     "id": "study-s10",
     "title": "Study: Practice derivative from the limit definition",
-    "start": "2026-11-25T08:00",
-    "end": "2026-11-25T08:30",
+    "start": "2026-11-25T12:45",
+    "end": "2026-11-25T13:15",
     "kind": "study",
     "session_id": "s10"
   },
@@ -156,16 +408,16 @@
   {
     "id": "study-s15",
     "title": "Study: Learn product and quotient rules",
-    "start": "2026-11-30T08:00",
-    "end": "2026-11-30T08:30",
+    "start": "2026-11-30T12:45",
+    "end": "2026-11-30T13:15",
     "kind": "study",
     "session_id": "s15"
   },
   {
     "id": "study-s16",
     "title": "Study: Practice product and quotient rules",
-    "start": "2026-11-30T08:45",
-    "end": "2026-11-30T09:15",
+    "start": "2026-11-30T16:15",
+    "end": "2026-11-30T16:45",
     "kind": "study",
     "session_id": "s16"
   },
@@ -188,16 +440,16 @@
   {
     "id": "study-s19",
     "title": "Study: Practice chain rule with mixed rules",
-    "start": "2026-12-02T08:00",
-    "end": "2026-12-02T08:30",
+    "start": "2026-12-02T12:45",
+    "end": "2026-12-02T13:15",
     "kind": "study",
     "session_id": "s19"
   },
   {
     "id": "study-s20",
     "title": "Study: Review chain rule and differentiation",
-    "start": "2026-12-02T08:45",
-    "end": "2026-12-02T09:15",
+    "start": "2026-12-02T13:30",
+    "end": "2026-12-02T14:00",
     "kind": "study",
     "session_id": "s20"
   },

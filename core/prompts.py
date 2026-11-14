@@ -179,9 +179,10 @@ Return only the JSON. No prose. No markdown fences.
 """
 
 TIMETABLE = """
-Read the provided class-timetable image and use the supplied Monday date of
-the target week to extract every class occurrence. Return one event for each
-class occurrence that falls in the Monday-through-Sunday week.
+Read the provided timetable image and use the supplied Monday date of the
+target week to extract every class and every other fixed commitment (work
+shifts, appointments). Return one event for each occurrence that falls in the
+Monday-through-Sunday week.
 
 Return exactly this JSON shape:
 [
@@ -196,10 +197,13 @@ Return exactly this JSON shape:
 
 Hard rules:
 - start and end must use ISO format YYYY-MM-DDTHH:MM.
-- Every event.kind must be exactly "class".
-- Use event ids class-1, class-2, ... in output order.
+- event.kind is "class" for courses, labs and lectures, and "busy" for work
+  shifts or any other non-class commitment.
+- Use event ids <kind>-1, <kind>-2, ... numbered in output order.
+- Times are 24-hour HH:MM: convert "4:00 PM" to "16:00".
 - Every date must fall within the Monday-Sunday week beginning at week_start.
 - If a class occurs multiple times, create one event for each occurrence.
+- Use the event title exactly as written in the image.
 - Do not invent classes or times that are not supported by the image.
 
 Return only the JSON. No prose. No markdown fences.
