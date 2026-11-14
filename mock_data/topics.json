@@ -1,0 +1,45 @@
+{
+  "course": "Circuit Analysis 1",
+  "topics": [
+    {
+      "id": "t1",
+      "name": "Ohm's law and power",
+      "weight": 0.15,
+      "summary": "Relation between voltage, current, resistance and power."
+    },
+    {
+      "id": "t2",
+      "name": "Kirchhoff's laws",
+      "weight": 0.2,
+      "summary": "KCL and KVL for solving node currents and loop voltages."
+    },
+    {
+      "id": "t3",
+      "name": "Series and parallel resistors",
+      "weight": 0.15,
+      "summary": "Equivalent resistance and voltage/current dividers."
+    },
+    {
+      "id": "t4",
+      "name": "Nodal and mesh analysis",
+      "weight": 0.25,
+      "summary": "Systematic methods to solve multi-loop circuits."
+    },
+    {
+      "id": "t5",
+      "name": "Thevenin and Norton equivalents",
+      "weight": 0.25,
+      "summary": "Reducing a linear circuit to a source and one resistance."
+    }
+  ],
+  "deadlines": [
+    {
+      "title": "Midterm",
+      "date": "2026-11-27"
+    },
+    {
+      "title": "Lab report 3",
+      "date": "2026-11-20"
+    }
+  ]
+}

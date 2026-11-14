@@ -1,0 +1,96 @@
+{
+  "session_id": "s2",
+  "guide": {
+    "key_points": [
+      "KCL: currents into a node = currents out",
+      "KVL: voltages around any closed loop sum to zero",
+      "Pick a sign convention and keep it",
+      "Use KCL at nodes, KVL around loops"
+    ],
+    "explanation": "Kirchhoff's laws come from conservation of charge (KCL) and energy (KVL). Together with Ohm's law they solve any resistive circuit.",
+    "example": "A loop has a 9 V source and resistors dropping 4 V and V2. KVL: 9 - 4 - V2 = 0, so **V2 = 5 V**.",
+    "source_hint": "Course notes, chapter 2, p.5-8"
+  },
+  "questions": [
+    {
+      "id": "s2-q1",
+      "session_id": "s2",
+      "topic_id": "t2",
+      "type": "mcq",
+      "question": "Three currents enter a node: 2 A, 3 A and I. 6 A leaves. What is I?",
+      "options": [
+        "1 A",
+        "5 A",
+        "6 A",
+        "11 A"
+      ],
+      "answer": "1 A",
+      "explanation": "KCL: 2 + 3 + I = 6, so I = 1 A."
+    },
+    {
+      "id": "s2-q2",
+      "session_id": "s2",
+      "topic_id": "t2",
+      "type": "mcq",
+      "question": "KVL is based on conservation of...",
+      "options": [
+        "charge",
+        "energy",
+        "mass",
+        "momentum"
+      ],
+      "answer": "energy",
+      "explanation": "The sum of voltage rises and drops around a loop is zero."
+    },
+    {
+      "id": "s2-q3",
+      "session_id": "s2",
+      "topic_id": "t2",
+      "type": "mcq",
+      "question": "A 12 V loop has drops of 5 V and 4 V. The third drop is...",
+      "options": [
+        "1 V",
+        "3 V",
+        "9 V",
+        "21 V"
+      ],
+      "answer": "3 V",
+      "explanation": "12 - 5 - 4 = 3 V."
+    },
+    {
+      "id": "s2-q4",
+      "session_id": "s2",
+      "topic_id": "t2",
+      "type": "mcq",
+      "question": "KCL is applied at...",
+      "options": [
+        "loops",
+        "nodes",
+        "sources only",
+        "resistors only"
+      ],
+      "answer": "nodes",
+      "explanation": "KCL balances currents at a node."
+    },
+    {
+      "id": "s2-q5",
+      "session_id": "s2",
+      "topic_id": "t2",
+      "type": "short",
+      "question": "State KCL in your own words.",
+      "options": [],
+      "answer": "The total current entering a node equals the total current leaving it.",
+      "explanation": "Charge cannot accumulate at a node."
+    },
+    {
+      "id": "s2-q6",
+      "session_id": "s2",
+      "topic_id": "t2",
+      "type": "short",
+      "question": "Two resistors in a 10 V loop drop 6 V and V. Find V.",
+      "options": [],
+      "answer": "4 V",
+      "explanation": "KVL: 10 - 6 - V = 0."
+    }
+  ]
+}

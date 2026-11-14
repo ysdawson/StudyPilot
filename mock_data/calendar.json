@@ -1,0 +1,185 @@
+[
+  {
+    "id": "class-1",
+    "title": "Circuit Analysis 1",
+    "start": "2026-11-16T08:30",
+    "end": "2026-11-16T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-2",
+    "title": "Digital Electronics",
+    "start": "2026-11-16T13:00",
+    "end": "2026-11-16T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-3",
+    "title": "Calculus II",
+    "start": "2026-11-17T10:00",
+    "end": "2026-11-17T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-4",
+    "title": "Circuit Analysis 1",
+    "start": "2026-11-18T08:30",
+    "end": "2026-11-18T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-5",
+    "title": "Electronics Lab",
+    "start": "2026-11-18T14:00",
+    "end": "2026-11-18T17:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-6",
+    "title": "Calculus II",
+    "start": "2026-11-19T10:00",
+    "end": "2026-11-19T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-7",
+    "title": "Networking",
+    "start": "2026-11-20T09:00",
+    "end": "2026-11-20T11:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-8",
+    "title": "Physics",
+    "start": "2026-11-20T13:00",
+    "end": "2026-11-20T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-1-w2",
+    "title": "Circuit Analysis 1",
+    "start": "2026-11-23T08:30",
+    "end": "2026-11-23T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-2-w2",
+    "title": "Digital Electronics",
+    "start": "2026-11-23T13:00",
+    "end": "2026-11-23T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-3-w2",
+    "title": "Calculus II",
+    "start": "2026-11-24T10:00",
+    "end": "2026-11-24T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-4-w2",
+    "title": "Circuit Analysis 1",
+    "start": "2026-11-25T08:30",
+    "end": "2026-11-25T10:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-5-w2",
+    "title": "Electronics Lab",
+    "start": "2026-11-25T14:00",
+    "end": "2026-11-25T17:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-6-w2",
+    "title": "Calculus II",
+    "start": "2026-11-26T10:00",
+    "end": "2026-11-26T12:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-7-w2",
+    "title": "Networking",
+    "start": "2026-11-27T09:00",
+    "end": "2026-11-27T11:00",
+    "kind": "class"
+  },
+  {
+    "id": "class-8-w2",
+    "title": "Physics",
+    "start": "2026-11-27T13:00",
+    "end": "2026-11-27T15:00",
+    "kind": "class"
+  },
+  {
+    "id": "study-s1",
+    "title": "Study: Ohm's law refresher",
+    "start": "2026-11-16T18:00",
+    "end": "2026-11-16T18:45",
+    "kind": "study",
+    "session_id": "s1"
+  },
+  {
+    "id": "study-s2",
+    "title": "Study: KCL and KVL basics",
+    "start": "2026-11-17T18:00",
+    "end": "2026-11-17T19:00",
+    "kind": "study",
+    "session_id": "s2"
+  },
+  {
+    "id": "study-s3",
+    "title": "Study: Series, parallel and dividers",
+    "start": "2026-11-18T18:00",
+    "end": "2026-11-18T18:45",
+    "kind": "study",
+    "session_id": "s3"
+  },
+  {
+    "id": "study-s4",
+    "title": "Study: Kirchhoff practice problems",
+    "start": "2026-11-19T18:00",
+    "end": "2026-11-19T19:00",
+    "kind": "study",
+    "session_id": "s4"
+  },
+  {
+    "id": "study-s5",
+    "title": "Study: Nodal analysis",
+    "start": "2026-11-21T18:00",
+    "end": "2026-11-21T19:00",
+    "kind": "study",
+    "session_id": "s5"
+  },
+  {
+    "id": "study-s6",
+    "title": "Study: Mesh analysis",
+    "start": "2026-11-23T18:00",
+    "end": "2026-11-23T19:00",
+    "kind": "study",
+    "session_id": "s6"
+  },
+  {
+    "id": "study-s7",
+    "title": "Study: Thevenin and Norton",
+    "start": "2026-11-24T18:00",
+    "end": "2026-11-24T19:15",
+    "kind": "study",
+    "session_id": "s7"
+  },
+  {
+    "id": "study-s8",
+    "title": "Study: Midterm review",
+    "start": "2026-11-25T18:00",
+    "end": "2026-11-25T19:30",
+    "kind": "study",
+    "session_id": "s8"
+  },
+  {
+    "id": "deadline-1",
+    "title": "Midterm",
+    "start": "2026-11-27T08:00",
+    "end": "2026-11-27T09:00",
+    "kind": "deadline"
+  }
+]

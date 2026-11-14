@@ -1,0 +1,96 @@
+{
+  "session_id": "s1",
+  "guide": {
+    "key_points": [
+      "V = I x R links voltage, current and resistance",
+      "Power: P = V x I = I^2 x R = V^2 / R",
+      "Current flows from higher to lower potential through a resistor",
+      "Units: volts (V), amperes (A), ohms, watts (W)"
+    ],
+    "explanation": "Ohm's law says the voltage across a resistor is proportional to the current through it. Combine it with the power formulas to find how much energy a component dissipates.",
+    "example": "A 12 V source drives a 4 ohm resistor. I = 12 / 4 = **3 A**. P = 12 x 3 = **36 W**.",
+    "source_hint": "Course notes, chapter 1, p.2-4"
+  },
+  "questions": [
+    {
+      "id": "s1-q1",
+      "session_id": "s1",
+      "topic_id": "t1",
+      "type": "mcq",
+      "question": "A 10 V source is across a 5 ohm resistor. What is the current?",
+      "options": [
+        "0.5 A",
+        "2 A",
+        "5 A",
+        "50 A"
+      ],
+      "answer": "2 A",
+      "explanation": "I = V / R = 10 / 5 = 2 A."
+    },
+    {
+      "id": "s1-q2",
+      "session_id": "s1",
+      "topic_id": "t1",
+      "type": "mcq",
+      "question": "A resistor draws 2 A from a 6 V supply. What power does it dissipate?",
+      "options": [
+        "3 W",
+        "8 W",
+        "12 W",
+        "24 W"
+      ],
+      "answer": "12 W",
+      "explanation": "P = V x I = 6 x 2 = 12 W."
+    },
+    {
+      "id": "s1-q3",
+      "session_id": "s1",
+      "topic_id": "t1",
+      "type": "mcq",
+      "question": "If the current through a fixed resistor doubles, the power...",
+      "options": [
+        "doubles",
+        "stays the same",
+        "is halved",
+        "quadruples"
+      ],
+      "answer": "quadruples",
+      "explanation": "P = I^2 R, so doubling I multiplies P by 4."
+    },
+    {
+      "id": "s1-q4",
+      "session_id": "s1",
+      "topic_id": "t1",
+      "type": "mcq",
+      "question": "Which unit is used for resistance?",
+      "options": [
+        "Watt",
+        "Ohm",
+        "Volt",
+        "Ampere"
+      ],
+      "answer": "Ohm",
+      "explanation": "Resistance is measured in ohms."
+    },
+    {
+      "id": "s1-q5",
+      "session_id": "s1",
+      "topic_id": "t1",
+      "type": "short",
+      "question": "A 100 ohm resistor carries 0.1 A. What is the voltage across it?",
+      "options": [],
+      "answer": "10 V",
+      "explanation": "V = I x R = 0.1 x 100 = 10 V."
+    },
+    {
+      "id": "s1-q6",
+      "session_id": "s1",
+      "topic_id": "t1",
+      "type": "short",
+      "question": "Explain in one sentence why a resistor heats up.",
+      "options": [],
+      "answer": "Current through the resistance dissipates electrical energy as heat (P = I^2 R).",
+      "explanation": "The power I^2 R is converted to heat."
+    }
+  ]
+}

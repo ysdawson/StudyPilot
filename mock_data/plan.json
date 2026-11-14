@@ -1,0 +1,84 @@
+{
+  "goal": {
+    "course": "Circuit Analysis 1",
+    "target": "Midterm",
+    "deadline": "2026-11-27",
+    "start_date": "2026-11-16",
+    "hours_per_week": 6,
+    "target_grade": "A"
+  },
+  "sessions": [
+    {
+      "id": "s1",
+      "order": 1,
+      "topic_id": "t1",
+      "title": "Ohm's law refresher",
+      "minutes": 45,
+      "objective": "Apply V=IR and P=VI to simple circuits",
+      "kind": "learn"
+    },
+    {
+      "id": "s2",
+      "order": 2,
+      "topic_id": "t2",
+      "title": "KCL and KVL basics",
+      "minutes": 60,
+      "objective": "Write KCL and KVL equations for any circuit",
+      "kind": "learn"
+    },
+    {
+      "id": "s3",
+      "order": 3,
+      "topic_id": "t3",
+      "title": "Series, parallel and dividers",
+      "minutes": 45,
+      "objective": "Find equivalent resistance and use dividers",
+      "kind": "learn"
+    },
+    {
+      "id": "s4",
+      "order": 4,
+      "topic_id": "t2",
+      "title": "Kirchhoff practice problems",
+      "minutes": 60,
+      "objective": "Solve 2-loop circuits with KVL",
+      "kind": "practice"
+    },
+    {
+      "id": "s5",
+      "order": 5,
+      "topic_id": "t4",
+      "title": "Nodal analysis",
+      "minutes": 60,
+      "objective": "Solve node voltages with nodal analysis",
+      "kind": "learn"
+    },
+    {
+      "id": "s6",
+      "order": 6,
+      "topic_id": "t4",
+      "title": "Mesh analysis",
+      "minutes": 60,
+      "objective": "Solve loop currents with mesh analysis",
+      "kind": "practice"
+    },
+    {
+      "id": "s7",
+      "order": 7,
+      "topic_id": "t5",
+      "title": "Thevenin and Norton",
+      "minutes": 75,
+      "objective": "Find Vth, Rth and the Norton equivalent",
+      "kind": "learn"
+    },
+    {
+      "id": "s8",
+      "order": 8,
+      "topic_id": "t5",
+      "title": "Midterm review",
+      "minutes": 90,
+      "objective": "Mixed exam-style problems on all topics",
+      "kind": "review"
+    }
+  ]
+}

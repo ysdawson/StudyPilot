@@ -1,0 +1,45 @@
+{
+  "session_id": "s1",
+  "results": [
+    {
+      "question_id": "s1-q1",
+      "topic_id": "t1",
+      "correct": true,
+      "user_answer": "2 A"
+    },
+    {
+      "question_id": "s1-q2",
+      "topic_id": "t1",
+      "correct": false,
+      "user_answer": "8 W"
+    },
+    {
+      "question_id": "s1-q3",
+      "topic_id": "t1",
+      "correct": false,
+      "user_answer": "doubles"
+    },
+    {
+      "question_id": "s1-q4",
+      "topic_id": "t1",
+      "correct": true,
+      "user_answer": "Ohm"
+    },
+    {
+      "question_id": "s1-q5",
+      "topic_id": "t1",
+      "correct": false,
+      "user_answer": "1 V"
+    },
+    {
+      "question_id": "s1-q6",
+      "topic_id": "t1",
+      "correct": true,
+      "user_answer": "heat"
+    }
+  ],
+  "score": 0.5,
+  "topic_scores": {
+    "t1": 0.5
+  }
+}
