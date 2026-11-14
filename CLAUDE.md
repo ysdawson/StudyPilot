@@ -23,7 +23,7 @@ Repo: https://github.com/ysdawson/StudyPilot
 | Member | Files | Status |
 |---|---|---|
 | 1 - AI engine (Python) | core/llm.py, core/prompts.py, core/ai_engine.py, test_engine.py | llm.py stub; ai_engine mock mode works, real mode TODO |
-| 2 - Yassine, app + integration (current user) | app.py, pages/1_Plan.py, pages/2_Calendar.py, core/scheduler.py, core/schedule_input.py, core/demo.py, tests/ | DONE and tested on mocks; now integration, deploy, polish |
+| 2 - Yassine, app + integration (current user) | app.py, pages/1_Plan.py, pages/2_Calendar.py, core/scheduler.py, core/schedule_input.py, core/demo.py, core/board.py, tests/ | DONE and tested on mocks; now integration, deploy, polish |
 | 3 - Session + quiz (non-technical, vibe codes) | pages/3_Session.py, core/quiz_logic.py, .streamlit/config.toml | placeholder page; grade() stub |
 | 4 - Data + demo (non-technical) | mock_data/, sample_data/, check_mocks.py, slides | mocks done for "Circuit Analysis 1"; demo PDFs + slides TODO |
 
