@@ -39,14 +39,23 @@ def _read_setting(name: str, secrets: dict[str, Any]) -> str | None:
 
 
 _FILE_SECRETS = _read_file_secrets()
-_API_KEY = _read_setting("ANTHROPIC_API_KEY", _FILE_SECRETS)
 MODEL = _read_setting("CLAUDE_MODEL", _FILE_SECRETS) or "claude-haiku-5-5"
-if not _API_KEY:
-    raise RuntimeError(
-        "ANTHROPIC_API_KEY is not configured in Streamlit secrets, "
-        ".streamlit/secrets.toml, or the environment."
-    )
-client = anthropic.Anthropic(api_key=_API_KEY)
+_client: anthropic.Anthropic | None = None
+
+
+def _get_client() -> anthropic.Anthropic:
+    """Create the client on the first real API call, so the app (and mock
+    mode) can start without an API key."""
+    global _client
+    if _client is None:
+        api_key = _read_setting("ANTHROPIC_API_KEY", _FILE_SECRETS)
+        if not api_key:
+            raise RuntimeError(
+                "ANTHROPIC_API_KEY is not configured in Streamlit secrets, "
+                ".streamlit/secrets.toml, or the environment."
+            )
+        _client = anthropic.Anthropic(api_key=api_key)
+    return _client
 
 
 def _strip_code_fence(raw_response: str) -> str:
@@ -92,7 +101,7 @@ def call_claude_json(
 
     request_system = system + "\n\nAnswer with JSON only, no prose."
     messages = [{"role": "user", "content": content}]
-    response = client.messages.create(
+    response = _get_client().messages.create(
         model=MODEL,
         max_tokens=max_tokens,
         system=request_system,
@@ -111,7 +120,7 @@ def call_claude_json(
                 "content": "Your last answer was not valid JSON. Return only the JSON.",
             },
         ]
-        retry_response = client.messages.create(
+        retry_response = _get_client().messages.create(
             model=MODEL,
             max_tokens=max_tokens,
             system=request_system,
