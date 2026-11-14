@@ -22,5 +22,5 @@ try:
     }, key="cal")
 except ImportError:
     st.warning("Install streamlit-calendar for the calendar view. Showing a list instead.")
-    st.dataframe(events, use_container_width=True)
+    st.dataframe(events, width="stretch")
 st.caption("Grey: classes · Blue: study sessions · Red: deadlines")

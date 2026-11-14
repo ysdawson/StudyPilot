@@ -47,7 +47,7 @@ def schedule_input_ui(week_start: str) -> list[Event]:
             st.error(f"Couldn't read the timetable: {ex}")
 
     edited = st.data_editor(
-        st.session_state[ROWS_KEY], num_rows="dynamic", use_container_width=True, key="schedule_editor",
+        st.session_state[ROWS_KEY], num_rows="dynamic", width="stretch", key="schedule_editor",
         column_config={
             "day": st.column_config.SelectboxColumn("Day", options=DAYS, required=True),
             "start": st.column_config.TextColumn("Start (HH:MM)", required=True),
