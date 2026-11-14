@@ -52,8 +52,9 @@ def test_topic_scores_per_topic():
 
 
 def test_short_answers_use_self_marking():
-    qs = _questions()
-    s = _first(qs, "short")[0]
+    qs = _questions() + [{"id": "s1-qx", "session_id": "s1", "topic_id": "t1", "type": "short",
+                          "question": "Explain.", "options": [], "answer": "Because.", "explanation": "e"}]
+    s = qs[-1]
     assert grade(qs, {s["id"]: "anything"}, {s["id"]: True})["results"][qs.index(s)]["correct"] is True
     assert grade(qs, {s["id"]: s["answer"]}, {})["results"][qs.index(s)]["correct"] is False
 
@@ -66,8 +67,7 @@ def test_empty_quiz():
 def test_session_page_full_flow():
     from streamlit.testing.v1 import AppTest
     qs = _questions()
-    m1, m2 = _first(qs, "mcq")[:2]
-    s1 = _first(qs, "short")[0]
+    m1, m2, m3 = _first(qs, "mcq")[:3]
     at = AppTest.from_file(os.path.join(ROOT, "pages", "3_Session.py"), default_timeout=30)
     at.secrets["MOCK_AI"] = "1"
     at.run()
@@ -78,11 +78,10 @@ def test_session_page_full_flow():
     assert not at.exception
     at.radio(key=f"ans_{m1['id']}").set_value(m1["answer"])
     at.radio(key=f"ans_{m2['id']}").set_value(m2["answer"])
-    at.text_area(key=f"ans_{s1['id']}").input(s1["answer"])
+    at.radio(key=f"ans_{m3['id']}").set_value(m3["answer"])
     next(b for b in at.button if b.label == "Check my answers").click()
     at.run()
     assert not at.exception
-    at.checkbox(key=f"self_{s1['id']}").check()
     next(b for b in at.button if b.label == "Save my results").click()
     at.run()
     assert not at.exception

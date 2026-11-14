@@ -123,8 +123,8 @@ with tab_quiz:
                     ok = ua.strip().lower() == q["answer"].strip().lower()
                     st.markdown(f"{'✅' if ok else '❌'} **Question {i} — {'Correct' if ok else 'Needs Review'}**")
                     st.markdown(f"*{q['question']}*")
-                    st.markdown(f"**Your Answer:** `{ua or 'No selection'}`")
-                    st.markdown(f"**Correct Answer:** `{q['answer']}`")
+                    st.markdown(f"**Your Answer:** {ua or '_No selection_'}")  # Markdown, so LaTeX renders
+                    st.markdown(f"**Correct Answer:** {q['answer']}")
                 else:
                     st.markdown(f"✍️ **Question {i} — Compare with the model answer**")
                     st.markdown(f"*{q['question']}*")

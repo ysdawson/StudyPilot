@@ -83,10 +83,10 @@ def _valid_questions(value: object, session_id: str, topic_id: str = "") -> list
                 continue
         if not str(question.get("explanation", "")).strip():
             question["explanation"] = "See the study guide."
-        if question.get("type") not in {"mcq", "short"}:
-            question["type"] = "short"
-        if question["type"] == "short":
-            question["options"] = []
+        if question.get("type") != "mcq":
+            continue  # multiple choice only (4 options, exactly one correct)
+        if len(question.get("options") or []) != 4 or question["options"].count(question.get("answer")) != 1:
+            continue
         if not question.get("question") or not str(question.get("answer", "")).strip():
             continue
         question["id"] = f"{session_id}-q{len(valid) + 1}"

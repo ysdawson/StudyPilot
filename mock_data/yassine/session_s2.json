@@ -2,89 +2,165 @@
   "session_id": "s2",
   "guide": {
     "key_points": [
-      "CDP is Cisco-proprietary Layer 2 discovery: it shows neighbor device ID, platform, port, and IP address.",
-      "LLDP (IEEE 802.1AB) provides similar discovery but is vendor-neutral, so it works in mixed-vendor networks.",
-      "NTP synchronizes device clocks through strata; accurate time keeps syslog entries and certificate checks reliable.",
-      "SNMP lets a manager poll agents (UDP 161) and receive traps (UDP 162) for monitoring; SNMPv3 adds authentication and encryption.",
-      "Syslog sends device log messages to a central server (UDP 514), with severity levels 0 (emergency) to 7 (debugging)."
+      "CDP is Cisco-proprietary and LLDP is vendor-neutral (IEEE 802.1AB); both discover directly connected neighbors at Layer 2.",
+      "NTP synchronizes device clocks over UDP 123 so that logs and events from different devices can be correlated.",
+      "SNMP uses a manager and agents: managers poll agents on UDP 161, and agents send traps to UDP 162.",
+      "SNMPv3 is the only version that provides authentication and encryption (authPriv); v1 and v2c use cleartext community strings.",
+      "Syslog sends event messages to a central server, typically over UDP 514, using severity levels 0 (emergency) to 7 (debug).",
+      "Discovery protocol timers determine how long a stale neighbor entry remains: the holdtime expires after the advertisement interval has been missed."
     ],
-    "explanation": "CDP and LLDP are discovery protocols that let you see which devices are directly connected and on which ports. NTP, SNMP, and Syslog are management protocols used for time sync, monitoring, and central logging. Choose the protocol based on whether you need discovery, time accuracy, device health polling, or log collection.",
-    "example": "LLDP advertisements are sent every 30 seconds, and the hold time is 4 times that interval. Hold time = 4 x 30 s = 120 s, so a neighbor entry expires 120 s after the last advertisement is heard.",
-    "source_hint": "Outline week 7: Extended ACLs + Network Management (CDP & LLDP, NTP, SNMP, Syslog)"
+    "explanation": "CDP and LLDP discover directly connected neighbors at Layer 2, with CDP being Cisco-proprietary and LLDP being vendor-neutral under IEEE 802.1AB. NTP keeps device clocks synchronized so that log timestamps can be compared, while SNMP lets a manager poll agents or receive traps from them. Syslog forwards event messages to a central server for monitoring and troubleshooting. Source: Outline week 7: Extended ACLs + Network Management.",
+    "example": "A switch receives CDP advertisements from a neighbor every $60$ s with a holdtime of $180$ s. The neighbor's last advertisement arrives at $t = 0$ s and then stops. The neighbor entry expires at $t = 0 + 180 = 180$ s, so the switch removes it after $180$ s.",
+    "source_hint": "Outline week 7: Extended ACLs + Network Management"
   },
   "questions": [
     {
       "id": "s2-q1",
       "type": "mcq",
-      "question": "Which discovery protocol is vendor-neutral and standardized as IEEE 802.1AB?",
+      "question": "Which protocol is Cisco-proprietary and discovers directly connected Cisco devices at Layer 2?",
       "options": [
         "CDP",
         "LLDP",
-        "SNMP",
-        "Syslog"
+        "NTP",
+        "SNMP"
       ],
-      "answer": "LLDP",
-      "explanation": "Outline week 7 covers CDP and LLDP for discovery. LLDP is the IEEE 802.1AB standard, while CDP is Cisco-proprietary.",
+      "answer": "CDP",
+      "explanation": "CDP is Cisco's proprietary Layer 2 discovery protocol, and LLDP is the vendor-neutral IEEE 802.1AB alternative. Source: Outline week 7: Extended ACLs + Network Management.",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q2",
       "type": "mcq",
-      "question": "In syslog, which severity level number represents an Error message?",
+      "question": "Which vendor-neutral discovery protocol is defined by IEEE 802.1AB?",
       "options": [
-        "1",
-        "3",
-        "5",
-        "7"
+        "CDP",
+        "LLDP",
+        "Syslog",
+        "SNMP"
       ],
-      "answer": "3",
-      "explanation": "Outline week 7 includes Syslog for logging. In the standard scale, 0 is emergency, 1 alert, 2 critical, 3 error, 4 warning, 5 notice, 6 informational, and 7 debugging.",
+      "answer": "LLDP",
+      "explanation": "LLDP is standardized as IEEE 802.1AB, so it works across multi-vendor equipment, unlike CDP. Source: Outline week 7: Extended ACLs + Network Management.",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q3",
       "type": "mcq",
-      "question": "Which UDP port do SNMP agents typically use to send traps to the manager?",
+      "question": "A technician sees that log entries from three routers have timestamps that do not line up. Which protocol should be fixed first?",
       "options": [
-        "161",
-        "162",
-        "514",
-        "123"
+        "CDP",
+        "NTP",
+        "SNMP",
+        "Syslog"
       ],
-      "answer": "162",
-      "explanation": "Outline week 7 covers SNMP for monitoring. Agents send traps to UDP 162, while managers poll agents on UDP 161.",
+      "answer": "NTP",
+      "explanation": "NTP synchronizes device clocks, so mismatched timestamps usually indicate that NTP is not configured or not synchronizing correctly. Source: Outline week 7: Extended ACLs + Network Management.",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q4",
       "type": "mcq",
-      "question": "You need the neighbor's platform and remote port on a network with only Cisco devices. Which protocol is the most direct choice?",
+      "question": "Which UDP port is the default destination for SNMP traps sent from an agent to a manager?",
       "options": [
-        "CDP",
-        "NTP",
-        "SNMPv1",
-        "Syslog"
+        "UDP 123",
+        "UDP 161",
+        "UDP 162",
+        "UDP 514"
       ],
-      "answer": "CDP",
-      "explanation": "Outline week 7 covers CDP for discovery. CDP shows neighbor platform and port details on Cisco devices, which fits this case.",
+      "answer": "UDP 162",
+      "explanation": "SNMP polls use UDP 161, while agent-initiated traps are sent to UDP 162. Source: Outline week 7: Extended ACLs + Network Management.",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q5",
       "type": "mcq",
-      "question": "A server synchronizes directly with a stratum 1 reference clock. What stratum is the server?",
+      "question": "Which SNMP version provides both authentication and encryption?",
       "options": [
-        "1",
-        "2",
-        "3",
-        "4"
+        "SNMPv1 with community strings",
+        "SNMPv2c with a read-only community",
+        "SNMPv3 with authPriv",
+        "SNMPv2c with a read-write community"
       ],
-      "answer": "2",
-      "explanation": "Outline week 7 covers NTP for time sync. Each hop away from a stratum 1 source increases the stratum by one, so a direct client of stratum 1 is stratum 2.",
+      "answer": "SNMPv3 with authPriv",
+      "explanation": "SNMPv3 authPriv adds authentication and encryption, while v1 and v2c rely on cleartext community strings. Source: Outline week 7: Extended ACLs + Network Management.",
+      "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q6",
+      "type": "mcq",
+      "question": "Which Syslog severity level is the most severe?",
+      "options": [
+        "Level 0 (emergency)",
+        "Level 3 (error)",
+        "Level 5 (notice)",
+        "Level 7 (debug)"
+      ],
+      "answer": "Level 0 (emergency)",
+      "explanation": "Syslog severity runs from 0 (emergency) to 7 (debug), so level 0 is the most severe. Source: Outline week 7: Extended ACLs + Network Management.",
+      "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q7",
+      "type": "mcq",
+      "question": "A switch receives CDP advertisements every $60$ s with a holdtime of $180$ s. If the neighbor stops advertising at $t = 0$ s, when is the neighbor entry removed?",
+      "options": [
+        "$60$ s",
+        "$120$ s",
+        "$180$ s",
+        "$240$ s"
+      ],
+      "answer": "$180$ s",
+      "explanation": "The neighbor entry remains until the holdtime expires, which is $0 + 180 = 180$ s. Source: Outline week 7: Extended ACLs + Network Management.",
+      "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q8",
+      "type": "mcq",
+      "question": "Which Syslog transport and port is commonly used to send messages to a central server?",
+      "options": [
+        "TCP 22",
+        "UDP 514",
+        "UDP 162",
+        "UDP 123"
+      ],
+      "answer": "UDP 514",
+      "explanation": "Syslog commonly uses UDP port 514 for transmission to a log server. Source: Outline week 7: Extended ACLs + Network Management.",
+      "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q9",
+      "type": "mcq",
+      "question": "A network administrator needs to periodically retrieve interface counters and CPU statistics from routers. Which protocol is most appropriate?",
+      "options": [
+        "CDP",
+        "NTP",
+        "SNMP",
+        "Syslog"
+      ],
+      "answer": "SNMP",
+      "explanation": "SNMP is designed for managers to poll agents for device statistics such as interface counters and CPU use. Source: Outline week 7: Extended ACLs + Network Management.",
+      "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q10",
+      "type": "mcq",
+      "question": "The default LLDP advertisement interval is $30$ s and the holdtime multiplier is $4$. What is the default LLDP holdtime?",
+      "options": [
+        "$30$ s",
+        "$60$ s",
+        "$120$ s",
+        "$180$ s"
+      ],
+      "answer": "$120$ s",
+      "explanation": "The holdtime equals the advertisement interval times the multiplier, so $30 \\times 4 = 120$ s. Source: Outline week 7: Extended ACLs + Network Management.",
       "topic_id": "t2",
       "session_id": "s2"
     }

@@ -122,8 +122,9 @@ Hard rules:
   The text may contain several files, each starting with "=== <file name> ===",
   and page numbers restart in every file, so always cite the file too, e.g.
   "Lecture9.pdf p.14-16". Cite sources the same way in question explanations.
-- Include 5 to 8 questions, mixing type="mcq" and type="short".
-- Every mcq question must have exactly 4 options.
+- Include 8 to 10 questions, ALL type="mcq" (no short-answer questions).
+- Every question has exactly 4 options and exactly one correct option; the
+  other three must be clearly wrong but plausible.
 - For mcq questions, answer must exactly equal one of the options.
 - Every question must have a non-empty explanation.
 - Use question ids <session_id>-q1, <session_id>-q2, and so on.
@@ -139,8 +140,10 @@ Hard rules:
   be flattened (e.g. "x2 + 1" means x^2 + 1). Interpret them mathematically.
 - Work out every answer step by step before writing it, and make sure the
   answer and explanation are mathematically correct and agree with each other.
-- Write math in plain text that reads well in Markdown, e.g. x^2, sqrt(x),
-  (x^2 + 1)^3, sin(x)/x, lim_(x->0). Do not use LaTeX.
+- Write all math in LaTeX: inline as $...$ (e.g. $x^2$, $\sqrt{x}$,
+  $(x^2+1)^3$, $\lim_{x \to 0} \frac{\sin x}{x}$) and a displayed formula as $$...$$ on its own
+  line. Use LaTeX in the guide, questions, options, answers and explanations. Never use a bare $ for
+  money (write USD instead). Escape backslashes correctly in the JSON strings.
 
 Return only the JSON. No prose. No markdown fences.
 """

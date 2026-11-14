@@ -2,120 +2,164 @@
   "session_id": "s1",
   "guide": {
     "key_points": [
-      "Extended ACL entries match protocol, source address, destination address, and port, so they filter more precisely than standard ACLs.",
-      "Syntax order: access-list number action protocol source source-wildcard [operator port] destination destination-wildcard [operator port].",
-      "Wildcard masks are the inverse of subnet masks: a 0 bit means match, a 1 bit means ignore.",
-      "The operator eq matches one port, such as eq 23 for Telnet or eq 80 for HTTP.",
-      "Extended numbered ACLs use 100-199 and 2000-2699, and named ACLs use ip access-list extended NAME.",
-      "Every ACL ends with an implicit deny, so traffic not matched by a permit line is dropped."
+      "An extended ACL entry can match protocol, source address and wildcard, destination address and wildcard, and optional port numbers (Outline week 7: Extended ACLs + Network Management).",
+      "A wildcard mask is the inverse of a subnet mask: a 0 bit means the address bit must match, and a 1 bit means it is ignored.",
+      "Port operators such as eq, gt, lt, and range apply only when the protocol is TCP or UDP.",
+      "Numbered extended IP ACLs use 100-199 and 2000-2699, and named extended ACLs use ip access-list extended.",
+      "Every ACL ends with an implicit deny any, so traffic not matched by a permit statement is dropped."
     ],
-    "explanation": "Outline week 7: Extended ACLs + Network Management covers writing extended ACLs that match protocol, source, destination, and port. Each entry specifies an action (permit or deny), a protocol, source and destination addresses with wildcard masks, and optionally a port operator. Entries are read top-down, and the first match decides the action.",
-    "example": "Block Telnet from 192.168.10.0/24 to any destination, and permit everything else. The wildcard for /24 is 0.0.0.255, so the lines are: access-list 110 deny tcp 192.168.10.0 0.0.0.255 any eq 23, then access-list 110 permit ip any any. The first line matches TCP port 23 from that subnet, and the second line permits all other IP traffic.",
+    "explanation": "Extended ACLs filter traffic using more fields than standard ACLs, including protocol, source, destination, and port. Each entry is read in order, and the first match decides whether the packet is permitted or denied (Outline week 7: Extended ACLs + Network Management). Wildcard masks tell the router which address bits to compare, and port numbers narrow the match to a specific service.",
+    "example": "For the network 10.0.0.0/24, the subnet mask $255.255.255.0$ inverts to the wildcard $0.0.0.255$. The entry access-list 101 deny tcp 10.0.0.0 0.0.0.255 host 192.168.5.20 eq 23 blocks TCP port 23 (Telnet) from that network to host 192.168.5.20 and leaves other traffic to be checked by later entries (Outline week 7: Extended ACLs + Network Management).",
     "source_hint": "Outline week 7: Extended ACLs + Network Management"
   },
   "questions": [
     {
       "id": "s1-q1",
       "type": "mcq",
-      "question": "What is the wildcard mask for the subnet mask 255.255.255.192?",
+      "question": "In the entry access-list 110 permit tcp any any eq 443, what does eq 443 match?",
       "options": [
-        "0.0.0.63",
-        "0.0.0.192",
-        "255.255.255.192",
-        "0.0.0.31"
+        "The destination port 443",
+        "The source port 443",
+        "The protocol number 443",
+        "The destination host 443"
       ],
-      "answer": "0.0.0.63",
-      "explanation": "Outline week 7: Extended ACLs + Network Management. The inverse of 255.255.255.192 is 0.0.0.63, because 255 minus 255 is 0 and 255 minus 192 is 63.",
+      "answer": "The destination port 443",
+      "explanation": "The port operand follows the destination specification (the second any), so it matches the destination TCP port 443 (Outline week 7: Extended ACLs + Network Management).",
       "topic_id": "t1",
       "session_id": "s1"
     },
     {
       "id": "s1-q2",
       "type": "mcq",
-      "question": "Which port operator matches exactly one specified port in an extended ACL entry?",
+      "question": "What is the wildcard mask for the subnet mask 255.255.255.0?",
       "options": [
-        "eq",
-        "gt",
-        "range",
-        "neq"
+        "0.0.0.255",
+        "255.255.255.0",
+        "0.0.0.0",
+        "255.255.255.255"
       ],
-      "answer": "eq",
-      "explanation": "Outline week 7: Extended ACLs + Network Management. The eq operator matches exactly one port, such as eq 80. The range operator needs two port numbers.",
+      "answer": "0.0.0.255",
+      "explanation": "Inverting each octet of 255.255.255.0 gives 0.0.0.255, so the first three octets must match and the last octet is ignored (Outline week 7: Extended ACLs + Network Management).",
       "topic_id": "t1",
       "session_id": "s1"
     },
     {
       "id": "s1-q3",
       "type": "mcq",
-      "question": "Where should an extended ACL normally be placed?",
+      "question": "What is the wildcard mask for the network 172.16.8.0/21?",
       "options": [
-        "Close to the source",
-        "Close to the destination",
-        "On every interface",
-        "On the loopback interface only"
+        "0.0.7.255",
+        "0.0.15.255",
+        "0.0.248.0",
+        "0.0.0.255"
       ],
-      "answer": "Close to the source",
-      "explanation": "Outline week 7: Extended ACLs + Network Management. Extended ACLs are placed close to the source so that unwanted traffic is dropped before it crosses the network.",
+      "answer": "0.0.7.255",
+      "explanation": "A /21 subnet mask is 255.255.248.0. Inverting 248 (11111000) gives 7 (00000111), so the wildcard is 0.0.7.255 (Outline week 7: Extended ACLs + Network Management).",
       "topic_id": "t1",
       "session_id": "s1"
     },
     {
       "id": "s1-q4",
-      "type": "short",
-      "question": "Write the extended numbered ACL 110 lines that deny Telnet (TCP port 23) from 192.168.10.0/24 to any destination and permit all other IP traffic.",
-      "answer": "access-list 110 deny tcp 192.168.10.0 0.0.0.255 any eq 23, then access-list 110 permit ip any any",
-      "explanation": "Outline week 7: Extended ACLs + Network Management. The /24 wildcard is 0.0.0.255, eq 23 matches Telnet, and the final permit line overrides the implicit deny for other traffic.",
+      "type": "mcq",
+      "question": "Which access-list number range identifies numbered extended IP ACLs?",
+      "options": [
+        "1-99",
+        "100-199",
+        "200-299",
+        "300-399"
+      ],
+      "answer": "100-199",
+      "explanation": "Numbers 100-199 (and 2000-2699) are used for extended IP ACLs, while 1-99 identifies standard IP ACLs (Outline week 7: Extended ACLs + Network Management).",
       "topic_id": "t1",
-      "options": [],
       "session_id": "s1"
     },
     {
       "id": "s1-q5",
-      "type": "short",
-      "question": "What is the wildcard mask for the network 10.1.0.0/16?",
-      "answer": "0.0.255.255",
-      "explanation": "Outline week 7: Extended ACLs + Network Management. A /16 mask is 255.255.0.0, and its inverse is 0.0.255.255.",
+      "type": "mcq",
+      "question": "Which command starts a named extended ACL called BLOCK-TELNET?",
+      "options": [
+        "ip access-list extended BLOCK-TELNET",
+        "ip access-list standard BLOCK-TELNET",
+        "ip access-group BLOCK-TELNET",
+        "access-list extended BLOCK-TELNET"
+      ],
+      "answer": "ip access-list extended BLOCK-TELNET",
+      "explanation": "The ip access-list extended name command creates a named extended ACL and enters its configuration mode (Outline week 7: Extended ACLs + Network Management).",
       "topic_id": "t1",
-      "options": [],
       "session_id": "s1"
     },
     {
       "id": "s1-q6",
       "type": "mcq",
-      "question": "Which access list number range is used for extended numbered IP ACLs?",
+      "question": "Which protocol keyword should be used to filter DNS queries that use UDP port 53?",
       "options": [
-        "100-199",
-        "1-99",
-        "200-299",
-        "300-399"
+        "udp",
+        "tcp",
+        "icmp",
+        "ospf"
       ],
-      "answer": "100-199",
-      "explanation": "Outline week 7: Extended ACLs + Network Management. Extended numbered IP ACLs use 100-199 and 2000-2699, while standard numbered ACLs use 1-99.",
+      "answer": "udp",
+      "explanation": "DNS queries normally use UDP port 53, so the udp keyword is needed before the port operand. Port operators apply only to TCP and UDP (Outline week 7: Extended ACLs + Network Management).",
       "topic_id": "t1",
       "session_id": "s1"
     },
     {
       "id": "s1-q7",
-      "type": "short",
-      "question": "Why must an ACL include an explicit permit line when most traffic should be allowed?",
-      "answer": "Because every ACL ends with an implicit deny, so any traffic not matched by a permit line is dropped.",
-      "explanation": "Outline week 7: Extended ACLs + Network Management. Without a permit statement for the allowed traffic, the implicit deny at the end blocks it.",
+      "type": "mcq",
+      "question": "What does the entry access-list 101 deny tcp 10.0.0.0 0.0.0.255 host 192.168.5.20 eq 23 block?",
+      "options": [
+        "Telnet from 10.0.0.0/24 to 192.168.5.20",
+        "SSH from 10.0.0.0/24 to 192.168.5.20",
+        "HTTP from 192.168.5.20 to 10.0.0.0/24",
+        "All IP traffic from 10.0.0.0/24 to any host"
+      ],
+      "answer": "Telnet from 10.0.0.0/24 to 192.168.5.20",
+      "explanation": "The source is 10.0.0.0 with wildcard 0.0.0.255 (a /24 network), the destination is host 192.168.5.20, and eq 23 matches TCP port 23, which is Telnet (Outline week 7: Extended ACLs + Network Management).",
       "topic_id": "t1",
-      "options": [],
       "session_id": "s1"
     },
     {
       "id": "s1-q8",
       "type": "mcq",
-      "question": "Which command starts configuration of a named extended ACL called WEB-FILTER?",
+      "question": "Which field can an extended ACL match that a standard ACL cannot?",
       "options": [
-        "ip access-list extended WEB-FILTER",
-        "access-list extended WEB-FILTER",
-        "ip access-group WEB-FILTER",
-        "ip access-list standard WEB-FILTER"
+        "Destination port number",
+        "Source IP address",
+        "ACL number",
+        "Inbound interface name"
       ],
-      "answer": "ip access-list extended WEB-FILTER",
-      "explanation": "Outline week 7: Extended ACLs + Network Management. The ip access-list extended NAME command creates or enters a named extended ACL. The ip access-group command applies an existing ACL to an interface.",
+      "answer": "Destination port number",
+      "explanation": "Standard ACLs match only the source address, while extended ACLs can also match the destination address, protocol, and port numbers (Outline week 7: Extended ACLs + Network Management).",
+      "topic_id": "t1",
+      "session_id": "s1"
+    },
+    {
+      "id": "s1-q9",
+      "type": "mcq",
+      "question": "What wildcard mask matches only the single host 10.1.1.5?",
+      "options": [
+        "0.0.0.0",
+        "255.255.255.255",
+        "0.0.0.255",
+        "10.1.1.5"
+      ],
+      "answer": "0.0.0.0",
+      "explanation": "A wildcard of 0.0.0.0 requires every bit to match exactly, which selects only one address. The host keyword is an equivalent shortcut (Outline week 7: Extended ACLs + Network Management).",
+      "topic_id": "t1",
+      "session_id": "s1"
+    },
+    {
+      "id": "s1-q10",
+      "type": "mcq",
+      "question": "Which rule applies to traffic that does not match any entry in an ACL?",
+      "options": [
+        "The implicit deny any at the end is applied",
+        "The implicit permit any at the end is applied",
+        "The traffic is forwarded to the default gateway",
+        "The traffic is sent to the syslog server"
+      ],
+      "answer": "The implicit deny any at the end is applied",
+      "explanation": "Every ACL has an implicit deny any statement at the end, so unmatched traffic is dropped. This is why at least one permit entry is needed when other traffic must pass (Outline week 7: Extended ACLs + Network Management).",
       "topic_id": "t1",
       "session_id": "s1"
     }

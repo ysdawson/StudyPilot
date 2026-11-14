@@ -2,119 +2,164 @@
   "session_id": "s2",
   "guide": {
     "key_points": [
-      "For f(x) = ax + b, the slope a is the change in y for a 1-unit increase in x, and b = f(0) is the y-intercept (Lecture1.pdf p.35).",
-      "The slope through two points (x0, y0) and (x1, y1) is a = (y1 - y0)/(x1 - x0), and the line is y = y0 + a(x - x0) (Lecture1.pdf p.42-43).",
-      "If a is positive the line is increasing, and if a is negative it is decreasing (Lecture1.pdf p.41).",
-      "For y = ax^2 + bx + c with a not equal to 0, the vertex is at x = -b/(2a). It is a low point if a > 0 and a high point if a < 0 (Lecture1.pdf p.47-48).",
-      "The x-intercepts are x = (-b ± sqrt(b^2 - 4ac))/(2a), and they exist only when b^2 - 4ac >= 0 (Lecture1.pdf p.49)."
+      "For $f(x)=ax+b$, the slope $a$ is the change in $y$ for a 1-unit increase in $x$ (Lecture1.pdf p.35).",
+      "The y-intercept of a linear function is $b=f(0)$ (Lecture1.pdf p.35).",
+      "The slope through two points is $a=\\frac{y_1-y_0}{x_1-x_0}$, and the line is $y=y_0+a(x-x_0)$ (Lecture1.pdf p.42-43).",
+      "A quadratic $y=ax^2+bx+c$ with $a\\neq 0$ is a parabola with vertex at $x=-\\frac{b}{2a}$ (Lecture1.pdf p.47).",
+      "If $a>0$ the parabola opens upward and the vertex is a minimum; if $a<0$ it opens downward and the vertex is a maximum (Lecture1.pdf p.47-48)."
     ],
-    "explanation": "A linear function f(x) = ax + b has constant slope a, which measures how much y changes for each unit increase in x. A quadratic y = ax^2 + bx + c opens upward when a > 0 or downward when a < 0, and its vertex sits at x = -b/(2a). Once you have the vertex x-value, substitute it back into the function to get the y-value.",
-    "example": "For y = x^2 - 2x + 1 (a = 1, b = -2, c = 1), the vertex is at x = -b/(2a) = -(-2)/(2*1) = 1. Substituting gives y = 1 - 2 + 1 = 0, so the vertex is (1, 0) (Lecture1.pdf p.50).",
-    "source_hint": "Lecture1.pdf p.35-36, p.40-43, p.47-50"
+    "explanation": "A linear function has constant slope $a$, which measures how $y$ changes per unit of $x$, and $b$ is its y-intercept (Lecture1.pdf p.35). For a quadratic, the vertex is located at $x=-\\frac{b}{2a}$, and the y-value is found by substituting that $x$ into the function (Lecture1.pdf p.47-48). The sign of $a$ tells you whether that vertex is a low point or a high point.",
+    "example": "For $f(x)=-x^2+3x+4$ we have $a=-1$, $b=3$, $c=4$. The vertex is at $x=-\\frac{3}{2(-1)}=\\frac{3}{2}$. Then $f\\left(\\frac{3}{2}\\right)=-\\frac{9}{4}+\\frac{9}{2}+4=\\frac{25}{4}$, so the parabola opens downward and its maximum value is $\\frac{25}{4}$ at $x=\\frac{3}{2}$ (Lecture1.pdf p.47-50).",
+    "source_hint": "Lecture1.pdf p.35-36, p.42-44, p.46-50"
   },
   "questions": [
     {
       "id": "s2-q1",
       "type": "mcq",
-      "question": "What is the slope of the line through the points (-1, -3) and (0, -1)?",
+      "question": "What is the slope of the line through the points $(-1,-3)$ and $(0,-1)$?",
       "options": [
-        "-2",
-        "-1/2",
-        "1",
-        "2"
+        "$-2$",
+        "$\\frac{1}{2}$",
+        "$2$",
+        "$1$"
       ],
-      "answer": "2",
-      "explanation": "Using a = (y1 - y0)/(x1 - x0) gives a = (-1 - (-3))/(0 - (-1)) = 2/1 = 2 (Lecture1.pdf p.43).",
+      "answer": "$2$",
+      "explanation": "Using $a=\\frac{y_1-y_0}{x_1-x_0}=\\frac{-1-(-3)}{0-(-1)}=\\frac{2}{1}=2$ (Lecture1.pdf p.43).",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q2",
       "type": "mcq",
-      "question": "What is the x-coordinate of the vertex of y = -x^2 + 3x + 4?",
+      "question": "What is the y-intercept of $f(x)=2x-1$?",
       "options": [
-        "-1.5",
-        "1.5",
-        "3",
-        "-3"
+        "$2$",
+        "$1$",
+        "$-2$",
+        "$-1$"
       ],
-      "answer": "1.5",
-      "explanation": "Here a = -1 and b = 3, so x = -b/(2a) = -3/(2*(-1)) = 1.5 (Lecture1.pdf p.47-48, p.50).",
+      "answer": "$-1$",
+      "explanation": "The y-intercept is $b=f(0)=2(0)-1=-1$ (Lecture1.pdf p.35, p.40).",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q3",
-      "type": "short",
-      "question": "Find the equation of the line with slope 2 that passes through (-1, -3). Write it in the form y = ax + b.",
-      "options": [],
-      "answer": "y = 2x - 1",
-      "explanation": "Using y = y0 + a(x - x0) with a = 2, x0 = -1, y0 = -3 gives y = -3 + 2(x + 1) = 2x - 1 (Lecture1.pdf p.42).",
+      "type": "mcq",
+      "question": "Which equation is the line with slope $2$ passing through $(-1,-3)$?",
+      "options": [
+        "$y=2x+1$",
+        "$y=-2x-1$",
+        "$y=2x-3$",
+        "$y=2x-1$"
+      ],
+      "answer": "$y=2x-1$",
+      "explanation": "Point-slope form gives $y=-3+2(x+1)=2x-1$, and $2(-1)-1=-3$ confirms the point (Lecture1.pdf p.42).",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q4",
       "type": "mcq",
-      "question": "For y = 2x^2 + 4x - 1, which way does the parabola open?",
+      "question": "What is the solution set of the inequality $-2x+3\\ge 4$?",
       "options": [
-        "Upward",
-        "Downward",
-        "Horizontal",
-        "It has no vertex"
+        "$x\\ge -\\frac{1}{2}$",
+        "$x\\le \\frac{1}{2}$",
+        "$x\\le -\\frac{1}{2}$",
+        "$x\\ge \\frac{7}{2}$"
       ],
-      "answer": "Upward",
-      "explanation": "Since a = 2 is positive, the parabola opens upward and its vertex is a low point (Lecture1.pdf p.47).",
+      "answer": "$x\\le -\\frac{1}{2}$",
+      "explanation": "Subtracting 3 gives $-2x\\ge 1$; dividing by $-2$ reverses the inequality, so $x\\le -\\frac{1}{2}$ (Lecture1.pdf p.44).",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q5",
-      "type": "short",
-      "question": "For the linear function f(x) = 2x - 1, what is f(0), and is the function increasing or decreasing?",
-      "options": [],
-      "answer": "f(0) = -1; increasing",
-      "explanation": "The intercept is b = f(0) = -1, and since the slope a = 2 is positive the function is increasing (Lecture1.pdf p.35, p.41).",
+      "type": "mcq",
+      "question": "At what $x$-value is the vertex of $y=x^2-2x+1$ located?",
+      "options": [
+        "$x=-1$",
+        "$x=2$",
+        "$x=-2$",
+        "$x=1$"
+      ],
+      "answer": "$x=1$",
+      "explanation": "The vertex is at $x=-\\frac{b}{2a}=-\\frac{-2}{2(1)}=1$ (Lecture1.pdf p.47, p.50).",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q6",
       "type": "mcq",
-      "question": "Where does y = x^2 - 2x + 1 cross the x-axis?",
+      "question": "Where is the vertex of $y=-x^2+3x+4$ located in terms of $x$?",
       "options": [
-        "x = 1 only",
-        "No x-intercepts",
-        "x = -1 and x = 1",
-        "x = 0 and x = 2"
+        "$x=-\\frac{3}{2}$",
+        "$x=3$",
+        "$x=\\frac{3}{2}$",
+        "$x=-3$"
       ],
-      "answer": "x = 1 only",
-      "explanation": "The discriminant is b^2 - 4ac = 4 - 4 = 0, so there is one x-intercept at x = (2 ± 0)/2 = 1 (Lecture1.pdf p.49-50).",
+      "answer": "$x=\\frac{3}{2}$",
+      "explanation": "With $a=-1$ and $b=3$, $x=-\\frac{3}{2(-1)}=\\frac{3}{2}$ (Lecture1.pdf p.48, p.50).",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q7",
-      "type": "short",
-      "question": "Find the vertex of y = x^2 - 2x + 1.",
-      "options": [],
-      "answer": "(1, 0)",
-      "explanation": "The vertex x-value is -b/(2a) = -(-2)/2 = 1. Then y = 1 - 2 + 1 = 0, so the vertex is (1, 0) (Lecture1.pdf p.47, p.50).",
+      "type": "mcq",
+      "question": "What is the maximum value of $y=-x^2+3x+4$?",
+      "options": [
+        "$4$",
+        "$3$",
+        "$\\frac{25}{4}$",
+        "$7$"
+      ],
+      "answer": "$\\frac{25}{4}$",
+      "explanation": "Since $a<0$ the vertex is a maximum. At $x=\\frac{3}{2}$, $y=-\\frac{9}{4}+\\frac{9}{2}+4=\\frac{25}{4}$ (Lecture1.pdf p.48, p.50).",
       "topic_id": "t2",
       "session_id": "s2"
     },
     {
       "id": "s2-q8",
       "type": "mcq",
-      "question": "In the linear whale model W = 3.51L - 192 (W in British tons, L in feet), what does the slope 3.51 mean?",
+      "question": "How many $x$-intercepts does $y=x^2-2x+1$ have?",
       "options": [
-        "Each extra foot of length adds 3.51 British tons",
-        "Each extra ton of weight adds 3.51 feet",
-        "A whale of zero length weighs 3.51 tons",
-        "The weight doubles when the length doubles"
+        "$0$",
+        "$1$",
+        "$2$",
+        "$3$"
       ],
-      "answer": "Each extra foot of length adds 3.51 British tons",
-      "explanation": "The slope measures the increase in W for a 1-unit increase in L, so each extra foot adds 3.51 tons (Lecture1.pdf p.28, p.35).",
+      "answer": "$1$",
+      "explanation": "The discriminant is $b^2-4ac=4-4=0$. Since it is nonnegative, the intercepts exist, and a zero discriminant gives a single intercept at $x=1$ (Lecture1.pdf p.49-50).",
+      "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q9",
+      "type": "mcq",
+      "question": "In the whale model $W=3.51L-192$, what does the coefficient $3.51$ represent?",
+      "options": [
+        "The length in feet when the weight is zero",
+        "The weight in British tons when the length is zero",
+        "The change in length for each ton of weight",
+        "The increase in weight in British tons for each 1-foot increase in length"
+      ],
+      "answer": "The increase in weight in British tons for each 1-foot increase in length",
+      "explanation": "The slope of a linear model is the change in the output per unit increase in the input, so $3.51$ is the tons gained per foot of length (Lecture1.pdf p.28, p.35).",
+      "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q10",
+      "type": "mcq",
+      "question": "For $y=2x^2-8x+3$, which statement about the parabola is correct?",
+      "options": [
+        "It opens downward and its vertex is at $x=2$",
+        "It opens upward and its vertex is at $x=-2$",
+        "It opens upward and its vertex is at $x=4$",
+        "It opens upward and its vertex is at $x=2$"
+      ],
+      "answer": "It opens upward and its vertex is at $x=2$",
+      "explanation": "Since $a=2>0$ the parabola opens upward, and the vertex is at $x=-\\frac{-8}{2(2)}=2$ (Lecture1.pdf p.47-48).",
       "topic_id": "t2",
       "session_id": "s2"
     }

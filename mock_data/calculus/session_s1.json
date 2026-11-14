@@ -2,105 +2,165 @@
   "session_id": "s1",
   "guide": {
     "key_points": [
-      "A function assigns exactly one output to each input. The domain is the set of allowed inputs and the range is the set of outputs (Lecture1.pdf p.10).",
-      "Find the domain by excluding values that make a denominator zero or a radicand negative (Lecture1.pdf p.12).",
-      "A function is increasing on I if x < x' implies f(x) < f(x'), and decreasing if x < x' implies f(x) > f(x') (Lecture1.pdf p.20).",
-      "f is even if f(-x) = f(x), with y-axis symmetry. f is odd if f(-x) = -f(x), with origin symmetry (Lecture1.pdf p.22-23).",
-      "For an even or odd function, sketching x >= 0 is enough, because the rest of the graph follows from symmetry (Lecture1.pdf p.24)."
+      "A function assigns exactly one output to each input; the vertical line test checks this on a graph.",
+      "The domain is the set of inputs where f(x) is defined, and the range is the set of outputs f(x) takes.",
+      "A function is increasing on an interval when larger x gives larger f(x), and decreasing when larger x gives smaller f(x).",
+      "Even functions satisfy f(-x)=f(x) and are symmetric about the y-axis; odd functions satisfy f(-x)=-f(x) and are symmetric about the origin.",
+      "For a piecewise function, evaluate using the branch whose condition the input satisfies."
     ],
-    "explanation": "A function is a rule that gives exactly one output for each input, and its domain and range describe the allowed inputs and resulting outputs. Monotonicity is read from whether f(x) rises or falls as x increases on an interval. Even and odd symmetry come from comparing f(-x) with f(x) and -f(x).",
-    "example": "Check whether f(x) = x^3 - x is even, odd, or neither. Compute f(-x) = (-x)^3 - (-x) = -x^3 + x = -(x^3 - x) = -f(x). Since f(-x) = -f(x) for all x, f is odd, so its graph is symmetric about the origin (Lecture1.pdf p.23).",
-    "source_hint": "Lecture1.pdf p.10-12, p.20-24"
+    "explanation": "The domain is the set of inputs where f(x) is defined, and the range is the set of outputs. A function is increasing where larger x gives larger f(x) and decreasing where larger x gives smaller f(x). It is even when $f(-x)=f(x)$ (symmetric about the y-axis) and odd when $f(-x)=-f(x)$ (symmetric about the origin). Source: Lecture1.pdf p.10, p.20, p.22-23.",
+    "example": "For $f(x)=x^3-x$: $f(-x)=(-x)^3-(-x)=-x^3+x=-(x^3-x)=-f(x)$, so $f$ is odd (Lecture1.pdf p.23).",
+    "source_hint": "Lecture1.pdf p.10-23"
   },
   "questions": [
     {
       "id": "s1-q1",
       "type": "mcq",
-      "question": "What is the domain of f(x) = 1/(x - 1)?",
+      "question": "What is the domain of $f(x)=\\dfrac{1}{x-1}$?",
       "options": [
-        "All real x except x = 1",
-        "All real x except x = -1",
-        "All real x greater than or equal to 1",
-        "All real numbers"
+        "All real $x$ except $x=1$",
+        "All real $x$ except $x=0$",
+        "All real $x$ with $x\\ge 1$",
+        "All real $x$"
       ],
-      "answer": "All real x except x = 1",
-      "explanation": "The denominator x - 1 is zero only when x = 1, so the domain is {x != 1} (Lecture1.pdf p.12).",
+      "answer": "All real $x$ except $x=1$",
+      "explanation": "The function is undefined when the denominator $x-1=0$, so $x\\neq 1$ (Lecture1.pdf p.12).",
       "topic_id": "t1",
       "session_id": "s1"
     },
     {
       "id": "s1-q2",
       "type": "mcq",
-      "question": "Which symmetry does f(x) = x^2 have?",
+      "question": "For $f(x)=\\dfrac{1}{1-x}$ on the branch $x>1$, what is $f(2)$?",
       "options": [
-        "Even",
-        "Odd",
-        "Neither even nor odd",
-        "Both even and odd"
+        "$-1$",
+        "$1$",
+        "$-2$",
+        "$2$"
       ],
-      "answer": "Even",
-      "explanation": "(-x)^2 = x^2 = f(x) for all x, so f is even and symmetric about the y-axis (Lecture1.pdf p.22).",
+      "answer": "$-1$",
+      "explanation": "Substituting $x=2$ gives $f(2)=\\dfrac{1}{1-2}=\\dfrac{1}{-1}=-1$ (Lecture1.pdf p.14).",
       "topic_id": "t1",
       "session_id": "s1"
     },
     {
       "id": "s1-q3",
-      "type": "short",
-      "question": "Show that f(x) = x^3 is odd by checking the defining condition.",
-      "answer": "f(-x) = (-x)^3 = -x^3 = -f(x) for all x, so f is odd.",
-      "explanation": "An odd function satisfies f(-x) = -f(x) wherever it is defined. The cube of -x is -x^3, which matches this condition (Lecture1.pdf p.23).",
+      "type": "mcq",
+      "question": "Using the absolute value function defined piecewise by $|x|=x$ for $x\\ge 0$ and $|x|=-x$ for $x<0$, what is $|-4|$?",
+      "options": [
+        "$4$",
+        "$-4$",
+        "$0$",
+        "$16$"
+      ],
+      "answer": "$4$",
+      "explanation": "Since $-4<0$, the rule $|x|=-x$ applies, giving $|-4|=-(-4)=4$ (Lecture1.pdf p.13).",
       "topic_id": "t1",
-      "options": [],
       "session_id": "s1"
     },
     {
       "id": "s1-q4",
       "type": "mcq",
-      "question": "The function on Lecture1.pdf p.21 is decreasing on [0,1] and [4.2,5] and increasing on [1,4.2]. On which interval is it increasing?",
+      "question": "The function $s:\\mathbb{R}^+\\to\\mathbb{R}$, $s(x)=\\pi x^2$, has what range?",
       "options": [
-        "[0,1]",
-        "[1,4.2]",
-        "[4.2,5]",
-        "[0,5]"
+        "$(0,\\infty)$",
+        "$[0,\\infty)$",
+        "$\\mathbb{R}$",
+        "$(-\\infty,0)$"
       ],
-      "answer": "[1,4.2]",
-      "explanation": "The text states the function is increasing on [1,4.2] and decreasing on the other two intervals (Lecture1.pdf p.21).",
+      "answer": "$(0,\\infty)$",
+      "explanation": "For $x>0$, $x^2>0$ and so $\\pi x^2>0$, and $x^2$ takes every positive value, so the range is $(0,\\infty)$ (Lecture1.pdf p.12).",
       "topic_id": "t1",
       "session_id": "s1"
     },
     {
       "id": "s1-q5",
-      "type": "short",
-      "question": "What is the domain of g(x) = sqrt(x - 2), using real numbers?",
-      "answer": "x >= 2, written as {x in R : x >= 2}",
-      "explanation": "The square root is real only when x - 2 >= 0, so x >= 2. Lecture1.pdf p.12 gives this same domain for the second exercise.",
+      "type": "mcq",
+      "question": "Which relation is NOT a function of $x$?",
+      "options": [
+        "$x=y^2$",
+        "$y=x^3$",
+        "$y=|x|$",
+        "$y=2x+1$"
+      ],
+      "answer": "$x=y^2$",
+      "explanation": "For $x=4$, $y^2=4$ gives $y=2$ or $y=-2$, so one input has two outputs and the vertical line test fails (Lecture1.pdf p.16).",
       "topic_id": "t1",
-      "options": [],
       "session_id": "s1"
     },
     {
       "id": "s1-q6",
       "type": "mcq",
-      "question": "What does the vertical line test check?",
+      "question": "Which of these functions is even?",
       "options": [
-        "Whether each x has at most one output y, so the curve is a function",
-        "Whether the function is continuous at every point",
-        "Whether the slope of the graph is constant",
-        "Whether the range is bounded"
+        "$f(x)=x^2$",
+        "$f(x)=x^3$",
+        "$f(x)=2x+1$",
+        "$f(x)=x$"
       ],
-      "answer": "Whether each x has at most one output y, so the curve is a function",
-      "explanation": "A curve is not the graph of a function if a vertical line meets it at two or more points, because one x would have two y-values (Lecture1.pdf p.16).",
+      "answer": "$f(x)=x^2$",
+      "explanation": "Here $f(-x)=(-x)^2=x^2=f(x)$, so the function is even and symmetric about the y-axis (Lecture1.pdf p.22).",
       "topic_id": "t1",
       "session_id": "s1"
     },
     {
       "id": "s1-q7",
-      "type": "short",
-      "question": "Why does knowing that a function is even or odd save work when sketching its graph?",
-      "answer": "You only need to sketch the part for x >= 0, then use symmetry to get the rest: reflection across the y-axis for even functions and across the origin for odd functions.",
-      "explanation": "Symmetry means the other half of the graph is determined by the positive-x half, which halves the sketching work (Lecture1.pdf p.22-24).",
+      "type": "mcq",
+      "question": "Is $f(x)=x^3-x$ even, odd, both, or neither?",
+      "options": [
+        "Odd",
+        "Even",
+        "Both even and odd",
+        "Neither even nor odd"
+      ],
+      "answer": "Odd",
+      "explanation": "$f(-x)=-x^3+x=-(x^3-x)=-f(x)$, so the function is odd and symmetric about the origin (Lecture1.pdf p.23).",
       "topic_id": "t1",
-      "options": [],
+      "session_id": "s1"
+    },
+    {
+      "id": "s1-q8",
+      "type": "mcq",
+      "question": "Is $f(x)=-3x+2$ increasing or decreasing on $\\mathbb{R}$?",
+      "options": [
+        "Decreasing on $\\mathbb{R}$",
+        "Increasing on $\\mathbb{R}$",
+        "Constant on $\\mathbb{R}$",
+        "Increasing on $(-\\infty,0)$ only"
+      ],
+      "answer": "Decreasing on $\\mathbb{R}$",
+      "explanation": "The slope $-3$ is negative, and a negative slope means the linear function is decreasing (Lecture1.pdf p.41).",
+      "topic_id": "t1",
+      "session_id": "s1"
+    },
+    {
+      "id": "s1-q9",
+      "type": "mcq",
+      "question": "What is the y-intercept of $f(x)=2x-1$?",
+      "options": [
+        "$-1$",
+        "$2$",
+        "$1$",
+        "$\\tfrac{1}{2}$"
+      ],
+      "answer": "$-1$",
+      "explanation": "The y-intercept is $b=f(0)=2(0)-1=-1$ (Lecture1.pdf p.35, p.40).",
+      "topic_id": "t1",
+      "session_id": "s1"
+    },
+    {
+      "id": "s1-q10",
+      "type": "mcq",
+      "question": "In the linear blue whale model $W=3.51L-192$, what does the slope $3.51$ mean?",
+      "options": [
+        "Each extra foot of length adds about 3.51 tons to the estimated weight",
+        "Each extra ton of weight adds 3.51 feet to the length",
+        "The estimated weight is 3.51 tons when length is zero",
+        "The estimated length is 3.51 feet when weight is zero"
+      ],
+      "answer": "Each extra foot of length adds about 3.51 tons to the estimated weight",
+      "explanation": "In $f(x)=ax+b$, the slope $a$ is the increase in $y$ for a 1-unit increase in $x$. Here $W$ is in tons and $L$ is in feet (Lecture1.pdf p.28, p.35).",
+      "topic_id": "t1",
       "session_id": "s1"
     }
   ]
