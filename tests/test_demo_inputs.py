@@ -53,7 +53,7 @@ def test_home_generate_with_no_deadlines_uses_other_and_manual_date():
     ss = at.session_state
     assert ss["goal"]["target"] == "Test 1" and ss["goal"]["deadline"] == day.isoformat()
     deadlines = [e for e in ss["calendar"] if e["kind"] == "deadline"]
-    assert [(d["title"], d["start"][:10]) for d in deadlines] == [("Test 1", day.isoformat())]
+    assert [(d["title"], d["start"][:10]) for d in deadlines] == [("Test 1 (your target date)", day.isoformat())]
     # CSV classes (Tue/Thu 18:00) are in the calendar; study never overlaps them
     classes = [e for e in ss["calendar"] if e["kind"] == "class"]
     assert classes and all(e["start"][11:] == "18:00" for e in classes)

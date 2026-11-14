@@ -5,41 +5,47 @@
       "question_id": "s1-q1",
       "topic_id": "t1",
       "correct": true,
-      "user_answer": "2 A"
+      "user_answer": "All real x except x = 1"
     },
     {
       "question_id": "s1-q2",
       "topic_id": "t1",
-      "correct": false,
-      "user_answer": "8 W"
+      "correct": true,
+      "user_answer": "Even"
     },
     {
       "question_id": "s1-q3",
       "topic_id": "t1",
-      "correct": false,
-      "user_answer": "doubles"
+      "correct": true,
+      "user_answer": "f(-x) = (-x)^3 = -x^3 = -f(x) for all x, so f is odd."
     },
     {
       "question_id": "s1-q4",
       "topic_id": "t1",
       "correct": true,
-      "user_answer": "Ohm"
+      "user_answer": "[1,4.2]"
     },
     {
       "question_id": "s1-q5",
       "topic_id": "t1",
       "correct": false,
-      "user_answer": "1 V"
+      "user_answer": "x >= 2, written as {x in R : x >= 2}"
     },
     {
       "question_id": "s1-q6",
       "topic_id": "t1",
+      "correct": false,
+      "user_answer": "Whether the function is continuous at every point"
+    },
+    {
+      "question_id": "s1-q7",
+      "topic_id": "t1",
       "correct": true,
-      "user_answer": "heat"
+      "user_answer": "You only need to sketch the part for x >= 0, then use symmetry to get the rest: reflection across the y-axis for even functions and across the origin for odd functions."
     }
   ],
-  "score": 0.5,
+  "score": 0.7142857142857143,
   "topic_scores": {
-    "t1": 0.5
+    "t1": 0.7142857142857143
   }
 }

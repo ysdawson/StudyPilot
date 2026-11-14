@@ -1,45 +1,72 @@
 {
-  "course": "Circuit Analysis 1",
+  "course": "Calculus",
   "topics": [
     {
       "id": "t1",
-      "name": "Ohm's law and power",
-      "weight": 0.15,
-      "summary": "Relation between voltage, current, resistance and power."
+      "name": "Functions and their properties",
+      "weight": 0.07,
+      "summary": "A function assigns exactly one output to each input, and its domain, range, monotonicity, and even or odd symmetry describe its behaviour."
     },
     {
       "id": "t2",
-      "name": "Kirchhoff's laws",
-      "weight": 0.2,
-      "summary": "KCL and KVL for solving node currents and loop voltages."
+      "name": "Linear and quadratic functions",
+      "weight": 0.06,
+      "summary": "Linear functions f(x)=ax+b have constant slope, and quadratic functions ax²+bx+c form parabolas with a vertex at x=-b/(2a)."
     },
     {
       "id": "t3",
-      "name": "Series and parallel resistors",
-      "weight": 0.15,
-      "summary": "Equivalent resistance and voltage/current dividers."
+      "name": "Limits and one-sided limits",
+      "weight": 0.09,
+      "summary": "A limit describes the value a function approaches as x nears a point, including one-sided limits and limits that are infinite or involve asymptotes."
     },
     {
       "id": "t4",
-      "name": "Nodal and mesh analysis",
-      "weight": 0.25,
-      "summary": "Systematic methods to solve multi-loop circuits."
+      "name": "Continuity",
+      "weight": 0.07,
+      "summary": "A function is continuous at a point when it is defined there, its limit exists, and the limit equals the function value, with discontinuities classified by type."
     },
     {
       "id": "t5",
-      "name": "Thevenin and Norton equivalents",
-      "weight": 0.25,
-      "summary": "Reducing a linear circuit to a source and one resistance."
-    }
-  ],
-  "deadlines": [
-    {
-      "title": "Midterm",
-      "date": "2026-11-27"
+      "name": "Limit laws and indeterminate forms",
+      "weight": 0.1,
+      "summary": "Limit laws combine limits of sums, quotients and products, and indeterminate forms such as 0/0 are resolved by factoring, dividing by the highest power, rationalising, or combining fractions."
     },
     {
-      "title": "Lab report 3",
-      "date": "2026-11-20"
+      "id": "t6",
+      "name": "Trigonometric limits and the squeeze theorem",
+      "weight": 0.07,
+      "summary": "The squeeze theorem gives lim sin(x)/x = 1 at 0, which yields equivalent-function substitutions for trigonometric limits."
+    },
+    {
+      "id": "t7",
+      "name": "Derivative at a point and rate of change",
+      "weight": 0.1,
+      "summary": "The derivative at a point is the limit of the difference quotient, interpreted as an instantaneous rate of change, velocity, and the slope of the tangent line."
+    },
+    {
+      "id": "t8",
+      "name": "Differentiability and higher-order derivatives",
+      "weight": 0.1,
+      "summary": "A function is differentiable at a point when that limit exists, which requires continuity there but is not guaranteed by it, and higher-order derivatives describe rates of change of the derivative such as acceleration."
+    },
+    {
+      "id": "t9",
+      "name": "Basic differentiation rules",
+      "weight": 0.1,
+      "summary": "The constant rule, power rule, derivatives of sine and cosine, and the linearity rule allow differentiation of sums and constant multiples of basic functions."
+    },
+    {
+      "id": "t10",
+      "name": "Product and quotient rules",
+      "weight": 0.1,
+      "summary": "The product rule differentiates a product of two differentiable functions, and the quotient rule differentiates a ratio where the denominator is nonzero."
+    },
+    {
+      "id": "t11",
+      "name": "Chain rule",
+      "weight": 0.14,
+      "summary": "The chain rule differentiates a composite function by multiplying the derivative of the outer function at the inner function by the derivative of the inner function."
     }
-  ]
+  ],
+  "deadlines": []
 }

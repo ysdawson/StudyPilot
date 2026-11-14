@@ -47,11 +47,17 @@ def schedule_sessions(plan: Plan, busy: list[Event], max_minutes_per_day: int = 
     events: list[Event] = []
     while queue and day <= last:
         used = 0
+        # Spread the work evenly up to the deadline instead of cramming the
+        # first days: today's share = remaining minutes / remaining days.
+        days_left = (last - day).days + 1
+        share = -(-sum(s["minutes"] for s in queue) // days_left)  # ceil
         windows = _free_windows(day, busy, day_start, day_end)
         while queue and windows:
             sess = queue[0]
             need = timedelta(minutes=sess["minutes"])
             if used + sess["minutes"] > max_minutes_per_day:
+                break
+            if used and used + sess["minutes"] > share:
                 break
             placed = False
             for i, (ws, we) in enumerate(windows):
@@ -96,4 +102,5 @@ def with_goal_deadline(deadlines: list[Deadline], goal: dict) -> list[Deadline]:
     gives no date, e.g. "Other" + a date typed on the Home page)."""
     if not goal.get("deadline") or any(d.get("date") == goal["deadline"] for d in deadlines):
         return list(deadlines)
-    return list(deadlines) + [{"title": goal.get("target") or "Deadline", "date": goal["deadline"]}]
+    title = f"{goal.get('target') or 'Deadline'} (your target date)"  # not from the material
+    return list(deadlines) + [{"title": title, "date": goal["deadline"]}]

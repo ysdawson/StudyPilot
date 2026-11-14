@@ -2,95 +2,106 @@
   "session_id": "s1",
   "guide": {
     "key_points": [
-      "V = I x R links voltage, current and resistance",
-      "Power: P = V x I = I^2 x R = V^2 / R",
-      "Current flows from higher to lower potential through a resistor",
-      "Units: volts (V), amperes (A), ohms, watts (W)"
+      "A function assigns exactly one output to each input. The domain is the set of allowed inputs and the range is the set of outputs (Lecture1.pdf p.10).",
+      "Find the domain by excluding values that make a denominator zero or a radicand negative (Lecture1.pdf p.12).",
+      "A function is increasing on I if x < x' implies f(x) < f(x'), and decreasing if x < x' implies f(x) > f(x') (Lecture1.pdf p.20).",
+      "f is even if f(-x) = f(x), with y-axis symmetry. f is odd if f(-x) = -f(x), with origin symmetry (Lecture1.pdf p.22-23).",
+      "For an even or odd function, sketching x >= 0 is enough, because the rest of the graph follows from symmetry (Lecture1.pdf p.24)."
     ],
-    "explanation": "Ohm's law says the voltage across a resistor is proportional to the current through it. Combine it with the power formulas to find how much energy a component dissipates.",
-    "example": "A 12 V source drives a 4 ohm resistor. I = 12 / 4 = **3 A**. P = 12 x 3 = **36 W**.",
-    "source_hint": "Course notes, chapter 1, p.2-4"
+    "explanation": "A function is a rule that gives exactly one output for each input, and its domain and range describe the allowed inputs and resulting outputs. Monotonicity is read from whether f(x) rises or falls as x increases on an interval. Even and odd symmetry come from comparing f(-x) with f(x) and -f(x).",
+    "example": "Check whether f(x) = x^3 - x is even, odd, or neither. Compute f(-x) = (-x)^3 - (-x) = -x^3 + x = -(x^3 - x) = -f(x). Since f(-x) = -f(x) for all x, f is odd, so its graph is symmetric about the origin (Lecture1.pdf p.23).",
+    "source_hint": "Lecture1.pdf p.10-12, p.20-24"
   },
   "questions": [
     {
       "id": "s1-q1",
-      "session_id": "s1",
-      "topic_id": "t1",
       "type": "mcq",
-      "question": "A 10 V source is across a 5 ohm resistor. What is the current?",
+      "question": "What is the domain of f(x) = 1/(x - 1)?",
       "options": [
-        "0.5 A",
-        "2 A",
-        "5 A",
-        "50 A"
+        "All real x except x = 1",
+        "All real x except x = -1",
+        "All real x greater than or equal to 1",
+        "All real numbers"
       ],
-      "answer": "2 A",
-      "explanation": "I = V / R = 10 / 5 = 2 A."
+      "answer": "All real x except x = 1",
+      "explanation": "The denominator x - 1 is zero only when x = 1, so the domain is {x != 1} (Lecture1.pdf p.12).",
+      "topic_id": "t1",
+      "session_id": "s1"
     },
     {
       "id": "s1-q2",
-      "session_id": "s1",
-      "topic_id": "t1",
       "type": "mcq",
-      "question": "A resistor draws 2 A from a 6 V supply. What power does it dissipate?",
+      "question": "Which symmetry does f(x) = x^2 have?",
       "options": [
-        "3 W",
-        "8 W",
-        "12 W",
-        "24 W"
+        "Even",
+        "Odd",
+        "Neither even nor odd",
+        "Both even and odd"
       ],
-      "answer": "12 W",
-      "explanation": "P = V x I = 6 x 2 = 12 W."
+      "answer": "Even",
+      "explanation": "(-x)^2 = x^2 = f(x) for all x, so f is even and symmetric about the y-axis (Lecture1.pdf p.22).",
+      "topic_id": "t1",
+      "session_id": "s1"
     },
     {
       "id": "s1-q3",
-      "session_id": "s1",
+      "type": "short",
+      "question": "Show that f(x) = x^3 is odd by checking the defining condition.",
+      "answer": "f(-x) = (-x)^3 = -x^3 = -f(x) for all x, so f is odd.",
+      "explanation": "An odd function satisfies f(-x) = -f(x) wherever it is defined. The cube of -x is -x^3, which matches this condition (Lecture1.pdf p.23).",
       "topic_id": "t1",
-      "type": "mcq",
-      "question": "If the current through a fixed resistor doubles, the power...",
-      "options": [
-        "doubles",
-        "stays the same",
-        "is halved",
-        "quadruples"
-      ],
-      "answer": "quadruples",
-      "explanation": "P = I^2 R, so doubling I multiplies P by 4."
+      "options": [],
+      "session_id": "s1"
     },
     {
       "id": "s1-q4",
-      "session_id": "s1",
-      "topic_id": "t1",
       "type": "mcq",
-      "question": "Which unit is used for resistance?",
+      "question": "The function on Lecture1.pdf p.21 is decreasing on [0,1] and [4.2,5] and increasing on [1,4.2]. On which interval is it increasing?",
       "options": [
-        "Watt",
-        "Ohm",
-        "Volt",
-        "Ampere"
+        "[0,1]",
+        "[1,4.2]",
+        "[4.2,5]",
+        "[0,5]"
       ],
-      "answer": "Ohm",
-      "explanation": "Resistance is measured in ohms."
+      "answer": "[1,4.2]",
+      "explanation": "The text states the function is increasing on [1,4.2] and decreasing on the other two intervals (Lecture1.pdf p.21).",
+      "topic_id": "t1",
+      "session_id": "s1"
     },
     {
       "id": "s1-q5",
-      "session_id": "s1",
-      "topic_id": "t1",
       "type": "short",
-      "question": "A 100 ohm resistor carries 0.1 A. What is the voltage across it?",
+      "question": "What is the domain of g(x) = sqrt(x - 2), using real numbers?",
+      "answer": "x >= 2, written as {x in R : x >= 2}",
+      "explanation": "The square root is real only when x - 2 >= 0, so x >= 2. Lecture1.pdf p.12 gives this same domain for the second exercise.",
+      "topic_id": "t1",
       "options": [],
-      "answer": "10 V",
-      "explanation": "V = I x R = 0.1 x 100 = 10 V."
+      "session_id": "s1"
     },
     {
       "id": "s1-q6",
-      "session_id": "s1",
+      "type": "mcq",
+      "question": "What does the vertical line test check?",
+      "options": [
+        "Whether each x has at most one output y, so the curve is a function",
+        "Whether the function is continuous at every point",
+        "Whether the slope of the graph is constant",
+        "Whether the range is bounded"
+      ],
+      "answer": "Whether each x has at most one output y, so the curve is a function",
+      "explanation": "A curve is not the graph of a function if a vertical line meets it at two or more points, because one x would have two y-values (Lecture1.pdf p.16).",
       "topic_id": "t1",
+      "session_id": "s1"
+    },
+    {
+      "id": "s1-q7",
       "type": "short",
-      "question": "Explain in one sentence why a resistor heats up.",
+      "question": "Why does knowing that a function is even or odd save work when sketching its graph?",
+      "answer": "You only need to sketch the part for x >= 0, then use symmetry to get the rest: reflection across the y-axis for even functions and across the origin for odd functions.",
+      "explanation": "Symmetry means the other half of the graph is determined by the positive-x half, which halves the sketching work (Lecture1.pdf p.22-24).",
+      "topic_id": "t1",
       "options": [],
-      "answer": "Current through the resistance dissipates electrical energy as heat (P = I^2 R).",
-      "explanation": "The power I^2 R is converted to heat."
+      "session_id": "s1"
     }
   ]
 }

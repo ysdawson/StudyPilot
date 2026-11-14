@@ -2,95 +2,121 @@
   "session_id": "s2",
   "guide": {
     "key_points": [
-      "KCL: currents into a node = currents out",
-      "KVL: voltages around any closed loop sum to zero",
-      "Pick a sign convention and keep it",
-      "Use KCL at nodes, KVL around loops"
+      "For f(x) = ax + b, the slope a is the change in y for a 1-unit increase in x, and b = f(0) is the y-intercept (Lecture1.pdf p.35).",
+      "The slope through two points (x0, y0) and (x1, y1) is a = (y1 - y0)/(x1 - x0), and the line is y = y0 + a(x - x0) (Lecture1.pdf p.42-43).",
+      "If a is positive the line is increasing, and if a is negative it is decreasing (Lecture1.pdf p.41).",
+      "For y = ax^2 + bx + c with a not equal to 0, the vertex is at x = -b/(2a). It is a low point if a > 0 and a high point if a < 0 (Lecture1.pdf p.47-48).",
+      "The x-intercepts are x = (-b ± sqrt(b^2 - 4ac))/(2a), and they exist only when b^2 - 4ac >= 0 (Lecture1.pdf p.49)."
     ],
-    "explanation": "Kirchhoff's laws come from conservation of charge (KCL) and energy (KVL). Together with Ohm's law they solve any resistive circuit.",
-    "example": "A loop has a 9 V source and resistors dropping 4 V and V2. KVL: 9 - 4 - V2 = 0, so **V2 = 5 V**.",
-    "source_hint": "Course notes, chapter 2, p.5-8"
+    "explanation": "A linear function f(x) = ax + b has constant slope a, which measures how much y changes for each unit increase in x. A quadratic y = ax^2 + bx + c opens upward when a > 0 or downward when a < 0, and its vertex sits at x = -b/(2a). Once you have the vertex x-value, substitute it back into the function to get the y-value.",
+    "example": "For y = x^2 - 2x + 1 (a = 1, b = -2, c = 1), the vertex is at x = -b/(2a) = -(-2)/(2*1) = 1. Substituting gives y = 1 - 2 + 1 = 0, so the vertex is (1, 0) (Lecture1.pdf p.50).",
+    "source_hint": "Lecture1.pdf p.35-36, p.40-43, p.47-50"
   },
   "questions": [
     {
       "id": "s2-q1",
-      "session_id": "s2",
-      "topic_id": "t2",
       "type": "mcq",
-      "question": "Three currents enter a node: 2 A, 3 A and I. 6 A leaves. What is I?",
+      "question": "What is the slope of the line through the points (-1, -3) and (0, -1)?",
       "options": [
-        "1 A",
-        "5 A",
-        "6 A",
-        "11 A"
+        "-2",
+        "-1/2",
+        "1",
+        "2"
       ],
-      "answer": "1 A",
-      "explanation": "KCL: 2 + 3 + I = 6, so I = 1 A."
+      "answer": "2",
+      "explanation": "Using a = (y1 - y0)/(x1 - x0) gives a = (-1 - (-3))/(0 - (-1)) = 2/1 = 2 (Lecture1.pdf p.43).",
+      "topic_id": "t2",
+      "session_id": "s2"
     },
     {
       "id": "s2-q2",
-      "session_id": "s2",
-      "topic_id": "t2",
       "type": "mcq",
-      "question": "KVL is based on conservation of...",
+      "question": "What is the x-coordinate of the vertex of y = -x^2 + 3x + 4?",
       "options": [
-        "charge",
-        "energy",
-        "mass",
-        "momentum"
+        "-1.5",
+        "1.5",
+        "3",
+        "-3"
       ],
-      "answer": "energy",
-      "explanation": "The sum of voltage rises and drops around a loop is zero."
+      "answer": "1.5",
+      "explanation": "Here a = -1 and b = 3, so x = -b/(2a) = -3/(2*(-1)) = 1.5 (Lecture1.pdf p.47-48, p.50).",
+      "topic_id": "t2",
+      "session_id": "s2"
     },
     {
       "id": "s2-q3",
-      "session_id": "s2",
+      "type": "short",
+      "question": "Find the equation of the line with slope 2 that passes through (-1, -3). Write it in the form y = ax + b.",
+      "options": [],
+      "answer": "y = 2x - 1",
+      "explanation": "Using y = y0 + a(x - x0) with a = 2, x0 = -1, y0 = -3 gives y = -3 + 2(x + 1) = 2x - 1 (Lecture1.pdf p.42).",
       "topic_id": "t2",
-      "type": "mcq",
-      "question": "A 12 V loop has drops of 5 V and 4 V. The third drop is...",
-      "options": [
-        "1 V",
-        "3 V",
-        "9 V",
-        "21 V"
-      ],
-      "answer": "3 V",
-      "explanation": "12 - 5 - 4 = 3 V."
+      "session_id": "s2"
     },
     {
       "id": "s2-q4",
-      "session_id": "s2",
-      "topic_id": "t2",
       "type": "mcq",
-      "question": "KCL is applied at...",
+      "question": "For y = 2x^2 + 4x - 1, which way does the parabola open?",
       "options": [
-        "loops",
-        "nodes",
-        "sources only",
-        "resistors only"
+        "Upward",
+        "Downward",
+        "Horizontal",
+        "It has no vertex"
       ],
-      "answer": "nodes",
-      "explanation": "KCL balances currents at a node."
+      "answer": "Upward",
+      "explanation": "Since a = 2 is positive, the parabola opens upward and its vertex is a low point (Lecture1.pdf p.47).",
+      "topic_id": "t2",
+      "session_id": "s2"
     },
     {
       "id": "s2-q5",
-      "session_id": "s2",
-      "topic_id": "t2",
       "type": "short",
-      "question": "State KCL in your own words.",
+      "question": "For the linear function f(x) = 2x - 1, what is f(0), and is the function increasing or decreasing?",
       "options": [],
-      "answer": "The total current entering a node equals the total current leaving it.",
-      "explanation": "Charge cannot accumulate at a node."
+      "answer": "f(0) = -1; increasing",
+      "explanation": "The intercept is b = f(0) = -1, and since the slope a = 2 is positive the function is increasing (Lecture1.pdf p.35, p.41).",
+      "topic_id": "t2",
+      "session_id": "s2"
     },
     {
       "id": "s2-q6",
-      "session_id": "s2",
+      "type": "mcq",
+      "question": "Where does y = x^2 - 2x + 1 cross the x-axis?",
+      "options": [
+        "x = 1 only",
+        "No x-intercepts",
+        "x = -1 and x = 1",
+        "x = 0 and x = 2"
+      ],
+      "answer": "x = 1 only",
+      "explanation": "The discriminant is b^2 - 4ac = 4 - 4 = 0, so there is one x-intercept at x = (2 ± 0)/2 = 1 (Lecture1.pdf p.49-50).",
       "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q7",
       "type": "short",
-      "question": "Two resistors in a 10 V loop drop 6 V and V. Find V.",
+      "question": "Find the vertex of y = x^2 - 2x + 1.",
       "options": [],
-      "answer": "4 V",
-      "explanation": "KVL: 10 - 6 - V = 0."
+      "answer": "(1, 0)",
+      "explanation": "The vertex x-value is -b/(2a) = -(-2)/2 = 1. Then y = 1 - 2 + 1 = 0, so the vertex is (1, 0) (Lecture1.pdf p.47, p.50).",
+      "topic_id": "t2",
+      "session_id": "s2"
+    },
+    {
+      "id": "s2-q8",
+      "type": "mcq",
+      "question": "In the linear whale model W = 3.51L - 192 (W in British tons, L in feet), what does the slope 3.51 mean?",
+      "options": [
+        "Each extra foot of length adds 3.51 British tons",
+        "Each extra ton of weight adds 3.51 feet",
+        "A whale of zero length weighs 3.51 tons",
+        "The weight doubles when the length doubles"
+      ],
+      "answer": "Each extra foot of length adds 3.51 British tons",
+      "explanation": "The slope measures the increase in W for a 1-unit increase in L, so each extra foot adds 3.51 tons (Lecture1.pdf p.28, p.35).",
+      "topic_id": "t2",
+      "session_id": "s2"
     }
   ]
 }

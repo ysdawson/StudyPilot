@@ -37,3 +37,11 @@ def test_calendar_has_deadline_and_study():
     cal = build_calendar(busy, ev, [{"title": "Midterm", "date": "2026-11-27"}], "2026-11-16", "2026-11-27")
     assert any(e["kind"] == "deadline" for e in cal)
     assert sum(e["kind"] == "study" for e in cal) == len(ev)
+
+
+def test_sessions_spread_until_deadline_not_crammed():
+    ev = schedule_sessions(plan, busy)
+    days = sorted({e["start"][:10] for e in ev})
+    span = (datetime.fromisoformat(plan["goal"]["deadline"]) - datetime.fromisoformat(plan["goal"]["start_date"])).days
+    # uses most of the available days instead of filling the first ones to the daily cap
+    assert len(days) >= min(len(ev), span) * 0.8

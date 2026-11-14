@@ -1,185 +1,211 @@
 [
   {
-    "id": "class-1",
-    "title": "Circuit Analysis 1",
-    "start": "2026-11-16T08:30",
-    "end": "2026-11-16T10:00",
+    "id": "class-1-2026-11-17",
+    "title": "Calculus I class",
+    "start": "2026-11-17T18:00",
+    "end": "2026-11-17T21:00",
     "kind": "class"
   },
   {
-    "id": "class-2",
-    "title": "Digital Electronics",
-    "start": "2026-11-16T13:00",
-    "end": "2026-11-16T15:00",
+    "id": "class-2-2026-11-19",
+    "title": "Calculus I class",
+    "start": "2026-11-19T18:00",
+    "end": "2026-11-19T21:00",
     "kind": "class"
   },
   {
-    "id": "class-3",
-    "title": "Calculus II",
-    "start": "2026-11-17T10:00",
-    "end": "2026-11-17T12:00",
+    "id": "class-1-2026-11-24",
+    "title": "Calculus I class",
+    "start": "2026-11-24T18:00",
+    "end": "2026-11-24T21:00",
     "kind": "class"
   },
   {
-    "id": "class-4",
-    "title": "Circuit Analysis 1",
-    "start": "2026-11-18T08:30",
-    "end": "2026-11-18T10:00",
+    "id": "class-2-2026-11-26",
+    "title": "Calculus I class",
+    "start": "2026-11-26T18:00",
+    "end": "2026-11-26T21:00",
     "kind": "class"
   },
   {
-    "id": "class-5",
-    "title": "Electronics Lab",
-    "start": "2026-11-18T14:00",
-    "end": "2026-11-18T17:00",
+    "id": "class-1-2026-12-01",
+    "title": "Calculus I class",
+    "start": "2026-12-01T18:00",
+    "end": "2026-12-01T21:00",
     "kind": "class"
   },
   {
-    "id": "class-6",
-    "title": "Calculus II",
-    "start": "2026-11-19T10:00",
-    "end": "2026-11-19T12:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-7",
-    "title": "Networking",
-    "start": "2026-11-20T09:00",
-    "end": "2026-11-20T11:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-8",
-    "title": "Physics",
-    "start": "2026-11-20T13:00",
-    "end": "2026-11-20T15:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-1-w2",
-    "title": "Circuit Analysis 1",
-    "start": "2026-11-23T08:30",
-    "end": "2026-11-23T10:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-2-w2",
-    "title": "Digital Electronics",
-    "start": "2026-11-23T13:00",
-    "end": "2026-11-23T15:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-3-w2",
-    "title": "Calculus II",
-    "start": "2026-11-24T10:00",
-    "end": "2026-11-24T12:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-4-w2",
-    "title": "Circuit Analysis 1",
-    "start": "2026-11-25T08:30",
-    "end": "2026-11-25T10:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-5-w2",
-    "title": "Electronics Lab",
-    "start": "2026-11-25T14:00",
-    "end": "2026-11-25T17:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-6-w2",
-    "title": "Calculus II",
-    "start": "2026-11-26T10:00",
-    "end": "2026-11-26T12:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-7-w2",
-    "title": "Networking",
-    "start": "2026-11-27T09:00",
-    "end": "2026-11-27T11:00",
-    "kind": "class"
-  },
-  {
-    "id": "class-8-w2",
-    "title": "Physics",
-    "start": "2026-11-27T13:00",
-    "end": "2026-11-27T15:00",
+    "id": "class-2-2026-12-03",
+    "title": "Calculus I class",
+    "start": "2026-12-03T18:00",
+    "end": "2026-12-03T21:00",
     "kind": "class"
   },
   {
     "id": "study-s1",
-    "title": "Study: Ohm's law refresher",
-    "start": "2026-11-16T18:00",
-    "end": "2026-11-16T18:45",
+    "title": "Study: Learn functions and their properties",
+    "start": "2026-11-16T08:00",
+    "end": "2026-11-16T08:30",
     "kind": "study",
     "session_id": "s1"
   },
   {
     "id": "study-s2",
-    "title": "Study: KCL and KVL basics",
-    "start": "2026-11-17T18:00",
-    "end": "2026-11-17T19:00",
+    "title": "Study: Learn linear and quadratic functions",
+    "start": "2026-11-17T08:00",
+    "end": "2026-11-17T08:30",
     "kind": "study",
     "session_id": "s2"
   },
   {
     "id": "study-s3",
-    "title": "Study: Series, parallel and dividers",
-    "start": "2026-11-18T18:00",
-    "end": "2026-11-18T18:45",
+    "title": "Study: Learn limits and one-sided limits",
+    "start": "2026-11-18T08:00",
+    "end": "2026-11-18T08:30",
     "kind": "study",
     "session_id": "s3"
   },
   {
     "id": "study-s4",
-    "title": "Study: Kirchhoff practice problems",
-    "start": "2026-11-19T18:00",
-    "end": "2026-11-19T19:00",
+    "title": "Study: Practice limits and one-sided limits",
+    "start": "2026-11-19T08:00",
+    "end": "2026-11-19T08:30",
     "kind": "study",
     "session_id": "s4"
   },
   {
     "id": "study-s5",
-    "title": "Study: Nodal analysis",
-    "start": "2026-11-21T18:00",
-    "end": "2026-11-21T19:00",
+    "title": "Study: Learn continuity",
+    "start": "2026-11-20T08:00",
+    "end": "2026-11-20T08:30",
     "kind": "study",
     "session_id": "s5"
   },
   {
     "id": "study-s6",
-    "title": "Study: Mesh analysis",
-    "start": "2026-11-23T18:00",
-    "end": "2026-11-23T19:00",
+    "title": "Study: Learn limit laws and indeterminate forms",
+    "start": "2026-11-21T08:00",
+    "end": "2026-11-21T08:30",
     "kind": "study",
     "session_id": "s6"
   },
   {
     "id": "study-s7",
-    "title": "Study: Thevenin and Norton",
-    "start": "2026-11-24T18:00",
-    "end": "2026-11-24T19:15",
+    "title": "Study: Practice indeterminate forms",
+    "start": "2026-11-22T08:00",
+    "end": "2026-11-22T08:30",
     "kind": "study",
     "session_id": "s7"
   },
   {
     "id": "study-s8",
-    "title": "Study: Midterm review",
-    "start": "2026-11-25T18:00",
-    "end": "2026-11-25T19:30",
+    "title": "Study: Learn trigonometric limits and the squeeze theorem",
+    "start": "2026-11-23T08:00",
+    "end": "2026-11-23T08:30",
     "kind": "study",
     "session_id": "s8"
   },
   {
-    "id": "deadline-1",
-    "title": "Midterm",
+    "id": "study-s9",
+    "title": "Study: Learn the derivative at a point",
+    "start": "2026-11-24T08:00",
+    "end": "2026-11-24T08:30",
+    "kind": "study",
+    "session_id": "s9"
+  },
+  {
+    "id": "study-s10",
+    "title": "Study: Practice derivative from the limit definition",
+    "start": "2026-11-25T08:00",
+    "end": "2026-11-25T08:30",
+    "kind": "study",
+    "session_id": "s10"
+  },
+  {
+    "id": "study-s11",
+    "title": "Study: Learn differentiability and higher-order derivatives",
+    "start": "2026-11-26T08:00",
+    "end": "2026-11-26T08:30",
+    "kind": "study",
+    "session_id": "s11"
+  },
+  {
+    "id": "study-s12",
+    "title": "Study: Practice higher-order derivatives",
     "start": "2026-11-27T08:00",
-    "end": "2026-11-27T09:00",
+    "end": "2026-11-27T08:30",
+    "kind": "study",
+    "session_id": "s12"
+  },
+  {
+    "id": "study-s13",
+    "title": "Study: Learn basic differentiation rules",
+    "start": "2026-11-28T08:00",
+    "end": "2026-11-28T08:30",
+    "kind": "study",
+    "session_id": "s13"
+  },
+  {
+    "id": "study-s14",
+    "title": "Study: Practice basic differentiation rules",
+    "start": "2026-11-29T08:00",
+    "end": "2026-11-29T08:30",
+    "kind": "study",
+    "session_id": "s14"
+  },
+  {
+    "id": "study-s15",
+    "title": "Study: Learn product and quotient rules",
+    "start": "2026-11-30T08:00",
+    "end": "2026-11-30T08:30",
+    "kind": "study",
+    "session_id": "s15"
+  },
+  {
+    "id": "study-s16",
+    "title": "Study: Practice product and quotient rules",
+    "start": "2026-11-30T08:45",
+    "end": "2026-11-30T09:15",
+    "kind": "study",
+    "session_id": "s16"
+  },
+  {
+    "id": "study-s17",
+    "title": "Study: Learn the chain rule",
+    "start": "2026-12-01T08:00",
+    "end": "2026-12-01T08:30",
+    "kind": "study",
+    "session_id": "s17"
+  },
+  {
+    "id": "study-s18",
+    "title": "Study: Practice chain rule",
+    "start": "2026-12-01T08:45",
+    "end": "2026-12-01T09:15",
+    "kind": "study",
+    "session_id": "s18"
+  },
+  {
+    "id": "study-s19",
+    "title": "Study: Practice chain rule with mixed rules",
+    "start": "2026-12-02T08:00",
+    "end": "2026-12-02T08:30",
+    "kind": "study",
+    "session_id": "s19"
+  },
+  {
+    "id": "study-s20",
+    "title": "Study: Review chain rule and differentiation",
+    "start": "2026-12-02T08:45",
+    "end": "2026-12-02T09:15",
+    "kind": "study",
+    "session_id": "s20"
+  },
+  {
+    "id": "deadline-1",
+    "title": "Test 1 (your target date)",
+    "start": "2026-12-03T08:00",
+    "end": "2026-12-03T09:00",
     "kind": "deadline"
   }
 ]

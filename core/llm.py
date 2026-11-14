@@ -80,7 +80,18 @@ def _parse_json(raw_response: str) -> dict | list:
 
 
 def _print_usage(response: Any) -> None:
-    print(f"[usage] in={response.usage.input_tokens} out={response.usage.output_tokens}")
+    print(f"[usage] in={response.usage.input_tokens} out={response.usage.output_tokens} "
+          f"stop={response.stop_reason}")
+
+
+# Thinking is on by default on current models (incl. Haiku 5.5) and counts
+# toward max_tokens, so give it room on top of the JSON answer itself.
+_MIN_REQUEST_TOKENS = 16000
+
+
+def _response_text(response: Any) -> str:
+    """Join the text blocks; content[0] may be a thinking block."""
+    return "".join(block.text for block in response.content if block.type == "text")
 
 
 def call_claude_json(
@@ -101,34 +112,37 @@ def call_claude_json(
 
     request_system = system + "\n\nAnswer with JSON only, no prose."
     messages = [{"role": "user", "content": content}]
+    request_tokens = max(max_tokens, _MIN_REQUEST_TOKENS)
     response = _get_client().messages.create(
         model=MODEL,
-        max_tokens=max_tokens,
+        max_tokens=request_tokens,
         system=request_system,
         messages=messages,
     )
     _print_usage(response)
-    raw_response = response.content[0].text
+    raw_response = _response_text(response)
 
     try:
+        if response.stop_reason == "max_tokens":
+            raise ValueError("answer was cut off at max_tokens")
         parsed = _parse_json(raw_response)
     except ValueError as first_error:
-        retry_messages = messages + [
-            {"role": "assistant", "content": raw_response},
-            {
-                "role": "user",
-                "content": "Your last answer was not valid JSON. Return only the JSON.",
-            },
-        ]
+        retry_messages = list(messages)
+        if raw_response.strip():  # the API rejects an empty assistant turn
+            retry_messages.append({"role": "assistant", "content": raw_response})
+        retry_messages.append({
+            "role": "user",
+            "content": "Your last answer was not valid JSON. Return only the JSON.",
+        })
         retry_response = _get_client().messages.create(
             model=MODEL,
-            max_tokens=max_tokens,
+            max_tokens=request_tokens * 2,
             system=request_system,
             messages=retry_messages,
         )
         _print_usage(retry_response)
         try:
-            parsed = _parse_json(retry_response.content[0].text)
+            parsed = _parse_json(_response_text(retry_response))
         except ValueError as retry_error:
             raise ValueError(
                 f"Claude did not return valid JSON: {retry_error}"

@@ -1,10 +1,10 @@
 {
   "goal": {
-    "course": "Circuit Analysis 1",
-    "target": "Midterm",
-    "deadline": "2026-11-27",
+    "course": "Calculus I",
+    "target": "Test 1",
+    "deadline": "2026-12-03",
     "start_date": "2026-11-16",
-    "hours_per_week": 6,
+    "hours_per_week": 4.0,
     "target_grade": "A"
   },
   "sessions": [
@@ -12,72 +12,180 @@
       "id": "s1",
       "order": 1,
       "topic_id": "t1",
-      "title": "Ohm's law refresher",
-      "minutes": 45,
-      "objective": "Apply V=IR and P=VI to simple circuits",
+      "title": "Learn functions and their properties",
+      "minutes": 30,
+      "objective": "Identify domain, range, monotonicity, and even or odd symmetry of a function.",
       "kind": "learn"
     },
     {
       "id": "s2",
       "order": 2,
       "topic_id": "t2",
-      "title": "KCL and KVL basics",
-      "minutes": 60,
-      "objective": "Write KCL and KVL equations for any circuit",
+      "title": "Learn linear and quadratic functions",
+      "minutes": 30,
+      "objective": "Find the slope of a linear function and the vertex of a quadratic at x = -b/(2a).",
       "kind": "learn"
     },
     {
       "id": "s3",
       "order": 3,
       "topic_id": "t3",
-      "title": "Series, parallel and dividers",
-      "minutes": 45,
-      "objective": "Find equivalent resistance and use dividers",
+      "title": "Learn limits and one-sided limits",
+      "minutes": 30,
+      "objective": "Evaluate limits from the left and right and recognise infinite limits and asymptotes.",
       "kind": "learn"
     },
     {
       "id": "s4",
       "order": 4,
-      "topic_id": "t2",
-      "title": "Kirchhoff practice problems",
-      "minutes": 60,
-      "objective": "Solve 2-loop circuits with KVL",
+      "topic_id": "t3",
+      "title": "Practice limits and one-sided limits",
+      "minutes": 30,
+      "objective": "Compute one-sided and infinite limits from graphs and formulas.",
       "kind": "practice"
     },
     {
       "id": "s5",
       "order": 5,
       "topic_id": "t4",
-      "title": "Nodal analysis",
-      "minutes": 60,
-      "objective": "Solve node voltages with nodal analysis",
+      "title": "Learn continuity",
+      "minutes": 30,
+      "objective": "Check the three continuity conditions and classify discontinuities by type.",
       "kind": "learn"
     },
     {
       "id": "s6",
       "order": 6,
-      "topic_id": "t4",
-      "title": "Mesh analysis",
-      "minutes": 60,
-      "objective": "Solve loop currents with mesh analysis",
-      "kind": "practice"
+      "topic_id": "t5",
+      "title": "Learn limit laws and indeterminate forms",
+      "minutes": 30,
+      "objective": "Apply limit laws and resolve 0/0 by factoring, rationalising, or combining fractions.",
+      "kind": "learn"
     },
     {
       "id": "s7",
       "order": 7,
       "topic_id": "t5",
-      "title": "Thevenin and Norton",
-      "minutes": 75,
-      "objective": "Find Vth, Rth and the Norton equivalent",
-      "kind": "learn"
+      "title": "Practice indeterminate forms",
+      "minutes": 30,
+      "objective": "Evaluate limits of rational and radical expressions that give 0/0 or infinity/infinity.",
+      "kind": "practice"
     },
     {
       "id": "s8",
       "order": 8,
-      "topic_id": "t5",
-      "title": "Midterm review",
-      "minutes": 90,
-      "objective": "Mixed exam-style problems on all topics",
+      "topic_id": "t6",
+      "title": "Learn trigonometric limits and the squeeze theorem",
+      "minutes": 30,
+      "objective": "Use lim sin(x)/x = 1 to evaluate trigonometric limits.",
+      "kind": "learn"
+    },
+    {
+      "id": "s9",
+      "order": 9,
+      "topic_id": "t7",
+      "title": "Learn the derivative at a point",
+      "minutes": 30,
+      "objective": "Write the difference quotient and interpret it as slope and instantaneous rate of change.",
+      "kind": "learn"
+    },
+    {
+      "id": "s10",
+      "order": 10,
+      "topic_id": "t7",
+      "title": "Practice derivative from the limit definition",
+      "minutes": 30,
+      "objective": "Compute f'(a) from the limit definition and find tangent line equations.",
+      "kind": "practice"
+    },
+    {
+      "id": "s11",
+      "order": 11,
+      "topic_id": "t8",
+      "title": "Learn differentiability and higher-order derivatives",
+      "minutes": 30,
+      "objective": "Explain why differentiability implies continuity but not conversely, and compute second derivatives.",
+      "kind": "learn"
+    },
+    {
+      "id": "s12",
+      "order": 12,
+      "topic_id": "t8",
+      "title": "Practice higher-order derivatives",
+      "minutes": 30,
+      "objective": "Find second and third derivatives and interpret acceleration.",
+      "kind": "practice"
+    },
+    {
+      "id": "s13",
+      "order": 13,
+      "topic_id": "t9",
+      "title": "Learn basic differentiation rules",
+      "minutes": 30,
+      "objective": "Apply the constant, power, sine, cosine, and linearity rules.",
+      "kind": "learn"
+    },
+    {
+      "id": "s14",
+      "order": 14,
+      "topic_id": "t9",
+      "title": "Practice basic differentiation rules",
+      "minutes": 30,
+      "objective": "Differentiate sums and constant multiples of basic functions without error.",
+      "kind": "practice"
+    },
+    {
+      "id": "s15",
+      "order": 15,
+      "topic_id": "t10",
+      "title": "Learn product and quotient rules",
+      "minutes": 30,
+      "objective": "State and apply the product and quotient rules with nonzero denominators.",
+      "kind": "learn"
+    },
+    {
+      "id": "s16",
+      "order": 16,
+      "topic_id": "t10",
+      "title": "Practice product and quotient rules",
+      "minutes": 30,
+      "objective": "Differentiate products and ratios of functions, simplifying the result.",
+      "kind": "practice"
+    },
+    {
+      "id": "s17",
+      "order": 17,
+      "topic_id": "t11",
+      "title": "Learn the chain rule",
+      "minutes": 30,
+      "objective": "Differentiate composite functions by multiplying outer and inner derivatives.",
+      "kind": "learn"
+    },
+    {
+      "id": "s18",
+      "order": 18,
+      "topic_id": "t11",
+      "title": "Practice chain rule",
+      "minutes": 30,
+      "objective": "Differentiate nested compositions and combine with product and quotient rules.",
+      "kind": "practice"
+    },
+    {
+      "id": "s19",
+      "order": 19,
+      "topic_id": "t11",
+      "title": "Practice chain rule with mixed rules",
+      "minutes": 30,
+      "objective": "Solve mixed differentiation problems under timed conditions.",
+      "kind": "practice"
+    },
+    {
+      "id": "s20",
+      "order": 20,
+      "topic_id": "t11",
+      "title": "Review chain rule and differentiation",
+      "minutes": 30,
+      "objective": "Revisit the most error-prone differentiation patterns from the course.",
       "kind": "review"
     }
   ]

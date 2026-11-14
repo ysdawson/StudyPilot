@@ -189,13 +189,30 @@ def make_plan(topics: dict, goal: dict) -> dict:
     return {"goal": goal, "sessions": sessions}
 
 
+def _mock_session_file(session: dict) -> str:
+    """Mock content for this session: session_<id>.json if saved, else a saved
+    session on the same topic (e.g. a chain-rule review), else session_s1.json."""
+    import os
+    files = sorted(f for f in os.listdir(contracts.MOCK_DIR)
+                   if f.startswith("session_") and f.endswith(".json"))
+    own = f"session_{session.get('id')}.json"
+    if own in files:
+        return own
+    for name in files:
+        questions = _as_dict(contracts.load_mock(name)).get("questions") or []
+        topic_ids = [q.get("topic_id") for q in questions if isinstance(q, dict)]
+        if topic_ids and max(set(topic_ids), key=topic_ids.count) == session.get("topic_id"):
+            return name
+    return "session_s1.json"
+
+
 def make_session(session: dict, topics: dict, doc_text: str) -> dict:
     """Create and normalize a guide and questions for one study session."""
     session = _as_dict(session)
     topics = _as_dict(topics)
     session_id = str(session.get("id", "s1"))
     if contracts.mock_mode(st):
-        content = _as_dict(contracts.load_mock("session_s1.json"))
+        content = _as_dict(contracts.load_mock(_mock_session_file(session)))
         content["session_id"] = session_id
         content["questions"] = _valid_questions(content.get("questions"), session_id)
         return content

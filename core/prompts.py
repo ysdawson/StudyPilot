@@ -17,6 +17,9 @@ Return exactly this JSON shape:
 
 Hard rules:
 - Use topic ids t1, t2, ... tn, in the order the material teaches them.
+- Aim for about one topic per lecture or major section (6 to 12 topics).
+  Do not merge rules or methods that are taught in separate lectures into one
+  topic: a student must be able to be weak in one and strong in the other.
 - Each weight must be a float between 0 and 1, with weights roughly summing to
   1.0.
 - Each summary is one sentence.
@@ -105,6 +108,9 @@ Hard rules:
 - The explanation must be short and 2 to 4 sentences.
 - Include exactly one worked_example.
 - source_hint must reference [Page N] markers from the provided document text.
+  The text may contain several files, each starting with "=== <file name> ===",
+  and page numbers restart in every file, so always cite the file too, e.g.
+  "Lecture9.pdf p.14-16". Cite sources the same way in question explanations.
 - Include 5 to 8 questions, mixing type="mcq" and type="short".
 - Every mcq question must have exactly 4 options.
 - For mcq questions, answer must exactly equal one of the options.
