@@ -59,3 +59,33 @@ def test_study_days_and_window_are_respected():
 
 def test_default_study_days_unchanged():
     assert schedule_sessions(plan, busy) == schedule_sessions(plan, busy, study_days=None)
+
+
+def test_per_day_availability_windows():
+    avail = {0: ("17:00", "22:00"), 2: ("12:00", "15:00"), 5: ("09:00", "13:00")}  # Mon, Wed, Sat
+    ev = schedule_sessions(plan, busy, max_minutes_per_day=60, availability=avail)
+    assert ev
+    cal = build_calendar(busy, [], [], plan["goal"]["start_date"], plan["goal"]["deadline"])
+    per_day = {}
+    for e in ev:
+        s, en = datetime.strptime(e["start"], FMT), datetime.strptime(e["end"], FMT)
+        assert s.weekday() in avail
+        lo, hi = avail[s.weekday()]
+        assert s.strftime("%H:%M") >= lo and en.strftime("%H:%M") <= hi
+        per_day[e["start"][:10]] = per_day.get(e["start"][:10], 0) + (en - s).seconds // 60
+    assert all(v <= 60 for v in per_day.values())
+    from core.scheduler import BUFFER
+    clash = [e for e in ev for c in cal if datetime.strptime(e["start"], FMT) < datetime.strptime(c["end"], FMT) + BUFFER
+             and datetime.strptime(c["start"], FMT) - BUFFER < datetime.strptime(e["end"], FMT)]
+    assert not clash
+
+
+def test_availability_rows_validation():
+    from core.schedule_input import availability_from_rows
+    rows = [{"day": "Mon", "study": True, "from": "17:00", "to": "22:00"},
+            {"day": "Tue", "study": True, "from": "20:00", "to": "18:00"},   # invalid: skipped
+            {"day": "Wed", "study": False, "from": "10:00", "to": "12:00"},  # not studying
+            {"day": "Sat", "study": True, "from": "9:00", "to": "13:00"}]
+    avail, problems = availability_from_rows(rows)
+    assert avail == {0: ("17:00", "22:00"), 5: ("09:00", "13:00")}
+    assert len(problems) == 1 and problems[0].startswith("Tue")

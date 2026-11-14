@@ -60,7 +60,7 @@ Demo data is loaded ONLY by a "Load demo data" button (Home sidebar + the pages 
 Run the full demo once with the demo model before presenting so every AI result is cached (instant, free live demo). Don't delete cache/.
 
 ## Other session_state keys (not in contracts.py)
-- "data_source": "demo" | "user" (see Hard rules). "course_deadlines": Home deadlines CSV. "study_prefs": Home "Days I can study" + study window {"days": [0..6], "start", "end"}, passed to schedule_sessions(study_days=, day_start=, day_end=) by Generate and Update plan. "demo_dataset": selected demo.
+- "data_source": "demo" | "user" (see Hard rules). "course_deadlines": Home deadlines CSV. "study_prefs": Home per-day availability table, {"availability": {weekday: ["HH:MM", "HH:MM"]}}, passed to schedule_sessions(availability=) by Generate and Update plan (days not listed get no sessions). "demo_dataset": selected demo.
 - extract_topics may return an extra optional "assessments" list (titles only, no dates) used for Home's "What are you studying for?". Deadline dates are only prefilled from the documents/CSV, never invented.
 
 ## Roadmap (NOT NOW)

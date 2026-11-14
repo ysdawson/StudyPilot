@@ -40,7 +40,8 @@ def _free_windows(day: date, busy: list[Event], day_start: str, day_end: str):
 
 def schedule_sessions(plan: Plan, busy: list[Event], max_minutes_per_day: int = 120,
                       day_start: str = "08:00", day_end: str = "22:00",
-                      study_days: set[int] | None = None) -> list[Event]:
+                      study_days: set[int] | None = None,
+                      availability: dict[int, tuple[str, str]] | None = None) -> list[Event]:
     """Place sessions in free time between day_start and day_end (the study window),
     only on study_days (weekday numbers, Mon=0; None = every day)."""
     goal = plan["goal"]
@@ -48,7 +49,11 @@ def schedule_sessions(plan: Plan, busy: list[Event], max_minutes_per_day: int = 
     last = date.fromisoformat(goal["deadline"]) - timedelta(days=1)
     queue = sorted(plan["sessions"], key=lambda s: s["order"])
     events: list[Event] = []
-    ok_day = (lambda d: True) if study_days is None else (lambda d: d.weekday() in study_days)
+    # availability {weekday: (from, to)} overrides day_start/day_end per day; other days get nothing
+    if availability is not None:
+        ok_day = lambda d: d.weekday() in availability
+    else:
+        ok_day = (lambda d: True) if study_days is None else (lambda d: d.weekday() in study_days)
     while queue and day <= last:
         if not ok_day(day):
             day += timedelta(days=1)
@@ -58,7 +63,8 @@ def schedule_sessions(plan: Plan, busy: list[Event], max_minutes_per_day: int = 
         # first days: today's share = remaining minutes / remaining days.
         days_left = sum(ok_day(day + timedelta(days=i)) for i in range((last - day).days + 1))
         share = -(-sum(s["minutes"] for s in queue) // days_left)  # ceil
-        windows = _free_windows(day, busy, day_start, day_end)
+        start_hm, end_hm = availability[day.weekday()] if availability is not None else (day_start, day_end)
+        windows = _free_windows(day, busy, start_hm, end_hm)
         while queue and windows:
             sess = queue[0]
             need = timedelta(minutes=sess["minutes"])

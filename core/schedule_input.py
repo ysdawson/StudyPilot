@@ -190,22 +190,48 @@ def goal_options(topics: dict, course_deadlines: list[dict]) -> list[tuple[str, 
 STUDY_PREFS_KEY = "study_prefs"  # owned by Home: {"days": [0..6], "start": "HH:MM", "end": "HH:MM"}
 
 
+DEFAULT_AVAILABILITY = {0: ("17:00", "22:00"), 1: ("17:00", "22:00"), 2: ("17:00", "22:00"),
+                        3: ("17:00", "22:00"), 4: ("17:00", "22:00")}
+_WEEKEND_DEFAULT = ("10:00", "18:00")
+
+
+def availability_from_rows(rows: list[dict]) -> tuple[dict[int, tuple[str, str]], list[str]]:
+    """Editor rows -> ({weekday: (from, to)} for checked valid days, warnings for skipped rows)."""
+    avail, problems = {}, []
+    for r in rows:
+        if not r.get("study") or r.get("day") not in DAYS:
+            continue
+        f, t = str(r.get("from") or "").strip(), str(r.get("to") or "").strip()
+        if not (_valid_hm(f) and _valid_hm(t)) or f.zfill(5) >= t.zfill(5):
+            problems.append(f"{r['day']}: 'From' must be before 'To' (HH:MM) — skipped.")
+            continue
+        avail[DAYS.index(r["day"])] = (f.zfill(5), t.zfill(5))
+    return avail, problems
+
+
 def study_prefs_ui() -> dict:
-    """Days I can study + study window. Stored for Generate and 'Update plan'."""
-    from datetime import time as dtime
+    """Per-day study availability (Study? / From / To). Stored for Generate and 'Update plan'."""
     st.subheader("When can you study?")
-    prev = st.session_state.get(STUDY_PREFS_KEY, {"days": [0, 1, 2, 3, 4], "start": "17:00", "end": "22:00"})
-    days = st.multiselect("Days I can study", DAYS, default=[DAYS[i] for i in prev["days"]], key="study_days")
-    c1, c2 = st.columns(2)
-    start = c1.time_input("Study window from", dtime.fromisoformat(prev["start"]), key="study_start", step=900)
-    end = c2.time_input("to", dtime.fromisoformat(prev["end"]), key="study_end", step=900)
-    if end <= start:
-        st.warning("The study window must end after it starts.")
-    return {"days": [DAYS.index(d) for d in days], "start": start.strftime("%H:%M"), "end": end.strftime("%H:%M")}
+    saved = (st.session_state.get(STUDY_PREFS_KEY) or {}).get("availability")
+    base = {int(k): tuple(v) for k, v in saved.items()} if saved else DEFAULT_AVAILABILITY
+    rows = pd.DataFrame([{"day": d, "study": i in base,
+                          "from": base.get(i, DEFAULT_AVAILABILITY.get(i, _WEEKEND_DEFAULT))[0],
+                          "to": base.get(i, DEFAULT_AVAILABILITY.get(i, _WEEKEND_DEFAULT))[1]}
+                         for i, d in enumerate(DAYS)])
+    edited = st.data_editor(rows, key="study_table", hide_index=True, num_rows="fixed", disabled=["day"],
+                            column_config={
+                                "day": st.column_config.TextColumn("Day"),
+                                "study": st.column_config.CheckboxColumn("Study?"),
+                                "from": st.column_config.TextColumn("From (HH:MM)"),
+                                "to": st.column_config.TextColumn("To (HH:MM)")})
+    avail, problems = availability_from_rows(edited.to_dict("records"))
+    for p in problems:
+        st.warning(p)
+    return {"availability": avail}
 
 
 def schedule_kwargs(prefs: dict | None) -> dict:
     """Extra schedule_sessions arguments for the saved study preferences (none = defaults)."""
-    if not prefs:
+    if not prefs or "availability" not in prefs:
         return {}
-    return {"study_days": set(prefs["days"]), "day_start": prefs["start"], "day_end": prefs["end"]}
+    return {"availability": {int(k): tuple(v) for k, v in prefs["availability"].items()}}
