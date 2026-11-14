@@ -223,6 +223,18 @@ def _mock_session_file(session: dict) -> str | None:
     return None
 
 
+def question_count(minutes: int) -> int:
+    """Quiz length for a session: 30 min -> 8, 45 -> 10, 60 -> 12, 75+ -> 15 (nearest band)."""
+    bands = [(30, 8), (45, 10), (60, 12), (75, 15)]
+    try:
+        m = int(minutes)
+    except (TypeError, ValueError):
+        m = 30
+    if m >= 75:
+        return 15
+    return min(bands, key=lambda b: (abs(b[0] - m), b[0]))[1]
+
+
 def make_session(session: dict, topics: dict, doc_text: str) -> dict:
     """Create and normalize a guide and questions for one study session."""
     session = _as_dict(session)
@@ -242,17 +254,19 @@ def make_session(session: dict, topics: dict, doc_text: str) -> dict:
         doc_text = (f"(Demo data: no course documents loaded. Explain from standard knowledge of the "
                     f"course topic '{topic.get('name', session.get('title', ''))}': {topic.get('summary', '')})")
 
-    prompt_content = _dumps(
-        {"session": session, "topics": topics, "doc_text": doc_text[:MAX_DOC_CHARS]}
-    )
-    result = _as_dict(call_claude_json(SESSION, prompt_content))
-    return {
-        "session_id": session_id,
-        "guide": _guide(result),
-        "questions": _valid_questions(
-            result.get("questions"), session_id, str(session.get("topic_id", ""))
-        ),
-    }
+    target = question_count(session.get("minutes", 30))
+    payload = {"session": session, "topics": topics, "target_questions": target,
+               "doc_text": doc_text[:MAX_DOC_CHARS]}
+    tokens = 4000 + 600 * target  # room for a 15-question quiz plus the guide
+    result = _as_dict(call_claude_json(SESSION, _dumps(payload), max_tokens=tokens))
+    questions = _valid_questions(result.get("questions"), session_id, str(session.get("topic_id", "")))
+    if len(questions) < 0.8 * target:  # too few valid questions: retry once
+        payload["retry_note"] = f"Return exactly {target} valid multiple-choice questions."
+        retry = _as_dict(call_claude_json(SESSION, _dumps(payload), max_tokens=tokens))
+        retry_qs = _valid_questions(retry.get("questions"), session_id, str(session.get("topic_id", "")))
+        if len(retry_qs) > len(questions):
+            result, questions = retry, retry_qs
+    return {"session_id": session_id, "guide": _guide(result), "questions": questions}
 
 
 def replan(plan: dict, topics: dict, results: dict) -> dict:

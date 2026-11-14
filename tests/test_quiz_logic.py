@@ -136,5 +136,28 @@ def test_demo_session_without_saved_content_is_generated_when_key(monkeypatch):
     at = _session_app("yassine", key_ok=True)
     at.sidebar.selectbox[0].set_value("s5")  # topic t4: no saved session on that topic
     at.run()
-    assert not at.exception and len(calls) == 1
+    assert not at.exception and len(calls) == 2  # 1 question < 80% of 8: one retry
     assert at.session_state["session_content"]["s5"]["guide"]["explanation"] == "Own guide"
+
+
+def test_question_count_scales_with_session_minutes():
+    from core.ai_engine import question_count
+    assert [question_count(m) for m in (15, 30, 37, 40, 45, 50, 60, 65, 75, 90)] == [8, 8, 8, 10, 10, 10, 12, 12, 15, 15]
+
+
+def test_make_session_asks_for_the_target_and_retries_when_short(monkeypatch):
+    import json as _json
+    import core.ai_engine as ae
+    monkeypatch.setattr(ae, "_use_mock", lambda: False)
+    calls = []
+
+    def fake(system, content, max_tokens=4000):
+        calls.append((_json.loads(content), max_tokens))
+        n = 5 if len(calls) == 1 else 15  # first answer too short (< 80% of 15)
+        return {"key_points": ["a"], "explanation": "e", "worked_example": "w", "source_hint": "s",
+                "questions": [{"type": "mcq", "question": f"Q{i}", "options": ["a", "b", "c", "d"],
+                               "answer": "a", "explanation": "x"} for i in range(n)]}
+    monkeypatch.setattr(ae, "call_claude_json", fake)
+    out = ae.make_session({"id": "s9", "topic_id": "t1", "minutes": 90}, {"topics": []}, "doc")
+    assert [c[0]["target_questions"] for c in calls] == [15, 15] and calls[0][1] >= 12000
+    assert len(out["questions"]) == 15 and out["questions"][-1]["id"] == "s9-q15"

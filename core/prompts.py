@@ -122,7 +122,8 @@ Hard rules:
   The text may contain several files, each starting with "=== <file name> ===",
   and page numbers restart in every file, so always cite the file too, e.g.
   "Lecture9.pdf p.14-16". Cite sources the same way in question explanations.
-- Include 8 to 10 questions, ALL type="mcq" (no short-answer questions).
+- Include exactly target_questions questions (given in the input), ALL
+  type="mcq" (no short-answer questions).
 - Every question has exactly 4 options and exactly one correct option; the
   other three must be clearly wrong but plausible.
 - For mcq questions, answer must exactly equal one of the options.
